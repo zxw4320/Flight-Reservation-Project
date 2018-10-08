@@ -11,31 +11,38 @@ public class Itinerary implements FlightInterface {
 
     @Override
     public int getAirfare() {
-        return 0;
+        int sum = 0;
+
+        for (FlightInterface flight : flights) {
+
+            sum += flight.getAirfare();
+        }
+        return sum;
     }
 
     @Override
     public String getArrivalTime() {
-        return null;
+        return flights.get(flights.size()-1).getArrivalTime();
     }
-//
+
     @Override
     public String getDepartureTime() {
-        return null;
+        return flights.get(0).getDepartureTime();
     }
 
     @Override
     public String getOrigin() {
-        return null;
+        return flights.get(0).getOrigin();
     }
 
     @Override
     public String getDestination() {
-        return null;
+        return flights.get(flights.size()-1).getDestination();
     }
 
     @Override
     public int getFlightNumber() {
-        return 0;
+
+        return flights.indexOf(0);
     }
 }
