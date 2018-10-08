@@ -18,7 +18,7 @@ public class Itinerary implements FlightInterface {
     public String getArrivalTime() {
         return null;
     }
-
+//
     @Override
     public String getDepartureTime() {
         return null;

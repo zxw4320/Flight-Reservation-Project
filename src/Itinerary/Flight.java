@@ -17,7 +17,7 @@ public class Flight implements FlightInterface {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
     }
-
+//
     @Override
     public int getAirfare() {
         return airfare;

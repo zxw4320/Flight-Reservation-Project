@@ -6,7 +6,7 @@ public class Airport {
     private int delaytime;
     private String weather;
 
-
+//
     public Airport(String airportcode, String name, int delaytime, String weather) {
         this.airportcode = airportcode;
         this.delaytime = delaytime;
