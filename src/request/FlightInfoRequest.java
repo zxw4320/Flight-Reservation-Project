@@ -1,6 +1,5 @@
 package request;
 
-import request.FlightOrders.DepartureSort;
 import request.FlightOrders.FlightOrder;
 
 public class FlightInfoRequest {
@@ -8,6 +7,10 @@ public class FlightInfoRequest {
   /**
    * The order flights will be returned in.
    */
-  private FlightOrder sortOrder = new DepartureSort();
+  private FlightOrder sortOrder;
+
+  public FlightInfoRequest(FlightOrder sortOrder){
+    this.sortOrder = sortOrder;
+  }
 
 }

@@ -2,6 +2,7 @@ package request.FlightOrders;
 
 import Itinerary.Flight;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Sorts all flights by their time of arrival.
@@ -13,6 +14,7 @@ public class ArrivalSort implements FlightOrder{
    * Orders and returns all flights based on arrival time.
    */
   public ArrayList<Flight> sortOrder(ArrayList<Flight> flights){
-    return null;
+    Collections.sort(flights, Flight.arrivalTimeComparator);
+    return flights;
   }
 }
