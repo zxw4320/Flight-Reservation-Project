@@ -3,7 +3,7 @@ package Itinerary;
 import java.util.ArrayList;
 
 public class Itinerary implements FlightInterface {
-
+    // TODO: 10/11/18 documentaion 
     public ArrayList<FlightInterface> flights;
     public Itinerary(ArrayList<FlightInterface> fs){
         flights = fs;
@@ -41,8 +41,13 @@ public class Itinerary implements FlightInterface {
     }
 
     @Override
-    public int getFlightNumber() {
-
-        return flights.indexOf(0);
+    public String getFlightNumber() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(FlightInterface flight:flights){
+            stringBuilder.append(flight.getFlightNumber()).append(",");
+        }
+        String fn = stringBuilder.toString();
+        fn = fn.substring(0, fn.length() - 1);
+        return fn;
     }
 }
