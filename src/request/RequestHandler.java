@@ -1,5 +1,10 @@
 package request;
 
+import database.CSVdb;
+import database.Flightdb;
+import itinerary.RouteMap;
+
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,8 +12,12 @@ public class RequestHandler {
 
     private String cachedString;
     private Boolean partialRequest;
+    private RouteMap routeMap;
+    private Flightdb db;
 
-    public RequestHandler(){
+    public RequestHandler(Path airportFile, Path weatherFile, Path flightFile){
+        db = new CSVdb(airportFile, weatherFile, flightFile);
+        routeMap = db.generateRouteMap();
         cachedString = "";
         partialRequest = false;
     }
@@ -96,8 +105,10 @@ public class RequestHandler {
     private void parseAirport(ui.AFRSInterface ui,
                               ArrayList<String> argumentArray){
         // create request
-        Request airportRequest = new AirportInfoRequest(ui,
+        Request airportRequest = new AirportInfoRequest(ui, routeMap,
                 argumentArray.get(1));
+        // execute request
+        airportRequest.execute();
 
     }
 
