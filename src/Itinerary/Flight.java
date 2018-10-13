@@ -9,15 +9,15 @@ public class Flight implements FlightInterface {
   
     private String flightNumber;
     private int airfare;
-    private String arrival;
-    private String departure;
+    private Airport arrival;
+    private Airport departure;
     private String arrivalTime;
     private String departureTime;
 
     /**
      * Constructor
      */
-    public Flight(String flightNumber, int airfare, String arrival, String departure, String arrivalTime, String departureTime) {
+    public Flight(String flightNumber, int airfare, Airport arrival, Airport departure, String arrivalTime, String departureTime) {
         this.flightNumber = flightNumber;
         this.airfare = airfare;
         this.arrival = arrival;
@@ -84,12 +84,12 @@ public class Flight implements FlightInterface {
     }
 
     @Override
-    public String getOrigin() {
+    public Airport getOrigin() {
         return departure;
     }
 
     @Override
-    public String getDestination() {
+    public Airport getDestination() {
         return arrival;
     }
 
@@ -102,6 +102,6 @@ public class Flight implements FlightInterface {
      * Gets the total time of a flight in minutes
      */
     public int getTotalTime(){
-        return convertTime(arrival) - convertTime(departure);
+        return convertTime(arrivalTime) - convertTime(departureTime);
     }
 }

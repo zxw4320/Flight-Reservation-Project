@@ -12,9 +12,8 @@ public class Airport {
     private String[] weather;
     private int weatherIndex = 0;
 
-    public Airport(String airportcode, String name, int delaytime, String[] weather) {
+    public Airport(String airportcode, String name, String[] weather) {
         this.airportcode = airportcode;
-        this.delaytime = delaytime;
         this.weather = weather;
         this.name = name;
     }
