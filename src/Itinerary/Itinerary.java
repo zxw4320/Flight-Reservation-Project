@@ -3,6 +3,9 @@ package Itinerary;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * 
+ */
 public class Itinerary implements FlightInterface {
 
     private ArrayList<FlightInterface> flights;
@@ -56,14 +59,14 @@ public class Itinerary implements FlightInterface {
     }
 
     /**
-     * Compares Flights by arrival time
+     * Compares Itinerary by arrival time
      */
     public static Comparator<Itinerary> arrivalTimeComparator =
         (Itinerary i1, Itinerary i2) ->(Integer.compare(convertTime(i1.getArrivalTime()),
             convertTime(i2.getArrivalTime())));
 
     /**
-     * Compares Flights by arrival time
+     * Compares Itinerary by arrival time
      */
     public static Comparator<Itinerary> departureTimeComparator =
         (Itinerary i1, Itinerary i2) ->(Integer.compare(convertTime(i1.getDepartureTime()),
@@ -71,7 +74,7 @@ public class Itinerary implements FlightInterface {
 
 
     /**
-     * Compares Flights by arrival time
+     * Compares Itinerary by arrival time
      */
     public static Comparator<Itinerary> airfareComparator =
         (Itinerary i1, Itinerary i2) -> (Integer.compare(i1.getAirfare(), i2.getAirfare()));

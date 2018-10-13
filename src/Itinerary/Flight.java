@@ -2,6 +2,9 @@ package Itinerary;
 
 import java.util.Comparator;
 
+/**
+ *
+ */
 public class Flight implements FlightInterface {
   
     private String flightNumber;
@@ -11,7 +14,9 @@ public class Flight implements FlightInterface {
     private String arrivalTime;
     private String departureTime;
 
-    // TODO: 10/11/18 documentation 
+    /**
+     * Constructor
+     */
     public Flight(String flightNumber, int airfare, String arrival, String departure, String arrivalTime, String departureTime) {
         this.flightNumber = flightNumber;
         this.airfare = airfare;
@@ -19,44 +24,6 @@ public class Flight implements FlightInterface {
         this.departure = departure;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
-    }
-
-    //
-    @Override
-    public int getAirfare() {
-        return airfare;
-    }
-
-    @Override
-    public String getArrivalTime() {
-        return arrivalTime;
-    }
-
-    @Override
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-    @Override
-    public String getOrigin() {
-        return departure;
-    }
-
-    @Override
-    public String getDestination() {
-        return arrival;
-    }
-
-    @Override
-    public String getFlightNumber() {
-        return flightNumber;
-    }
-
-    /**
-     * Gets the total time of a flight in minutes
-     */
-    public int getTotalTime(){
-        return convertTime(arrival) - convertTime(departure);
     }
 
     /**
@@ -97,5 +64,44 @@ public class Flight implements FlightInterface {
         }
         result = hours * 60 + minutes;
         return result;
+    }
+
+    /*** Getters ***/
+
+    @Override
+    public int getAirfare() {
+        return airfare;
+    }
+
+    @Override
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    @Override
+    public String getDepartureTime() {
+        return departureTime;
+    }
+
+    @Override
+    public String getOrigin() {
+        return departure;
+    }
+
+    @Override
+    public String getDestination() {
+        return arrival;
+    }
+
+    @Override
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    /**
+     * Gets the total time of a flight in minutes
+     */
+    public int getTotalTime(){
+        return convertTime(arrival) - convertTime(departure);
     }
 }
