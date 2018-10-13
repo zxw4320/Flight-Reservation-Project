@@ -40,6 +40,8 @@ public class Itinerary implements FlightInterface {
         return flights.get(flights.size()-1).getDestination();
     }
 
+
+
     @Override
     public String getFlightNumber() {
         StringBuilder stringBuilder = new StringBuilder();
