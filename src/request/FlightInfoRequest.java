@@ -13,4 +13,8 @@ public class FlightInfoRequest {
     this.sortOrder = sortOrder;
   }
 
+  @Override
+  public void execute() {
+
+  }
 }
