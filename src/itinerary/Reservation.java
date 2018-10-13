@@ -19,11 +19,11 @@ public class Reservation {
         return itinerary;
     }
 
-    public String getOrigin() {
+    public Airport getOrigin() {
         return itinerary.getOrigin();
     }
 
-    public String getDestination() {
+    public Airport getDestination() {
         return itinerary.getDestination();
     }
 

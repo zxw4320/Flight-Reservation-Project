@@ -36,12 +36,12 @@ public class Itinerary implements FlightInterface {
     }
 
     @Override
-    public String getOrigin() {
+    public Airport getOrigin() {
         return flights.get(0).getOrigin();
     }
 
     @Override
-    public String getDestination() {
+    public Airport getDestination() {
         return flights.get(flights.size() - 1).getDestination();
     }
 

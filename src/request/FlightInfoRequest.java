@@ -2,7 +2,7 @@ package request;
 
 import request.FlightOrders.FlightOrder;
 
-public class FlightInfoRequest {
+public class FlightInfoRequest implements Request{
 
   /**
    * The order flights will be returned in.
