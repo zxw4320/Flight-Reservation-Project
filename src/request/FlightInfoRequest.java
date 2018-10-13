@@ -1,11 +1,20 @@
 package request;
 
-public class FlightInfoRequest implements Request {
+import request.FlightOrders.FlightOrder;
 
-    //TODO Read up on requirements for this request
+public class FlightInfoRequest {
 
-    @Override
-    public void execute() {
+  /**
+   * The order flights will be returned in.
+   */
+  private FlightOrder sortOrder;
 
-    }
+  public FlightInfoRequest(FlightOrder sortOrder){
+    this.sortOrder = sortOrder;
+  }
+
+  @Override
+  public void execute() {
+
+  }
 }

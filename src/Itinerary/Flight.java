@@ -1,6 +1,9 @@
 package Itinerary;
 
+import java.util.Comparator;
+
 public class Flight implements FlightInterface {
+  
     private String flightNumber;
     private int airfare;
     private String arrival;
@@ -17,7 +20,8 @@ public class Flight implements FlightInterface {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
     }
-//
+
+    //
     @Override
     public int getAirfare() {
         return airfare;
@@ -46,5 +50,52 @@ public class Flight implements FlightInterface {
     @Override
     public String getFlightNumber() {
         return flightNumber;
+    }
+
+    /**
+     * Gets the total time of a flight in minutes
+     */
+    public int getTotalTime(){
+        return convertTime(arrival) - convertTime(departure);
+    }
+
+    /**
+     * Compares Flights by arrival time
+     */
+    public static Comparator<Flight> arrivalTimeComparator =
+        (Flight f1, Flight f2) ->(Integer.compare(convertTime(f1.getDepartureTime()),
+            convertTime(f2.getDepartureTime())));
+
+    /**
+     * Compares Flights by arrival time
+     */
+    public static Comparator<Flight> departureTimeComparator =
+        (Flight f1, Flight f2) ->(Integer.compare(convertTime(f1.getDepartureTime()),
+            convertTime(f2.getDepartureTime())));
+
+
+    /**
+     * Compares Flights by arrival time
+     */
+    public static Comparator<Flight> airfareComparator =
+        (Flight f1, Flight f2) -> (Integer.compare(f1.getAirfare(), f2.getAirfare()));
+
+    /**
+     * Converts times to entirely minutes for comparison
+     */
+    private static int convertTime(String t1){
+        int result;
+        int split = t1.indexOf(":");
+        int hours = Integer.parseInt(t1.substring(0, split));
+        int minutes = Integer.parseInt(t1.substring(split + 1, t1.length() - 1));
+        char ampm = t1.charAt(t1.length() - 1);
+        if(ampm == 'p' && hours != 12){
+            hours += 12;
+        }
+        else if(hours == 12 && ampm == 'a'){
+            hours = 0;
+        }
+        result = hours * 60 + minutes;
+        return result;
     }
 }
