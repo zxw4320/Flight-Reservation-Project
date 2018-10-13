@@ -1,15 +1,15 @@
 package Itinerary;
 
 public class Flight implements FlightInterface {
-    private int flightNumber;
+    private String flightNumber;
     private int airfare;
     private String arrival;
     private String departure;
     private String arrivalTime;
     private String departureTime;
 
-
-    public Flight(int flightNumber, int airfare, String arrival, String departure, String arrivalTime, String departureTime) {
+    // TODO: 10/11/18 documentation 
+    public Flight(String flightNumber, int airfare, String arrival, String departure, String arrivalTime, String departureTime) {
         this.flightNumber = flightNumber;
         this.airfare = airfare;
         this.arrival = arrival;
@@ -44,7 +44,7 @@ public class Flight implements FlightInterface {
     }
 
     @Override
-    public int getFlightNumber() {
+    public String getFlightNumber() {
         return flightNumber;
     }
 }
