@@ -54,6 +54,13 @@ public class Flight implements FlightInterface {
     }
 
     /**
+     * Gets the total time of a flight in minutes
+     */
+    public int getTotalTime(){
+        return convertTime(arrival) - convertTime(departure);
+    }
+
+    /**
      * Compares Flights by arrival time
      */
     public static Comparator<Flight> arrivalTimeComparator =
