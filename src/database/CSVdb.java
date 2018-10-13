@@ -32,51 +32,54 @@ public class CSVdb implements Flightdb {
         RouteMap routeMap = new RouteMap();
 
         // read in weather data for airports that we have on file
-        try (Stream<String> stream = Files.lines(airportFile)) {
-            stream.forEach(s -> {
-                // parsing each line
-                String[] sArray = s.split(",");
-                weatherMap.put(sArray[0], sArray);
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (String[] sArray : parseLinesInFile(weatherFile)) {
+            weatherMap.put(sArray[0], sArray);
         }
 
         // read airportFile and add data to routeMap
-        try (Stream<String> stream = Files.lines(weatherFile)) {
-            stream.forEach(s -> {
-                // parsing each line
-                String[] sArray = s.split(",");
+        for (String[] sArray : parseLinesInFile(airportFile)){
                 String airportCode = sArray[0];
                 String cityName = sArray[1];
                 String[] weather = weatherMap.get(airportCode);
                 routeMap.addAirport(new Airport(airportCode, cityName,
                         weather));
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       }
 
         // read flight data and add to routeMap
-        try (Stream<String> stream = Files.lines(flightFile)) {
-            stream.forEach(s -> {
-                // parsing each line
-                String[] sArray = s.split(",");
-                Airport origin = routeMap.getAirport(sArray[0]);
-                Airport destination = routeMap.getAirport(sArray[1]);
-                String departureTime = sArray[2];
-                String arrivalTime = sArray[3];
-                String flightNumber = sArray[4];
-                int airfare = Integer.parseInt(sArray[5]);
-                routeMap.addFlight(new Flight(flightNumber, airfare, origin,
-                        destination, arrivalTime, departureTime));
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+        for (String[] sArray : parseLinesInFile(flightFile)) {
+            Airport origin = routeMap.getAirport(sArray[0]);
+            Airport destination = routeMap.getAirport(sArray[1]);
+            String departureTime = sArray[2];
+            String arrivalTime = sArray[3];
+            String flightNumber = sArray[4];
+            int airfare = Integer.parseInt(sArray[5]);
+            routeMap.addFlight(new Flight(flightNumber, airfare, origin,
+                    destination, arrivalTime, departureTime));
         }
 
         return routeMap;
+    }
 
+    /**
+     * A simple method to parse the csv file
+     * @param file
+     * @return
+     */
+    private List<String[]> parseLinesInFile(Path file){
 
+        List<String[]> returnList = new ArrayList<>();
+
+        // parse the file from the path
+        try (Stream<String> stream = Files.lines(file)) {
+            stream.forEach(s -> {
+                // parsing each line
+                String[] sArray = s.split(",");
+                returnList.add(sArray);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return returnList;
     }
 }
