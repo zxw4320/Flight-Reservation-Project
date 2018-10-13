@@ -3,31 +3,33 @@ package ui;
 
 import request.RequestHandler;
 
-import java.awt.desktop.SystemEventListener;
 import java.util.Scanner;
 
-public class tui implements AFRSInterface {
+public class Tui implements AFRSInterface {
 
     request.RequestHandler afrs;
 
-    public tui() {
+    public Tui() {
         afrs = new RequestHandler();
     }
 
     @Override
     public void printString(String printText) {
-        System.out.println("printText");
+        System.out.println(printText);
     }
 
     private void sendString(String sendText) {
-        afrs.makeRequest(sendText);
+        afrs.makeRequest(this, sendText);
     }
 
     public static void main(String[] args) {
-        tui activeTui = new tui();
+        Tui activeTui = new Tui();
         Scanner input = new Scanner(System.in);
+        String inputLine = "";
         while(true){
-            activeTui.sendString(input.nextLine());
+            inputLine = input.nextLine();
+            activeTui.sendString(inputLine);
+            System.out.println(inputLine);
         }
 
     }

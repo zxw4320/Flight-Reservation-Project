@@ -22,7 +22,7 @@ public class RequestHandler {
      * @param requestString User input string
      * @return 0 on success, 1 on error of partial request
      */
-    public int makeRequest(String requestString) {
+    public int makeRequest(ui.AFRSInterface ui, String requestString) {
 
         ArrayList<String> requestArray = new ArrayList<>();
 
@@ -55,16 +55,16 @@ public class RequestHandler {
 
         // check the command we are running and hand off to associated method
         String command = requestArray.get(0);
-        if (command == "info") {
-            parseInfo(requestArray);
-        } else if (command == "reserve") {
-            parseReserve(requestArray);
-        } else if (command == "retrieve") {
-            parseRetrieve(requestArray);
-        } else if (command == "delete") {
-            parseDelete(requestArray);
-        } else if (command == "airport") {
-            parseAirport(requestArray);
+        if (command.equals("info")) {
+            parseInfo(ui, requestArray);
+        } else if (command.equals("reserve")) {
+            parseReserve(ui, requestArray);
+        } else if (command.equals("retrieve")) {
+            parseRetrieve(ui, requestArray);
+        } else if (command.equals("delete")) {
+            parseDelete(ui, requestArray);
+        } else if (command.equals("airport")) {
+            parseAirport(ui, requestArray);
         }
 
         // return success
@@ -73,23 +73,28 @@ public class RequestHandler {
     }
 
 
-    private void parseInfo(ArrayList<String> argumentArray){
+    private void parseInfo(ui.AFRSInterface ui,
+                           ArrayList<String> argumentArray){
+        ui.printString("Info request attempted");
+    }
+
+    private void parseReserve(ui.AFRSInterface ui,
+                              ArrayList<String> argumentArray){
 
     }
 
-    private void parseReserve(ArrayList<String> argumentArray){
+    private void parseRetrieve(ui.AFRSInterface ui,
+                               ArrayList<String> argumentArray){
 
     }
 
-    private void parseRetrieve(ArrayList<String> argumentArray){
+    private void parseDelete(ui.AFRSInterface ui,
+                             ArrayList<String> argumentArray){
 
     }
 
-    private void parseDelete(ArrayList<String> argumentArray){
-
-    }
-
-    private void parseAirport(ArrayList<String> argumentArray){
+    private void parseAirport(ui.AFRSInterface ui,
+                              ArrayList<String> argumentArray){
 
     }
 
