@@ -6,6 +6,7 @@ import itinerary.RouteMap;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,5 +81,15 @@ public class CSVdb implements Flightdb {
         }
 
         return returnList;
+    }
+
+    //TODO Remove BASIC test
+    public static void main(String[] args) {
+        Path a = Paths.get("csv/airports.csv");
+        Path f = Paths.get("csv/flights.csv");
+        Path w = Paths.get("csv/weather.csv");
+        Flightdb db = new CSVdb(a,w,f);
+        RouteMap routeMap = db.generateRouteMap();
+        System.out.println(routeMap.getAirport("BOS"));
     }
 }

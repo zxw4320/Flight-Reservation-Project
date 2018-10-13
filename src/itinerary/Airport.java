@@ -53,4 +53,8 @@ public class Airport {
         weatherIndex = (weatherIndex+2)%weather.length;
         return currentWeather;
     }
+
+    public String toString(){
+        return name + " (" + airportcode + ")";
+    }
 }
