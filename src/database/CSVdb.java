@@ -1,10 +1,9 @@
 package database;
 
-import Itinerary.Airport;
-import Itinerary.Flight;
-import Itinerary.RouteMap;
+import itinerary.Airport;
+import itinerary.Flight;
+import itinerary.RouteMap;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;

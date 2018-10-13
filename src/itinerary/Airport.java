@@ -1,4 +1,4 @@
-package Itinerary;
+package itinerary;
 
 /**
  * Holds info and calculates weather for a specific airport.

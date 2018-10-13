@@ -1,4 +1,4 @@
-package Itinerary;
+package itinerary;
 
 public class Reservation {
     // TODO: 10/11/18 documentation  

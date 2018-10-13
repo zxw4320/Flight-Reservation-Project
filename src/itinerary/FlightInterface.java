@@ -1,4 +1,4 @@
-package Itinerary;
+package itinerary;
 
 /**
  *
