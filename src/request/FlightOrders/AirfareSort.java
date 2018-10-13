@@ -1,6 +1,6 @@
 package request.FlightOrders;
 
-import Itinerary.Flight;
+import itinerary.Flight;
 import java.util.ArrayList;
 import java.util.Collections;
 

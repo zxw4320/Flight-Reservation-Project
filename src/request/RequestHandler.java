@@ -95,6 +95,9 @@ public class RequestHandler {
 
     private void parseAirport(ui.AFRSInterface ui,
                               ArrayList<String> argumentArray){
+        // create request
+        Request airportRequest = new AirportInfoRequest(ui,
+                argumentArray.get(1));
 
     }
 

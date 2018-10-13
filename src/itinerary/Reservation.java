@@ -1,4 +1,4 @@
-package Itinerary;
+package itinerary;
 
 public class Reservation {
     // TODO: 10/11/18 documentation  
@@ -19,11 +19,11 @@ public class Reservation {
         return itinerary;
     }
 
-    public String getOrigin() {
+    public Airport getOrigin() {
         return itinerary.getOrigin();
     }
 
-    public String getDestination() {
+    public Airport getDestination() {
         return itinerary.getDestination();
     }
 

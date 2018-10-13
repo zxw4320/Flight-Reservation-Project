@@ -1,4 +1,4 @@
-package Itinerary;
+package itinerary;
 
 /**
  *
@@ -10,9 +10,9 @@ public interface FlightInterface {
 
     String getDepartureTime();
 
-    String getOrigin();
+    Airport getOrigin();
 
-    String getDestination();
+    Airport getDestination();
 
     String getFlightNumber();
 }
