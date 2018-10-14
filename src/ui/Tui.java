@@ -3,6 +3,8 @@ package ui;
 
 import database.CSVdb;
 import database.Flightdb;
+import database.ReservationCSVParser;
+import database.Reservationdb;
 import request.RequestHandler;
 
 import java.nio.file.Path;
@@ -19,8 +21,12 @@ public class Tui implements AFRSInterface {
         Path f = Paths.get("csv/flights.csv");
         Path w = Paths.get("csv/weather.csv");
         Path d = Paths.get("csv/delay.csv");
-        Flightdb db = new CSVdb(a, w,f,d);
-        afrs = new RequestHandler(db);
+        Path r = Paths.get("csv/reservation.csv");
+        // make DB readers
+        Flightdb flightdb = new CSVdb(a,w,f,d);
+        Reservationdb reservationdb = new ReservationCSVParser();
+        // create request handler
+        afrs = new RequestHandler(flightdb, reservationdb);
     }
 
     @Override
