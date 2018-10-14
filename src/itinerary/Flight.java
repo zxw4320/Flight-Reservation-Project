@@ -27,27 +27,6 @@ public class Flight implements FlightInterface {
     }
 
     /**
-     * Compares Flights by arrival time
-     */
-    public static Comparator<Flight> arrivalTimeComparator =
-        (Flight f1, Flight f2) ->(Integer.compare(convertTime(f1.getDepartureTime()),
-            convertTime(f2.getDepartureTime())));
-
-    /**
-     * Compares Flights by arrival time
-     */
-    public static Comparator<Flight> departureTimeComparator =
-        (Flight f1, Flight f2) ->(Integer.compare(convertTime(f1.getDepartureTime()),
-            convertTime(f2.getDepartureTime())));
-
-
-    /**
-     * Compares Flights by arrival time
-     */
-    public static Comparator<Flight> airfareComparator =
-        (Flight f1, Flight f2) -> (Integer.compare(f1.getAirfare(), f2.getAirfare()));
-
-    /**
      * Converts times to entirely minutes for comparison
      */
     private static int convertTime(String t1){
