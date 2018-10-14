@@ -93,8 +93,8 @@ public class RequestHandler {
     }
 
     /**
-     * Parses through the argumentArray and checks to make sure all arguments are present
-     * in order to run the command. Calls the FlightInfoRequest if all arguments are valid.
+     * Checks for the sort order and generates a FlightInfoRequest with the proper
+     * order or default if none is specified. Executes the request.
      *
      * @param ui the user interface the command returns to
      * @param argumentArray arguments sent by the user
@@ -105,26 +105,8 @@ public class RequestHandler {
         FlightOrder sortOrder = null;
         boolean validSort = true;
 
-        // parts of the query that should always be present
-        String origin = argumentArray.get(1);
-        String destination = argumentArray.get(2);
-        String numConnect = argumentArray.get(3);
-
-        // check origin is valid
-        if(routeMap.getAirport(origin) == null){
-            ui.printString("error,unknown origin");
-
-        // check destination is valid
-        } else if(routeMap.getAirport(destination) == null){
-            ui.printString("error,unknown destination");
-
-        // check connection number is valid
-        } else if(!numConnect.equals("0") && !numConnect.equals("1") &&
-            !numConnect.equals("2") && !numConnect.equals("")){
-            ui.printString("error,invalid connection limit");
-
         // Check if flight order was specified
-        } else if(argumentArray.size() == 5) {
+        if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
                 case "departure":   sortOrder = new DepartureSort();
                                     break;
@@ -150,7 +132,7 @@ public class RequestHandler {
     }
 
     /**
-     *
+     * Generates an MakeReservationRequest and executes it.
      *
      * @param ui the user interface the command returns to
      * @param argumentArray arguments sent by the user
@@ -160,7 +142,7 @@ public class RequestHandler {
     }
 
     /**
-     *
+     * Generates an RetreiveReservationRequest and executes it.
      *
      * @param ui the user interface the command returns to
      * @param argumentArray arguments sent by the user
@@ -170,7 +152,7 @@ public class RequestHandler {
     }
 
     /**
-     *
+     * Generates an DeleteReservationRequest and executes it.
      *
      * @param ui the user interface the command returns to
      * @param argumentArray arguments sent by the user
@@ -180,20 +162,16 @@ public class RequestHandler {
     }
 
     /**
-     *
+     * Generates an AirportInfoRequest and executes it.
      *
      * @param ui the user interface the command returns to
      * @param argumentArray arguments sent by the user
      */
     private void parseAirport(ui.AFRSInterface ui, ArrayList<String> argumentArray){
-        if(routeMap.getAirport(argumentArray.get(1)) == null){ // check airport is valid
-            ui.printString("error,unknown airport");
-        } else {
-            // create request
-            Request airportRequest = new AirportInfoRequest(ui, routeMap,
-                argumentArray.get(1));
-            // execute request
-            airportRequest.execute();
-        }
+        // create request
+        Request airportRequest = new AirportInfoRequest(ui, routeMap,
+            argumentArray.get(1));
+        // execute request
+        airportRequest.execute();
     }
 }

@@ -32,18 +32,20 @@ public class FlightInfoRequest implements Request{
 
   @Override
   public void execute() {
-    // creates all itineraries that fit the query
-    ArrayList<Itinerary> itineraries = generateItineraries(routeMap.getFlights());
-    itineraries = sortOrder.sortOrder(itineraries);
-    StringBuilder result = new StringBuilder();
-    result.append("info,").append(itineraries.size());
-    // gathers all of the valid itineraries
-    for(int i = 1; i <= itineraries.size(); i++){
-     result.append("\n").append(i).append(",").append((itineraries.get(i - 1)).toString());
+    if(checkArgumentsValid(flightRequest)) {
+      // creates all itineraries that fit the query
+      ArrayList<Itinerary> itineraries = generateItineraries(routeMap.getFlights());
+      itineraries = sortOrder.sortOrder(itineraries);
+      StringBuilder result = new StringBuilder();
+      result.append("info,").append(itineraries.size());
+      // gathers all of the valid itineraries
+      for (int i = 1; i <= itineraries.size(); i++) {
+        result.append("\n").append(i).append(",").append((itineraries.get(i - 1)).toString());
+      }
+      String fn = result.toString();
+      fn = fn.substring(0, fn.length() - 1);
+      ui.printString(fn);
     }
-    String fn = result.toString();
-    fn = fn.substring(0, fn.length() - 1);
-    ui.printString(fn);
   }
 
   /**
@@ -106,5 +108,36 @@ public class FlightInfoRequest implements Request{
 
 
     return itineraries;
+  }
+
+  /**
+   * Checks that all of the arguments passed to the Request were valid.
+   *
+   * @param argumentArray arguments given to the Request
+   * @return true if valid, false otherwise
+   */
+  private boolean checkArgumentsValid(ArrayList<String> argumentArray){
+    // parts of the query that should always be present
+    String origin = argumentArray.get(1);
+    String destination = argumentArray.get(2);
+    String numConnect = argumentArray.get(3);
+
+    // check origin is valid
+    if(routeMap.getAirport(origin) == null){
+      ui.printString("error,unknown origin");
+      return false;
+
+      // check destination is valid
+    } else if(routeMap.getAirport(destination) == null){
+      ui.printString("error,unknown destination");
+      return false;
+
+      // check connection number is valid
+    } else if(!numConnect.equals("0") && !numConnect.equals("1") &&
+        !numConnect.equals("2") && !numConnect.equals("")) {
+      ui.printString("error,invalid connection limit");
+      return false;
+    }
+    return true;
   }
 }
