@@ -7,5 +7,6 @@ public interface Reservationdb {
 
     public ReservationCollection generateReservationCollection();
 
-    public ReservationCollection writeToDB();
+    public Void writeToDB(ReservationCollection reservationCollection);
+
 }
