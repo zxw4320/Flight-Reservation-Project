@@ -1,6 +1,9 @@
 package itinerary;
 
 public class Reservation {
+    /**
+     * By Tyler Baldwin
+     */
     // TODO: 10/11/18 documentation  
     private String passenger;
     private Itinerary itinerary;
