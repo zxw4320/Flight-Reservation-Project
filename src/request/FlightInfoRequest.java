@@ -4,11 +4,14 @@ import itinerary.Flight;
 import itinerary.Itinerary;
 import itinerary.RouteMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import request.FlightOrders.FlightOrder;
 import ui.AFRSInterface;
 
+/**
+ *  The request to gather all itineraries between the given airports that also comply
+ *  with other arguments given. It is a Concrete Command in the Command pattern.
+ */
 public class FlightInfoRequest implements Request{
 
   private AFRSInterface ui;
@@ -16,6 +19,9 @@ public class FlightInfoRequest implements Request{
   private ArrayList<String> flightRequest;
   private FlightOrder sortOrder;
 
+  /**
+   * Constructor
+   */
   public FlightInfoRequest(AFRSInterface ui, RouteMap routeMap,
                             ArrayList<String> flightRequest, FlightOrder sortOrder){
     this.ui = ui;

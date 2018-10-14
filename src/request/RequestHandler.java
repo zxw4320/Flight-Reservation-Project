@@ -34,7 +34,7 @@ public class RequestHandler {
      * when more information is needed from the user. It stores the previous
      * part of the requestString and will accept more until it receives the
      * terminator.
-     * 
+     *
      * @param requestString User input string
      * @return 0 on success, 1 on error of partial request
      */
