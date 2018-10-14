@@ -3,7 +3,15 @@ package database;
 import itinerary.ReservationCollection;
 
 public class ReservationCSVParser implements Reservationdb {
-    public ReservationCollection generateReservationCollection();
+    private ReservationCollection reservations = new ReservationCollection();
 
-    public ReservationCollection writeToDB();
+    public ReservationCollection generateReservationCollection(){
+
+        return reservations;
+    }
+    //TODO Read Reservations From CSV
+    public void writeToDB(){
+
+    }
+    //TODO Write Reservations To CSV
 }
