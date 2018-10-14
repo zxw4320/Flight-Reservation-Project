@@ -93,7 +93,7 @@ public class RequestHandler {
         Request flightInfoRequest;
         FlightOrder sortOrder = null;
         // Check if flight order was specified
-        if(argumentArray.size() == 4) {
+        if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
                 case "departure":
                     sortOrder = new DepartureSort();
