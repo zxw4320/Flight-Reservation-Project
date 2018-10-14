@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * This class contains all airports and flights for our routes
- * By Tyler Baldwin
  */
 public class RouteMap {
 
@@ -46,7 +45,6 @@ public class RouteMap {
     return null;
   }
 
-
   /**
    * Gets a flight from a flight number
    * @param flightNumber The number of the flight
@@ -59,7 +57,12 @@ public class RouteMap {
     }
     return null;
   }
-
+  
+   /**
+   * Returns all the flights for the system
+   *
+   * @return all the flights in the system
+   */
   public List<Flight> getFlights() {
     return flights;
   }
