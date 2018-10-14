@@ -9,19 +9,19 @@ public class Flight implements FlightInterface {
 
     private String flightNumber;
     private int airfare;
-    private Airport arrival;
-    private Airport departure;
+    private Airport origin;
+    private Airport destination;
     private String arrivalTime;
     private String departureTime;
 
     /**
      * Constructor
      */
-    public Flight(String flightNumber, int airfare, Airport arrival, Airport departure, String arrivalTime, String departureTime) {
+    public Flight(String flightNumber, int airfare, Airport origin, Airport destination, String arrivalTime, String departureTime) {
         this.flightNumber = flightNumber;
         this.airfare = airfare;
-        this.arrival = arrival;
-        this.departure = departure;
+        this.origin = origin;
+        this.destination = destination;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
     }
@@ -92,12 +92,12 @@ public class Flight implements FlightInterface {
 
     @Override
     public Airport getOrigin() {
-        return departure;
+        return origin;
     }
 
     @Override
     public Airport getDestination() {
-        return arrival;
+        return destination;
     }
 
     @Override
