@@ -66,7 +66,6 @@ public class Itinerary implements FlightInterface {
             result.append(",").append(flight.toString());
         }
         String fn = result.toString();
-        fn = fn.substring(0, fn.length() - 1);
         return fn;
     }
 
@@ -110,7 +109,6 @@ public class Itinerary implements FlightInterface {
             stringBuilder.append(flight.getFlightNumber()).append(",");
         }
         String fn = stringBuilder.toString();
-        fn = fn.substring(0, fn.length() - 1);
         return fn;
     }
 }
