@@ -32,7 +32,7 @@ public class FlightInfoRequest implements Request{
 
   @Override
   public void execute() {
-    if(checkArgumentsValid(flightRequest)) {
+    if(checkArgumentsValid()) {
       // creates all itineraries that fit the query
       ArrayList<Itinerary> itineraries = generateItineraries(routeMap.getFlights());
       itineraries = sortOrder.sortOrder(itineraries);
@@ -112,14 +112,13 @@ public class FlightInfoRequest implements Request{
   /**
    * Checks that all of the arguments passed to the Request were valid.
    *
-   * @param argumentArray arguments given to the Request
    * @return true if valid, false otherwise
    */
-  private boolean checkArgumentsValid(ArrayList<String> argumentArray){
+  private boolean checkArgumentsValid(){
     // parts of the query that should always be present
-    String origin = argumentArray.get(1);
-    String destination = argumentArray.get(2);
-    String numConnect = argumentArray.get(3);
+    String origin = flightRequest.get(1);
+    String destination = flightRequest.get(2);
+    String numConnect = flightRequest.get(3);
 
     // check origin is valid
     if(routeMap.getAirport(origin) == null){
