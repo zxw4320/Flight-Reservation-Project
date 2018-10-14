@@ -11,7 +11,8 @@ import request.FlightOrders.DepartureSort;
 import request.FlightOrders.FlightOrder;
 
 /**
- *
+ * Handles all user input. Parses the input and calls the proper command, or prints the
+ * proper error to the user. Fulfills the Invoker part of the Command design pattern.
  */
 public class RequestHandler {
 
@@ -33,6 +34,7 @@ public class RequestHandler {
      * when more information is needed from the user. It stores the previous
      * part of the requestString and will accept more until it receives the
      * terminator.
+     * 
      * @param requestString User input string
      * @return 0 on success, 1 on error of partial request
      */
@@ -89,7 +91,14 @@ public class RequestHandler {
         return 0;
 
     }
-    
+
+    /**
+     * Parses through the argumentArray and checks to make sure all arguments are present
+     * in order to run the command. Calls the FlightInfoRequest if all arguments are valid.
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseInfo(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
         Request flightInfoRequest;
@@ -101,17 +110,21 @@ public class RequestHandler {
         String destination = argumentArray.get(2);
         String numConnect = argumentArray.get(3);
 
-        if(routeMap.getAirport(origin) == null){    // check origin is valid
+        // check origin is valid
+        if(routeMap.getAirport(origin) == null){
             ui.printString("error,unknown origin");
 
-        } else if(routeMap.getAirport(destination) == null){ // check destination is valid
+        // check destination is valid
+        } else if(routeMap.getAirport(destination) == null){
             ui.printString("error,unknown destination");
 
-        } else if(!numConnect.equals("0") && !numConnect.equals("1") && // check connection number is valid
+        // check connection number is valid
+        } else if(!numConnect.equals("0") && !numConnect.equals("1") &&
             !numConnect.equals("2") && !numConnect.equals("")){
             ui.printString("error,invalid connection limit");
 
-        } else if(argumentArray.size() == 5) { // Check if flight order was specified
+        // Check if flight order was specified
+        } else if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
                 case "departure":   sortOrder = new DepartureSort();
                                     break;
@@ -123,7 +136,9 @@ public class RequestHandler {
                                     ui.printString("error,invalid sort order");
                                     break;
             }
-        } else { // set default flight order
+
+        // set default flight order
+        } else {
             sortOrder = new DepartureSort();
         }
         if(validSort) {
@@ -134,18 +149,42 @@ public class RequestHandler {
         }
     }
 
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseReserve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseRetrieve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseDelete(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseAirport(ui.AFRSInterface ui, ArrayList<String> argumentArray){
         if(routeMap.getAirport(argumentArray.get(1)) == null){ // check airport is valid
             ui.printString("error,unknown airport");
@@ -157,5 +196,4 @@ public class RequestHandler {
             airportRequest.execute();
         }
     }
-
 }
