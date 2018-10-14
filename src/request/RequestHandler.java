@@ -1,6 +1,8 @@
 package request;
 
 import database.Flightdb;
+import database.Reservationdb;
+import itinerary.ReservationCollection;
 import itinerary.RouteMap;
 
 import java.util.ArrayList;
@@ -19,11 +21,14 @@ public class RequestHandler {
     private String cachedString;
     private Boolean partialRequest;
     private RouteMap routeMap;
-    private Flightdb db;
+    private ReservationCollection reservationCollection;
+    private Flightdb flightdb;
 
-    public RequestHandler(Flightdb db){
-        this.db = db;
-        routeMap = db.generateRouteMap();
+    public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
+        this.flightdb = flightdb;
+        routeMap = flightdb.generateRouteMap();
+        reservationCollection =
+                reservationdb.generateReservationCollection(routeMap);
         cachedString = "";
         partialRequest = false;
     }
@@ -158,7 +163,10 @@ public class RequestHandler {
      * @param argumentArray arguments sent by the user
      */
     private void parseDelete(ui.AFRSInterface ui, ArrayList<String> argumentArray){
-
+        Request deleteRequest = new DeleteReservationRequest(ui,
+                argumentArray.get(1), argumentArray.get(2),
+                argumentArray.get(3), reservationCollection);
+        deleteRequest.execute();
     }
 
     /**
