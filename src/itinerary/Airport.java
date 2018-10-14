@@ -12,10 +12,11 @@ public class Airport {
     private String[] weather;
     private int weatherIndex = 0;
 
-    public Airport(String airportcode, String name, String[] weather) {
+    public Airport(String airportcode, String name, int delaytime, String[] weather) {
         this.airportcode = airportcode;
         this.weather = weather;
         this.name = name;
+        this.delaytime = delaytime;
     }
 
     /**

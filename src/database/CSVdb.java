@@ -29,6 +29,7 @@ public class CSVdb implements Flightdb {
 
         // variables for data
         HashMap<String, String[]> weatherMap = new HashMap<>();
+        HashMap<String, Integer> delayMap = new HashMap<>();
         RouteMap routeMap = new RouteMap();
 
         // read in weather data for airports that we have on file
@@ -36,13 +37,19 @@ public class CSVdb implements Flightdb {
             weatherMap.put(sArray[0], sArray);
         }
 
+        // read in delay data for airports that we have on file
+        for (String[] sArray : parseLinesInFile(weatherFile)) {
+            delayMap.put(sArray[0], Integer.parseInt(sArray[1]));
+        }
+
         // read airportFile and add data to routeMap
         for (String[] sArray : parseLinesInFile(airportFile)){
                 String airportCode = sArray[0];
                 String cityName = sArray[1];
+                int delaytime = delayMap.get(airportCode);
                 String[] weather = weatherMap.get(airportCode);
                 routeMap.addAirport(new Airport(airportCode, cityName,
-                        weather));
+                        delaytime, weather));
        }
 
         // read flight data and add to routeMap
