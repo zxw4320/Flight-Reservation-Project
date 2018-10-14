@@ -1,10 +1,8 @@
 package request;
 
-import database.CSVdb;
 import database.Flightdb;
 import itinerary.RouteMap;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import request.FlightOrders.AirfareSort;
@@ -12,6 +10,9 @@ import request.FlightOrders.ArrivalSort;
 import request.FlightOrders.DepartureSort;
 import request.FlightOrders.FlightOrder;
 
+/**
+ *
+ */
 public class RequestHandler {
 
     private String cachedString;
@@ -41,6 +42,7 @@ public class RequestHandler {
 
         // use our cachedString, we prepend it if it exist TODO move to tui
         if (partialRequest) {
+            ui.printString("partial-request");
             requestString = cachedString + requestString;
         }
 
@@ -68,48 +70,58 @@ public class RequestHandler {
 
         // check the command we are running and hand off to associated method
         String command = requestArray.get(0);
-        if (command.equals("info")) {
-            parseInfo(ui, requestArray);
-        } else if (command.equals("reserve")) {
-            parseReserve(ui, requestArray);
-        } else if (command.equals("retrieve")) {
-            parseRetrieve(ui, requestArray);
-        } else if (command.equals("delete")) {
-            parseDelete(ui, requestArray);
-        } else if (command.equals("airport")) {
-            parseAirport(ui, requestArray);
+        switch (command){
+            case "info":        parseInfo(ui, requestArray);
+                                break;
+            case "reserve":     parseReserve(ui, requestArray);
+                                break;
+            case "retrieve":    parseRetrieve(ui, requestArray);
+                                break;
+            case "delete" :     parseDelete(ui, requestArray);
+                                break;
+            case "airport":     parseAirport(ui, requestArray);
+                                break;
+            default:            ui.printString("error,unknown airport");
+                                return 1;
         }
 
         // return success
         return 0;
 
     }
-
-
-    private void parseInfo(ui.AFRSInterface ui,
-                           ArrayList<String> argumentArray){
-        ui.printString("Info request attempted");
+    
+    private void parseInfo(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
         Request flightInfoRequest;
         FlightOrder sortOrder = null;
         boolean validSort = true;
 
-        // Check if flight order was specified
-        if(argumentArray.size() == 5) {
+        // parts of the query that should always be present
+        String origin = argumentArray.get(1);
+        String destination = argumentArray.get(2);
+        String numConnect = argumentArray.get(3);
+
+        if(routeMap.getAirport(origin) == null){    // check origin is valid
+            ui.printString("error,unknown origin");
+
+        } else if(routeMap.getAirport(destination) == null){ // check destination is valid
+            ui.printString("error,unknown destination");
+
+        } else if(!numConnect.equals("0") && !numConnect.equals("1") && // check connection number is valid
+            !numConnect.equals("2") && !numConnect.equals("")){
+            ui.printString("error,invalid connection limit");
+
+        } else if(argumentArray.size() == 5) { // Check if flight order was specified
             switch (argumentArray.get(argumentArray.size() - 1)) {
-                case "departure":
-                    sortOrder = new DepartureSort();
-                    break;
-                case "arrival":
-                    sortOrder = new ArrivalSort();
-                    break;
-                case "airfare":
-                    sortOrder = new AirfareSort();
-                    break;
-                default:
-                    validSort = false;
-                    ui.printString("error,invalid sort order");
-                    break;
+                case "departure":   sortOrder = new DepartureSort();
+                                    break;
+                case "arrival":     sortOrder = new ArrivalSort();
+                                    break;
+                case "airfare":     sortOrder = new AirfareSort();
+                                    break;
+                default:            validSort = false;
+                                    ui.printString("error,invalid sort order");
+                                    break;
             }
         } else { // set default flight order
             sortOrder = new DepartureSort();
@@ -122,29 +134,28 @@ public class RequestHandler {
         }
     }
 
-    private void parseReserve(ui.AFRSInterface ui,
-                              ArrayList<String> argumentArray){
+    private void parseReserve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
-    private void parseRetrieve(ui.AFRSInterface ui,
-                               ArrayList<String> argumentArray){
+    private void parseRetrieve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
-    private void parseDelete(ui.AFRSInterface ui,
-                             ArrayList<String> argumentArray){
+    private void parseDelete(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
-    private void parseAirport(ui.AFRSInterface ui,
-                              ArrayList<String> argumentArray){
-        // create request
-        Request airportRequest = new AirportInfoRequest(ui, routeMap,
+    private void parseAirport(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+        if(routeMap.getAirport(argumentArray.get(1)) == null){ // check airport is valid
+            ui.printString("error,unknown airport");
+        } else {
+            // create request
+            Request airportRequest = new AirportInfoRequest(ui, routeMap,
                 argumentArray.get(1));
-        // execute request
-        airportRequest.execute();
-
+            // execute request
+            airportRequest.execute();
+        }
     }
 
 }
