@@ -9,9 +9,9 @@ import java.util.Comparator;
  */
 public class Itinerary implements FlightInterface {
 
-    private ArrayList<FlightInterface> flights;
+    private ArrayList<Flight> flights;
 
-    public Itinerary(ArrayList<FlightInterface> fs){
+    public Itinerary(ArrayList<Flight> fs){
         flights = fs;
     }
 

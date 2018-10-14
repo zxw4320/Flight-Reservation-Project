@@ -92,8 +92,10 @@ public class RequestHandler {
 
         Request flightInfoRequest;
         FlightOrder sortOrder = null;
+        boolean validSort = true;
+
         // Check if flight order was specified
-        if(argumentArray.size() == 4) {
+        if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
                 case "departure":
                     sortOrder = new DepartureSort();
@@ -104,14 +106,20 @@ public class RequestHandler {
                 case "airfare":
                     sortOrder = new AirfareSort();
                     break;
+                default:
+                    validSort = false;
+                    ui.printString("error,invalid sort order");
+                    break;
             }
         } else { // set default flight order
             sortOrder = new DepartureSort();
         }
-        // create request
-        flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
-        //execute request
-        flightInfoRequest.execute();
+        if(validSort) {
+            // create request
+            flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
+            //execute request
+            flightInfoRequest.execute();
+        }
     }
 
     private void parseReserve(ui.AFRSInterface ui,
