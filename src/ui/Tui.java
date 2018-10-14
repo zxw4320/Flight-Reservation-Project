@@ -21,7 +21,7 @@ public class Tui implements AFRSInterface {
         Path f = Paths.get("csv/flights.csv");
         Path w = Paths.get("csv/weather.csv");
         Path d = Paths.get("csv/delay.csv");
-        Path r = Paths.get("csv/reservation.csv");
+        Path r = Paths.get("csv/reservations.csv");
         // make DB readers
         Flightdb flightdb = new CSVdb(a,w,f,d);
         Reservationdb reservationdb = new ReservationCSVParser(r);

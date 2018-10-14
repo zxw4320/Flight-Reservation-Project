@@ -27,8 +27,8 @@ public class RequestHandler {
     public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
         this.flightdb = flightdb;
         routeMap = flightdb.generateRouteMap();
-        reservationCollection =
-                reservationdb.generateReservationCollection(routeMap);
+        reservationCollection
+                = reservationdb.generateReservationCollection(routeMap);
         cachedString = "";
         partialRequest = false;
     }
