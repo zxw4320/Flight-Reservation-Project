@@ -1,6 +1,6 @@
 package request.FlightOrders;
 
-import itinerary.Flight;
+import itinerary.Itinerary;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,10 +11,12 @@ import java.util.Collections;
 public class DepartureSort implements FlightOrder {
 
   /**
-   * Orders and returns all flights based on departure time.
+   * Orders and returns all itineraries based on departure time.
+   *
+   * @return the list of itineraries sorted based on departure time
    */
-  public ArrayList<Flight> sortOrder(ArrayList<Flight> flights){
-    Collections.sort(flights, Flight.departureTimeComparator);
-    return flights;
+  public ArrayList<Itinerary> sortOrder(ArrayList<Itinerary> itineraries){
+    Collections.sort(itineraries ,Itinerary.departureTimeComparator);
+    return itineraries;
   }
 }

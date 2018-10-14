@@ -30,6 +30,7 @@ public class FlightInfoRequest implements Request{
     // creates all itineraries that fit the query
     //Todo put in the logic to sort everything
 
+    itineraries = sortOrder.sortOrder(itineraries);
     ui.printString("info," + itineraries.size());
     // prints all of the valid itineraries
     for(int i = 1; i <= itineraries.size(); i++){

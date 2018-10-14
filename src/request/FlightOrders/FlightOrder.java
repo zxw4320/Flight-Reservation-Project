@@ -1,6 +1,7 @@
 package request.FlightOrders;
 
 import itinerary.Flight;
+import itinerary.Itinerary;
 import java.util.ArrayList;
 
 /**
@@ -12,5 +13,5 @@ public interface FlightOrder {
   /**
    * Orders and returns all flights.
    */
-  ArrayList<Flight> sortOrder(ArrayList<Flight> flights);
+  ArrayList<Itinerary> sortOrder(ArrayList<Itinerary> itineraries);
 }
