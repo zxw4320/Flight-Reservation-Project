@@ -43,7 +43,6 @@ public class FlightInfoRequest implements Request{
         result.append("\n").append(i).append(",").append((itineraries.get(i - 1)).toString());
       }
       String fn = result.toString();
-      fn = fn.substring(0, fn.length() - 1);
       ui.printString(fn);
     }
   }
