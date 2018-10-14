@@ -24,7 +24,7 @@ public class Tui implements AFRSInterface {
         Path r = Paths.get("csv/reservation.csv");
         // make DB readers
         Flightdb flightdb = new CSVdb(a,w,f,d);
-        Reservationdb reservationdb = new ReservationCSVParser();
+        Reservationdb reservationdb = new ReservationCSVParser(r);
         // create request handler
         afrs = new RequestHandler(flightdb, reservationdb);
     }
