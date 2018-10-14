@@ -21,6 +21,8 @@ public class AirportInfoRequest implements Request {
     @Override
     public void execute() {
         Airport airport = routeMap.getAirport(airportCode);
-        ui.printString( airport.toString() + " " + airport.getWeather() );
+        ui.printString( airport.toString() + " is currently "
+                + airport.getWeather() +" with " +
+                Integer.toString(airport.getDelaytime()) + " minute delays.");
     }
 }

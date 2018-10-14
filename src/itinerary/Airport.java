@@ -50,7 +50,7 @@ public class Airport {
      * @return current weather
      */
     public String getWeather() {
-        String currentWeather = weather[weatherIndex+1] + "," + weather[weatherIndex+2];
+        String currentWeather = weather[weatherIndex+1] + ", " + weather[weatherIndex+2] +"F";
         weatherIndex = (weatherIndex+2)%weather.length;
         return currentWeather;
     }

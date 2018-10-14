@@ -17,11 +17,13 @@ public class CSVdb implements Flightdb {
     Path airportFile;
     Path weatherFile;
     Path flightFile;
+    Path delayFile;
 
-    public CSVdb(Path airportFile, Path weatherFile, Path flightFile){
+    public CSVdb(Path airportFile, Path weatherFile, Path flightFile, Path delayFile){
         this.airportFile = airportFile;
         this.weatherFile = weatherFile;
         this.flightFile = flightFile;
+        this.delayFile = delayFile;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class CSVdb implements Flightdb {
         }
 
         // read in delay data for airports that we have on file
-        for (String[] sArray : parseLinesInFile(weatherFile)) {
+        for (String[] sArray : parseLinesInFile(delayFile)) {
             delayMap.put(sArray[0], Integer.parseInt(sArray[1]));
         }
 
@@ -90,13 +92,4 @@ public class CSVdb implements Flightdb {
         return returnList;
     }
 
-    //TODO Remove BASIC test
-    public static void main(String[] args) {
-        Path a = Paths.get("csv/airports.csv");
-        Path f = Paths.get("csv/flights.csv");
-        Path w = Paths.get("csv/weather.csv");
-        Flightdb db = new CSVdb(a,w,f);
-        RouteMap routeMap = db.generateRouteMap();
-        System.out.println(routeMap.getAirport("BOS"));
-    }
 }

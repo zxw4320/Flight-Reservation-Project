@@ -19,8 +19,8 @@ public class RequestHandler {
     private RouteMap routeMap;
     private Flightdb db;
 
-    public RequestHandler(Path airportFile, Path weatherFile, Path flightFile){
-        db = new CSVdb(airportFile, weatherFile, flightFile);
+    public RequestHandler(Flightdb db){
+        this.db = db;
         routeMap = db.generateRouteMap();
         cachedString = "";
         partialRequest = false;

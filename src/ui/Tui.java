@@ -1,6 +1,8 @@
 package ui;
 
 
+import database.CSVdb;
+import database.Flightdb;
 import request.RequestHandler;
 
 import java.nio.file.Path;
@@ -16,8 +18,9 @@ public class Tui implements AFRSInterface {
         Path a = Paths.get("csv/airports.csv");
         Path f = Paths.get("csv/flights.csv");
         Path w = Paths.get("csv/weather.csv");
-
-        afrs = new RequestHandler(a, w, f);
+        Path d = Paths.get("csv/delay.csv");
+        Flightdb db = new CSVdb(a, w,f,d);
+        afrs = new RequestHandler(db);
     }
 
     @Override
