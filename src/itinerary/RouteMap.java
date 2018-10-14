@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * This class contains all airports and flights for our routes
+ * By Tyler Baldwin
  */
 public class RouteMap {
 

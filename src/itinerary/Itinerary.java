@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * 
+ *
+ * By Tyler Baldwin
  */
 public class Itinerary implements FlightInterface {
 

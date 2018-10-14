@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 /**
  *
+ * By Tyler Baldwin
  */
 public class Flight implements FlightInterface {
 
