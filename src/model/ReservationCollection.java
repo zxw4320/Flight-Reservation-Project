@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReservationCollection {
 
@@ -45,6 +44,15 @@ public class ReservationCollection {
 
         return foundReservations;
 
+    }
+
+    /**
+     * Finds all reservations.
+     * @return an iterative list of all reservations.
+     */
+    public List<Reservation> listReservations(){
+        ArrayList<Reservation> resCopy = new ArrayList<>(reservations);
+        return resCopy;
     }
 
 }
