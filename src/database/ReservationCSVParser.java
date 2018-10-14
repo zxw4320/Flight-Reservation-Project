@@ -9,13 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Class that parses and writes to a CSV file for the reservations to persist.
+ */
 public class ReservationCSVParser implements Reservationdb {
 
-    Path file = Paths.get("csv/reservations.csv");
+    Path file;
     RouteMap routeMap;
 
-    public ReservationCSVParser(){
-
+    /**
+     * Constructor.
+     * @param file a path to a csv file of reservations.
+     */
+    public ReservationCSVParser(Path file){
+        this.file = file;
     }
 
 
@@ -51,7 +58,13 @@ public class ReservationCSVParser implements Reservationdb {
     }
 
     public void writeToDB(ReservationCollection reservations){
+        String name; // The passenger's name
+        String line; // The line to be written to the csv
+        for(Reservation reservation:reservations.listReservations()){
+            name = reservation.getPassenger();
+            line = name + "," + reservation.getItinerary().getFlightNumber();
 
+        }
     }
     //TODO Write Reservations To CSV
 }
