@@ -1,4 +1,4 @@
-package itinerary;
+package model;
 
 public class Reservation {
     /**

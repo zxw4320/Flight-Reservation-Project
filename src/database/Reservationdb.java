@@ -1,8 +1,7 @@
 package database;
 
-import itinerary.Reservation;
-import itinerary.ReservationCollection;
-import itinerary.RouteMap;
+import model.ReservationCollection;
+import model.RouteMap;
 
 /**
  * This is the interface for the system that parses the CSV file holding the reservations from the previous session.

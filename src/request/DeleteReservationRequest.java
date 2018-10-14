@@ -1,8 +1,8 @@
 package request;
 
-import itinerary.Airport;
-import itinerary.Reservation;
-import itinerary.ReservationCollection;
+import model.Airport;
+import model.Reservation;
+import model.ReservationCollection;
 import ui.AFRSInterface;
 
 import java.util.List;

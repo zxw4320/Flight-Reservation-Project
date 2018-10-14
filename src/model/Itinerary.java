@@ -1,10 +1,10 @@
-package itinerary;
+package model;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- *  Represents an itinerary in the system. It is a collection of flights with the ability
+ *  Represents an model in the system. It is a collection of flights with the ability
  *  to compare itineraries to each other. The Composite in the Composite Pattern.
  */
 public class Itinerary implements FlightInterface {
@@ -19,14 +19,14 @@ public class Itinerary implements FlightInterface {
     }
 
     /**
-     * Compares itinerary by arrival time
+     * Compares model by arrival time
      */
     public static Comparator<Itinerary> arrivalTimeComparator =
         (Itinerary i1, Itinerary i2) ->(Integer.compare(convertTime(i1.getArrivalTime()),
             convertTime(i2.getArrivalTime())));
 
     /**
-     * Compares itinerary by arrival time
+     * Compares model by arrival time
      */
     public static Comparator<Itinerary> departureTimeComparator =
         (Itinerary i1, Itinerary i2) ->(Integer.compare(convertTime(i1.getDepartureTime()),
@@ -34,7 +34,7 @@ public class Itinerary implements FlightInterface {
 
 
     /**
-     * Compares itinerary by arrival time
+     * Compares model by arrival time
      */
     public static Comparator<Itinerary> airfareComparator =
         (Itinerary i1, Itinerary i2) -> (Integer.compare(i1.getAirfare(), i2.getAirfare()));

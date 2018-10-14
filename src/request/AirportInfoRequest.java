@@ -1,7 +1,7 @@
 package request;
 
-import itinerary.Airport;
-import itinerary.RouteMap;
+import model.Airport;
+import model.RouteMap;
 import ui.AFRSInterface;
 
 /**

@@ -2,8 +2,8 @@ package request;
 
 import database.Flightdb;
 import database.Reservationdb;
-import itinerary.ReservationCollection;
-import itinerary.RouteMap;
+import model.ReservationCollection;
+import model.RouteMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;

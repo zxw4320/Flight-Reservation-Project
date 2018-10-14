@@ -1,4 +1,4 @@
-package itinerary;
+package model;
 
 /**
  *  This class sets up the behavior of flights and interfaces

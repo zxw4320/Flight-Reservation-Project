@@ -1,8 +1,8 @@
 package request;
 
-import itinerary.Flight;
-import itinerary.Itinerary;
-import itinerary.RouteMap;
+import model.Flight;
+import model.Itinerary;
+import model.RouteMap;
 import java.util.ArrayList;
 import java.util.List;
 import request.FlightOrders.FlightOrder;
@@ -77,7 +77,7 @@ public class FlightInfoRequest implements Request{
       ArrayList<Flight> origins = new ArrayList<>();
       ArrayList<Flight> dests = new ArrayList<>();
 
-      // gather all flights that are not in the itinerary that start or end in the proper place
+      // gather all flights that are not in the model that start or end in the proper place
       for(Flight flight : flights){
         if(!flight.getOrigin().getAirportcode().equals(origin) ||
             !flight.getDestination().getAirportcode().equals(destination)) {

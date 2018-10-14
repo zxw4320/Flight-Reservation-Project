@@ -1,4 +1,4 @@
-package itinerary;
+package model;
 
 /**
  *  An implementation of the FlightInterface for a simple flight. Represents a leaf in

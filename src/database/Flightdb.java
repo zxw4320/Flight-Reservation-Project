@@ -1,6 +1,6 @@
 package database;
 
-import itinerary.RouteMap;
+import model.RouteMap;
 
 public interface Flightdb {
 
