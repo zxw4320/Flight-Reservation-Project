@@ -6,7 +6,7 @@ import java.util.Comparator;
  *
  */
 public class Flight implements FlightInterface {
-  
+
     private String flightNumber;
     private int airfare;
     private Airport arrival;
@@ -64,6 +64,13 @@ public class Flight implements FlightInterface {
         }
         result = hours * 60 + minutes;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getFlightNumber() + "," + getOrigin().getAirportcode() + "," +
+            getDepartureTime() + "," + getDestination().getAirportcode() + "," +
+            getArrivalTime();
     }
 
     /*** Getters ***/

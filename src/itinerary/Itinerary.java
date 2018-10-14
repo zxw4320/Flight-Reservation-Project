@@ -14,50 +14,6 @@ public class Itinerary implements FlightInterface {
         flights = fs;
     }
 
-    @Override
-    public int getAirfare() {
-        int sum = 0;
-
-        for (FlightInterface flight : flights) {
-
-            sum += flight.getAirfare();
-        }
-        return sum;
-    }
-
-    @Override
-    public String getArrivalTime() {
-        return flights.get(flights.size() - 1).getArrivalTime();
-    }
-
-    @Override
-    public String getDepartureTime() {
-        return flights.get(0).getDepartureTime();
-    }
-
-    @Override
-    public Airport getOrigin() {
-        return flights.get(0).getOrigin();
-    }
-
-    @Override
-    public Airport getDestination() {
-        return flights.get(flights.size() - 1).getDestination();
-    }
-
-
-
-    @Override
-    public String getFlightNumber() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(FlightInterface flight:flights){
-            stringBuilder.append(flight.getFlightNumber()).append(",");
-        }
-        String fn = stringBuilder.toString();
-        fn = fn.substring(0, fn.length() - 1);
-        return fn;
-    }
-
     /**
      * Compares itinerary by arrival time
      */
@@ -96,5 +52,61 @@ public class Itinerary implements FlightInterface {
         }
         result = hours * 60 + minutes;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(getAirfare()).append(",").append(flights.size());
+        for(FlightInterface flight : flights){
+            result.append(",").append(flight.toString());
+        }
+        String fn = result.toString();
+        fn = fn.substring(0, fn.length() - 1);
+        return fn;
+    }
+
+    /*** getters ***/
+
+    @Override
+    public int getAirfare() {
+        int sum = 0;
+
+        for (FlightInterface flight : flights) {
+
+            sum += flight.getAirfare();
+        }
+        return sum;
+    }
+
+    @Override
+    public String getArrivalTime() {
+        return flights.get(flights.size() - 1).getArrivalTime();
+    }
+
+    @Override
+    public String getDepartureTime() {
+        return flights.get(0).getDepartureTime();
+    }
+
+    @Override
+    public Airport getOrigin() {
+        return flights.get(0).getOrigin();
+    }
+
+    @Override
+    public Airport getDestination() {
+        return flights.get(flights.size() - 1).getDestination();
+    }
+
+    @Override
+    public String getFlightNumber() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(FlightInterface flight:flights){
+            stringBuilder.append(flight.getFlightNumber()).append(",");
+        }
+        String fn = stringBuilder.toString();
+        fn = fn.substring(0, fn.length() - 1);
+        return fn;
     }
 }

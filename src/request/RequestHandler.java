@@ -7,6 +7,10 @@ import itinerary.RouteMap;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import request.FlightOrders.AirfareSort;
+import request.FlightOrders.ArrivalSort;
+import request.FlightOrders.DepartureSort;
+import request.FlightOrders.FlightOrder;
 
 public class RequestHandler {
 
@@ -35,7 +39,7 @@ public class RequestHandler {
 
         ArrayList<String> requestArray = new ArrayList<>();
 
-        // use our cachedString, we prepend it if it exist
+        // use our cachedString, we prepend it if it exist TODO move to tui
         if (partialRequest) {
             requestString = cachedString + requestString;
         }
@@ -85,6 +89,29 @@ public class RequestHandler {
     private void parseInfo(ui.AFRSInterface ui,
                            ArrayList<String> argumentArray){
         ui.printString("Info request attempted");
+
+        Request flightInfoRequest;
+        FlightOrder sortOrder = null;
+        // Check if flight order was specified
+        if(argumentArray.size() == 4) {
+            switch (argumentArray.get(argumentArray.size() - 1)) {
+                case "departure":
+                    sortOrder = new DepartureSort();
+                    break;
+                case "arrival":
+                    sortOrder = new ArrivalSort();
+                    break;
+                case "airfare":
+                    sortOrder = new AirfareSort();
+                    break;
+            }
+        } else { // set default flight order
+            sortOrder = new DepartureSort();
+        }
+        // create request
+        flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
+        //execute request
+        flightInfoRequest.execute();
     }
 
     private void parseReserve(ui.AFRSInterface ui,

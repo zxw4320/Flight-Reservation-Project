@@ -1,7 +1,8 @@
 package itinerary;
 
 /**
- *
+ *  This class sets up the behavior of flights and interfaces
+ *  allowing them to be used interchangeably.
  */
 public interface FlightInterface {
     int getAirfare();
@@ -15,5 +16,6 @@ public interface FlightInterface {
     Airport getDestination();
 
     String getFlightNumber();
+
+    String toString();
 }
-//
