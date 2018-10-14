@@ -25,25 +25,6 @@ public class Flight implements FlightInterface {
         this.departureTime = departureTime;
     }
 
-    /**
-     * Converts times to entirely minutes for comparison
-     */
-    private static int convertTime(String t1){
-        int result;
-        int split = t1.indexOf(":");
-        int hours = Integer.parseInt(t1.substring(0, split));
-        int minutes = Integer.parseInt(t1.substring(split + 1, t1.length() - 1));
-        char ampm = t1.charAt(t1.length() - 1);
-        if(ampm == 'p' && hours != 12){
-            hours += 12;
-        }
-        else if(hours == 12 && ampm == 'a'){
-            hours = 0;
-        }
-        result = hours * 60 + minutes;
-        return result;
-    }
-
     @Override
     public String toString() {
         return getFlightNumber() + "," + getOrigin().getAirportcode() + "," +
@@ -81,12 +62,5 @@ public class Flight implements FlightInterface {
     @Override
     public String getFlightNumber() {
         return flightNumber;
-    }
-
-    /**
-     * Gets the total time of a flight in minutes TODO possibly remove
-     */
-    public int getTotalTime(){
-        return convertTime(arrivalTime) - convertTime(departureTime);
     }
 }
