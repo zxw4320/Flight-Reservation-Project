@@ -2,6 +2,9 @@ package database;
 
 import model.*;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,14 +60,19 @@ public class ReservationCSVParser implements Reservationdb {
         return reservations;
     }
 
-    public void writeToDB(ReservationCollection reservations){
+    public void writeToDB(ReservationCollection reservations) throws IOException {
         String name; // The passenger's name
         String line; // The line to be written to the csv
+        ArrayList<String> lines = new ArrayList<>();
         for(Reservation reservation:reservations.listReservations()){
             name = reservation.getPassenger();
             line = name + "," + reservation.getItinerary().getFlightNumber();
-
+            lines.add(line);
         }
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file.toFile()));
+        for(String writeLine:lines){
+            writer.write(writeLine);
+        }
+        writer.close();
     }
-    //TODO Write Reservations To CSV
 }
