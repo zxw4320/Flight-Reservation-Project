@@ -63,9 +63,7 @@ public class FlightInfoRequest implements Request{
         itineraries.add(new Itinerary(temp));
       }
     }
-
-
-/* TODO fix this for 1 and 2 connections
+   /* TODO fix this
     // puts all itineraries with 1 connection into the list
     if(numConnect.equals("1") || numConnect.equals("2") || numConnect.equals("")){
       ArrayList<Flight> origins = new ArrayList<>();
@@ -86,13 +84,16 @@ public class FlightInfoRequest implements Request{
 
       for(Flight org : origins){
         for(Flight dest : dests){
-          if(org.getDestination() == dest.getOrigin()){
+          if(org.getDestination() == dest.getOrigin() &&
+              org.getDestination().getDelaytime() < dest.getDepartureTime().convertTime() - org.getArrivalTime().convertTime()){
 
+            ArrayList<Flight> temp = new ArrayList<>();
+            temp.add(org);
+            temp.add(dest);
+            itineraries.add(new Itinerary(temp));
           }
         }
       }
-
-
     }*/
 
     // puts all itineraries with 2 connections into the list
