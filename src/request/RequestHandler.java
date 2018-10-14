@@ -1,10 +1,8 @@
 package request;
 
-import database.CSVdb;
 import database.Flightdb;
 import itinerary.RouteMap;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import request.FlightOrders.AirfareSort;
@@ -12,6 +10,10 @@ import request.FlightOrders.ArrivalSort;
 import request.FlightOrders.DepartureSort;
 import request.FlightOrders.FlightOrder;
 
+/**
+ * Handles all user input. Parses the input and calls the proper command, or prints the
+ * proper error to the user. Fulfills the Invoker part of the Command design pattern.
+ */
 public class RequestHandler {
 
     private String cachedString;
@@ -32,6 +34,7 @@ public class RequestHandler {
      * when more information is needed from the user. It stores the previous
      * part of the requestString and will accept more until it receives the
      * terminator.
+     *
      * @param requestString User input string
      * @return 0 on success, 1 on error of partial request
      */
@@ -41,6 +44,7 @@ public class RequestHandler {
 
         // use our cachedString, we prepend it if it exist TODO move to tui
         if (partialRequest) {
+            ui.printString("partial-request");
             requestString = cachedString + requestString;
         }
 
@@ -68,16 +72,19 @@ public class RequestHandler {
 
         // check the command we are running and hand off to associated method
         String command = requestArray.get(0);
-        if (command.equals("info")) {
-            parseInfo(ui, requestArray);
-        } else if (command.equals("reserve")) {
-            parseReserve(ui, requestArray);
-        } else if (command.equals("retrieve")) {
-            parseRetrieve(ui, requestArray);
-        } else if (command.equals("delete")) {
-            parseDelete(ui, requestArray);
-        } else if (command.equals("airport")) {
-            parseAirport(ui, requestArray);
+        switch (command){
+            case "info":        parseInfo(ui, requestArray);
+                                break;
+            case "reserve":     parseReserve(ui, requestArray);
+                                break;
+            case "retrieve":    parseRetrieve(ui, requestArray);
+                                break;
+            case "delete" :     parseDelete(ui, requestArray);
+                                break;
+            case "airport":     parseAirport(ui, requestArray);
+                                break;
+            default:            ui.printString("error,unknown airport");
+                                return 1;
         }
 
         // return success
@@ -85,58 +92,108 @@ public class RequestHandler {
 
     }
 
-
-    private void parseInfo(ui.AFRSInterface ui,
-                           ArrayList<String> argumentArray){
-        ui.printString("Info request attempted");
+    /**
+     * Parses through the argumentArray and checks to make sure all arguments are present
+     * in order to run the command. Calls the FlightInfoRequest if all arguments are valid.
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
+    private void parseInfo(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
         Request flightInfoRequest;
         FlightOrder sortOrder = null;
+        boolean validSort = true;
+
+        // parts of the query that should always be present
+        String origin = argumentArray.get(1);
+        String destination = argumentArray.get(2);
+        String numConnect = argumentArray.get(3);
+
+        // check origin is valid
+        if(routeMap.getAirport(origin) == null){
+            ui.printString("error,unknown origin");
+
+        // check destination is valid
+        } else if(routeMap.getAirport(destination) == null){
+            ui.printString("error,unknown destination");
+
+        // check connection number is valid
+        } else if(!numConnect.equals("0") && !numConnect.equals("1") &&
+            !numConnect.equals("2") && !numConnect.equals("")){
+            ui.printString("error,invalid connection limit");
+
         // Check if flight order was specified
-        if(argumentArray.size() == 4) {
+        } else if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
-                case "departure":
-                    sortOrder = new DepartureSort();
-                    break;
-                case "arrival":
-                    sortOrder = new ArrivalSort();
-                    break;
-                case "airfare":
-                    sortOrder = new AirfareSort();
-                    break;
+                case "departure":   sortOrder = new DepartureSort();
+                                    break;
+                case "arrival":     sortOrder = new ArrivalSort();
+                                    break;
+                case "airfare":     sortOrder = new AirfareSort();
+                                    break;
+                default:            validSort = false;
+                                    ui.printString("error,invalid sort order");
+                                    break;
             }
-        } else { // set default flight order
+
+        // set default flight order
+        } else {
             sortOrder = new DepartureSort();
         }
-        // create request
-        flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
-        //execute request
-        flightInfoRequest.execute();
+        if(validSort) {
+            // create request
+            flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
+            //execute request
+            flightInfoRequest.execute();
+        }
     }
 
-    private void parseReserve(ui.AFRSInterface ui,
-                              ArrayList<String> argumentArray){
-
-    }
-
-    private void parseRetrieve(ui.AFRSInterface ui,
-                               ArrayList<String> argumentArray){
-
-    }
-
-    private void parseDelete(ui.AFRSInterface ui,
-                             ArrayList<String> argumentArray){
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
+    private void parseReserve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
     }
 
-    private void parseAirport(ui.AFRSInterface ui,
-                              ArrayList<String> argumentArray){
-        // create request
-        Request airportRequest = new AirportInfoRequest(ui, routeMap,
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
+    private void parseRetrieve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+
+    }
+
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
+    private void parseDelete(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+
+    }
+
+    /**
+     *
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
+    private void parseAirport(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+        if(routeMap.getAirport(argumentArray.get(1)) == null){ // check airport is valid
+            ui.printString("error,unknown airport");
+        } else {
+            // create request
+            Request airportRequest = new AirportInfoRequest(ui, routeMap,
                 argumentArray.get(1));
-        // execute request
-        airportRequest.execute();
-
+            // execute request
+            airportRequest.execute();
+        }
     }
-
 }

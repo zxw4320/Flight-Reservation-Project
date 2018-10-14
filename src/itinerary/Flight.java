@@ -1,10 +1,8 @@
 package itinerary;
 
-import java.util.Comparator;
-
 /**
- *
- * By Tyler Baldwin
+ *  An implementation of the FlightInterface for a simple flight. Represents a leaf in
+ *  the Composite pattern.
  */
 public class Flight implements FlightInterface {
 
@@ -86,7 +84,7 @@ public class Flight implements FlightInterface {
     }
 
     /**
-     * Gets the total time of a flight in minutes
+     * Gets the total time of a flight in minutes TODO possibly remove
      */
     public int getTotalTime(){
         return convertTime(arrivalTime) - convertTime(departureTime);

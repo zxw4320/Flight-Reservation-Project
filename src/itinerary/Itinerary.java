@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- *
- * By Tyler Baldwin
+ *  Represents an itinerary in the system. It is a collection of flights with the ability
+ *  to compare itineraries to each other. The Composite in the Composite Pattern.
  */
 public class Itinerary implements FlightInterface {
 
-    private ArrayList<FlightInterface> flights;
+    private ArrayList<Flight> flights;
 
-    public Itinerary(ArrayList<FlightInterface> fs){
+  /**
+   * Constructor
+   */
+  public Itinerary(ArrayList<Flight> fs){
         flights = fs;
     }
 
