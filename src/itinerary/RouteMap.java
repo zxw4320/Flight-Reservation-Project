@@ -47,6 +47,19 @@ public class RouteMap {
   }
 
 
+  /**
+   * Gets a flight from a flight number
+   * @param flightNumber The number of the flight
+   * @return null if not found, other wise the Flight
+   */
+  public Flight getFlight(String flightNumber) {
+    for(Flight flight : flights){
+      if(flight.getFlightNumber().equals(flightNumber))
+        return flight;
+    }
+    return null;
+  }
+
   public List<Flight> getFlights() {
     return flights;
   }
