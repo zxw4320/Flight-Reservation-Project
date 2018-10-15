@@ -30,6 +30,9 @@ public class Reservation {
         return itinerary.getDestination();
     }
 
+    public String toString(){
+        return itinerary.toString();
+    }
 
 }
 //
