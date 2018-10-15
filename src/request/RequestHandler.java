@@ -202,6 +202,11 @@ public class RequestHandler {
                 argumentArray.get(1), argumentArray.get(2),
                 argumentArray.get(3), reservationCollection);
         deleteRequest.execute();
+        try {
+            reservationdb.writeToDB(reservationCollection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
