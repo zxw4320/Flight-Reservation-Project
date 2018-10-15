@@ -71,7 +71,7 @@ public class ReservationCSVParser implements Reservationdb {
         ArrayList<String> lines = new ArrayList<>();
         for(Reservation reservation:reservations.listReservations()){
             name = reservation.getPassenger();
-            line = name + "," + reservation.getItinerary().getFlightNumber();
+            line = name + "," + reservation.getItinerary().getFlightNumber() + "\n";
             lines.add(line);
         }
         BufferedWriter writer = new BufferedWriter(new FileWriter(file.toFile()));

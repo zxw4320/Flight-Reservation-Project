@@ -108,6 +108,6 @@ public class Itinerary implements FlightInterface {
       stringBuilder.append(flight.getFlightNumber()).append(",");
     }
     String fn = stringBuilder.toString();
-    return fn;
+    return fn.substring(0, fn.length() - 1);
   }
 }

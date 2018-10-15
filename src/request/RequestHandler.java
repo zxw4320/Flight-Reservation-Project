@@ -24,10 +24,12 @@ public class RequestHandler {
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
     private Flightdb flightdb;
+    private Reservationdb reservationdb;
     private ItineraryHistory itineraryHistory;
 
     public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
         this.flightdb = flightdb;
+        this.reservationdb = reservationdb;
         routeMap = flightdb.generateRouteMap();
         reservationCollection
                 = reservationdb.generateReservationCollection(routeMap);
@@ -157,6 +159,11 @@ public class RequestHandler {
         Request request = new MakeReservationRequest(ui, reservationCollection,
                 itineraryHistory, id, name );
         request.execute();
+        try {
+            reservationdb.writeToDB(reservationCollection);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
