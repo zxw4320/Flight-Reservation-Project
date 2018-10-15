@@ -28,12 +28,15 @@ public class ItineraryHistory {
         // get the list from the hashmap
         List<Itinerary> itineraryList = itineraryHashMap.get(ui);
 
+        // put ID into what was displayed (1-n) => (0-(n-1))
+        id -= 1;
+
         // return null if out of bounds
         if(id < 0 || id >= itineraryList.size()){
             return null;
         }
         else {
-            return itineraryList.get(id - 1);
+            return itineraryList.get(id);
         }
     }
 
