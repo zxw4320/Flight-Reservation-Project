@@ -70,10 +70,13 @@ public class FlightInfoRequest implements Request{
         itineraries.add(new Itinerary(temp));
       }
     }
-   /* TODO fix this
+
     // puts all itineraries with 1 connection into the list
     if(numConnect.equals("1") || numConnect.equals("2") || numConnect.equals("")){
+      // flights that start at the origin, but end in another airport
       ArrayList<Flight> origins = new ArrayList<>();
+
+      // flights that end in the destination, but start at another airport
       ArrayList<Flight> dests = new ArrayList<>();
 
       // gather all flights that are not in the model that start or end in the proper place
@@ -89,11 +92,11 @@ public class FlightInfoRequest implements Request{
         }
       }
 
-      for(Flight org : origins){
-        for(Flight dest : dests){
-          if(org.getDestination() == dest.getOrigin() &&
-              org.getDestination().getDelaytime() < dest.getDepartureTime().convertTime() - org.getArrivalTime().convertTime()){
-
+// TODO Combinations following delay and arrival time
+      // create all itineraries that have one connection
+      for(Flight org : origins){ // go through all the origin flights
+        for(Flight dest : dests){ // go through all the destination flights
+          if(org.getDestination() == dest.getOrigin()){ // flights that connect at the same airport
             ArrayList<Flight> temp = new ArrayList<>();
             temp.add(org);
             temp.add(dest);
@@ -101,7 +104,25 @@ public class FlightInfoRequest implements Request{
           }
         }
       }
-    }*/
+
+      // create all itineraries that have 2 connecting flights
+      if(numConnect.equals("2") || numConnect.equals("")){
+        for(Flight flight : flights){ // go through every flight
+          for(Flight org : origins) { // go through all the origin flights
+            for (Flight dest : dests) { // go through all the destination flights
+              if (org.getDestination() == flight.getOrigin() &&
+                  flight.getDestination() == dest.getOrigin()) { // flights that connect at the same airport
+                ArrayList<Flight> temp = new ArrayList<>();
+                temp.add(org);
+                temp.add(flight);
+                temp.add(dest);
+                itineraries.add(new Itinerary(temp));
+              }
+            }
+          }
+        }
+      }
+    }
 
     // puts all itineraries with 2 connections into the list
 
