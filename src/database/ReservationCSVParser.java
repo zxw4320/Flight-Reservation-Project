@@ -60,6 +60,11 @@ public class ReservationCSVParser implements Reservationdb {
         return reservations;
     }
 
+    /**
+     *
+     * @param reservations
+     * @throws IOException
+     */
     public void writeToDB(ReservationCollection reservations) throws IOException {
         String name; // The passenger's name
         String line; // The line to be written to the csv

@@ -2,6 +2,9 @@ package database;
 
 import model.RouteMap;
 
+/**
+ * Interface for all
+ */
 public interface Flightdb {
 
     /**

@@ -2,10 +2,16 @@ package model;
 
 import java.util.*;
 
+/**
+ *
+ */
 public class ReservationCollection {
 
     private List<Reservation> reservations;
 
+    /**
+     * Constructor
+     */
     public ReservationCollection(){
         reservations = new ArrayList<>();
     }

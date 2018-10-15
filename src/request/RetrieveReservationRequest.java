@@ -1,11 +1,13 @@
 package request;
 
-import database.Reservationdb;
 import model.Airport;
 import model.Reservation;
 import model.ReservationCollection;
 import ui.AFRSInterface;
 
+/**
+ *
+ */
 public class RetrieveReservationRequest implements Request {
 
     private AFRSInterface ui;
@@ -15,6 +17,9 @@ public class RetrieveReservationRequest implements Request {
     private String destinationAirportCode;
 
 
+  /**
+   * Constructor
+   */
     public RetrieveReservationRequest(AFRSInterface ui, ReservationCollection
             reservationCollection, String passengerName, String
             originAirportCode, String destinationAirportCode){
@@ -57,6 +62,7 @@ public class RetrieveReservationRequest implements Request {
      * Little private helper method.
      * null code string returns true.
      * Otherwise we compare the code with the airport code.
+     *
      * @param airport airport to check
      * @param code Airport code to compare
      */

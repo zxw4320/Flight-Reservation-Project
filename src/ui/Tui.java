@@ -1,6 +1,5 @@
 package ui;
 
-
 import database.CSVdb;
 import database.Flightdb;
 import database.ReservationCSVParser;
@@ -11,10 +10,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ *
+ */
 public class Tui implements AFRSInterface {
 
     request.RequestHandler afrs;
 
+    /**
+     * Constructor
+     */
     public Tui() {
         // acquire DB files
         Path a = Paths.get("csv/airports.csv");

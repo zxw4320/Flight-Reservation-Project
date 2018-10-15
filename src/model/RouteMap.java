@@ -11,6 +11,9 @@ public class RouteMap {
   List<Airport> airports;
   List<Flight> flights;
 
+  /**
+   * Constructor
+   */
   public RouteMap() {
     airports = new ArrayList<>();
     flights = new ArrayList<>();

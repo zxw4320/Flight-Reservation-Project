@@ -7,6 +7,9 @@ import ui.AFRSInterface;
 
 import java.util.List;
 
+/**
+ *
+ */
 public class DeleteReservationRequest implements Request {
 
     private String passengerName;
@@ -15,7 +18,9 @@ public class DeleteReservationRequest implements Request {
     private AFRSInterface ui;
     private ReservationCollection reservations;
 
-
+    /**
+     * Constructor
+     */
     public DeleteReservationRequest(AFRSInterface ui, String passengerName, String originAirportCode,
                                     String destinationAirportCode, ReservationCollection reservations){
         this.ui = ui;
@@ -42,6 +47,10 @@ public class DeleteReservationRequest implements Request {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private Reservation findReservation(){
 
         List<Reservation> passengersReservations = reservations.findReservation(passengerName);

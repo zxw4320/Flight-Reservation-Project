@@ -6,6 +6,7 @@ package model;
  *  By Tyler Baldwin
  */
 public interface FlightInterface {
+
     int getAirfare();
 
     String getArrivalTime();
