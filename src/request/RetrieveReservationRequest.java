@@ -3,15 +3,17 @@ package request;
 import model.Airport;
 import model.Reservation;
 import model.ReservationCollection;
+import model.RouteMap;
 import ui.AFRSInterface;
 
-/**
- *
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class RetrieveReservationRequest implements Request {
 
     private AFRSInterface ui;
     private ReservationCollection reservationCollection;
+    private RouteMap routeMap;
     private String passengerName;
     private String originAirportCode;
     private String destinationAirportCode;
@@ -21,10 +23,11 @@ public class RetrieveReservationRequest implements Request {
    * Constructor
    */
     public RetrieveReservationRequest(AFRSInterface ui, ReservationCollection
-            reservationCollection, String passengerName, String
-            originAirportCode, String destinationAirportCode){
+            reservationCollection, RouteMap routeMap, String passengerName
+            , String originAirportCode, String destinationAirportCode){
         this.reservationCollection = reservationCollection;
         this.ui = ui;
+        this.routeMap = routeMap;
         this.passengerName = passengerName;
         this.originAirportCode = originAirportCode;
         this.destinationAirportCode = destinationAirportCode;
@@ -33,13 +36,31 @@ public class RetrieveReservationRequest implements Request {
 
     @Override
     public void execute() {
-       for (Reservation reservation : reservationCollection.listReservations()){
 
-           // check passenger
-           boolean passengerMatch = reservation.getPassenger()
-                   .equals(passengerName);
+        List<Reservation> reservations = new ArrayList<>();
 
-           // check origin airport
+        // error for origin
+        if (originAirportCode != "" &&
+                routeMap.getAirport(originAirportCode) == null) {
+            ui.printString("error,unknown origin");
+            return;
+        }
+
+        // error for destination
+        if ( !destinationAirportCode.equals("") &&
+            routeMap.getAirport(destinationAirportCode) == null) {
+            ui.printString("error,unknown destination");
+            return;
+        }
+
+        // loop over all reservations
+        for (Reservation reservation : reservationCollection.listReservations()){
+
+            // check passenger
+            boolean passengerMatch = reservation.getPassenger()
+                    .equals(passengerName);
+
+            // check origin airport
             boolean originMatch = airportCodeEquals(reservation.getOrigin(),
                     originAirportCode);
 
@@ -47,30 +68,31 @@ public class RetrieveReservationRequest implements Request {
             boolean destinationMatch = airportCodeEquals(reservation
                     .getDestination(), destinationAirportCode);
 
+            // print if valid
             if (passengerMatch && originMatch && destinationMatch){
-                ui.printString(reservation.toString());
+                reservations.add(reservation);
             }
-            else {
-                ui.printString("Error: Reservation not found");
-            }
+        }
 
+        // print start line
+        ui.printString( "retrieve," + reservations.size() );
+        // print to ui
+        reservations.forEach(r -> ui.printString(r.toString()));
 
-       }
     }
 
     /**
      * Little private helper method.
-     * null code string returns true.
-     * Otherwise we compare the code with the airport code.
-     *
+     * We compare the code with the airport code.
+     * We also return true when the input string is empty as it means no input
      * @param airport airport to check
      * @param code Airport code to compare
      */
-    private boolean airportCodeEquals(Airport airport, String code){
-        if(code == null){
+    private boolean airportCodeEquals(Airport airport, String code) {
+        if (code.equals("")) {
             return true;
-        } else {
-            return airport.getAirportcode().equals(code);
         }
+        return airport.getAirportcode().equals(code);
     }
+
 }

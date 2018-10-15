@@ -153,7 +153,21 @@ public class RequestHandler {
      * @param argumentArray arguments sent by the user
      */
     private void parseRetrieve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+        // add 3rd argument if it does not exist
+        if (argumentArray.size() < 3)
+            argumentArray.add("");
 
+        // add 4rd argument if it does not exist
+        if (argumentArray.size() < 4)
+            argumentArray.add("");
+
+        // create request
+        Request retrieveRequest = new RetrieveReservationRequest(ui,
+                reservationCollection, routeMap, argumentArray.get(1),
+                argumentArray.get(2), argumentArray.get(3));
+
+        // execute request
+        retrieveRequest.execute();
     }
 
     /**
