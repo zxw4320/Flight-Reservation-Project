@@ -2,6 +2,7 @@ package request;
 
 import database.Flightdb;
 import database.Reservationdb;
+import model.ItineraryHistory;
 import model.ReservationCollection;
 import model.RouteMap;
 
@@ -23,12 +24,14 @@ public class RequestHandler {
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
     private Flightdb flightdb;
+    private ItineraryHistory itineraryHistory;
 
     public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
         this.flightdb = flightdb;
         routeMap = flightdb.generateRouteMap();
         reservationCollection
                 = reservationdb.generateReservationCollection(routeMap);
+        this.itineraryHistory = new ItineraryHistory();
         cachedString = "";
         partialRequest = false;
     }
@@ -49,7 +52,6 @@ public class RequestHandler {
 
         // use our cachedString, we prepend it if it exist TODO move to tui
         if (partialRequest) {
-            ui.printString("partial-request");
             requestString = cachedString + requestString;
         }
 
@@ -59,6 +61,7 @@ public class RequestHandler {
 
         // throw error on lack of terminator
         if (!hasTerminator) {
+            ui.printString("partial-request");
             cachedString += requestString;
             partialRequest = true;
             return 1;
@@ -110,6 +113,10 @@ public class RequestHandler {
         FlightOrder sortOrder = null;
         boolean validSort = true;
 
+        // add 3rd argument if it does not exist
+        if (argumentArray.size() < 4)
+            argumentArray.add("");
+
         // Check if flight order was specified
         if(argumentArray.size() == 5) {
             switch (argumentArray.get(argumentArray.size() - 1)) {
@@ -130,7 +137,7 @@ public class RequestHandler {
         }
         if(validSort) {
             // create request
-            flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder);
+            flightInfoRequest = new FlightInfoRequest(ui, routeMap, argumentArray, sortOrder, itineraryHistory);
             //execute request
             flightInfoRequest.execute();
         }

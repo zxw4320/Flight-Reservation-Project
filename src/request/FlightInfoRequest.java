@@ -2,6 +2,7 @@ package request;
 
 import model.Flight;
 import model.Itinerary;
+import model.ItineraryHistory;
 import model.RouteMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,19 @@ public class FlightInfoRequest implements Request{
   private RouteMap routeMap;
   private ArrayList<String> flightRequest;
   private FlightOrder sortOrder;
+  private ItineraryHistory itineraryHistory;
 
   /**
    * Constructor
    */
   public FlightInfoRequest(AFRSInterface ui, RouteMap routeMap,
-                            ArrayList<String> flightRequest, FlightOrder sortOrder){
+                           ArrayList<String> flightRequest, FlightOrder sortOrder,
+                           ItineraryHistory itineraryHistory){
     this.ui = ui;
     this.routeMap = routeMap;
     this.flightRequest = flightRequest;
     this.sortOrder = sortOrder;
+    this.itineraryHistory = itineraryHistory;
   }
 
   @Override
@@ -44,6 +48,7 @@ public class FlightInfoRequest implements Request{
       }
       String fn = result.toString();
       ui.printString(fn);
+      itineraryHistory.addItineraries(ui, itineraries);
     }
   }
 
