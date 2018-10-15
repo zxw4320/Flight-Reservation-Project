@@ -1,17 +1,19 @@
-package itinerary;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class contains all airports and flights for our routes
- * By Tyler Baldwin
  */
 public class RouteMap {
 
   List<Airport> airports;
   List<Flight> flights;
 
+  /**
+   * Constructor
+   */
   public RouteMap() {
     airports = new ArrayList<>();
     flights = new ArrayList<>();
@@ -46,7 +48,24 @@ public class RouteMap {
     return null;
   }
 
-
+  /**
+   * Gets a flight from a flight number
+   * @param flightNumber The number of the flight
+   * @return null if not found, other wise the Flight
+   */
+  public Flight getFlight(String flightNumber) {
+    for(Flight flight : flights){
+      if(flight.getFlightNumber().equals(flightNumber))
+        return flight;
+    }
+    return null;
+  }
+  
+   /**
+   * Returns all the flights for the system
+   *
+   * @return all the flights in the system
+   */
   public List<Flight> getFlights() {
     return flights;
   }

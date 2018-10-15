@@ -1,17 +1,19 @@
 package database;
 
-import itinerary.Airport;
-import itinerary.Flight;
-import itinerary.RouteMap;
+import model.Airport;
+import model.Flight;
+import model.RouteMap;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Represents a "database" of flights from a csv file
+ */
 public class CSVdb implements Flightdb {
 
     Path airportFile;
