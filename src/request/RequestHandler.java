@@ -151,6 +151,13 @@ public class RequestHandler {
      */
     private void parseReserve(ui.AFRSInterface ui, ArrayList<String> argumentArray){
 
+        int id = Integer.parseInt(argumentArray.get(1));
+        String name = argumentArray.get(2);
+
+        Request request = new MakeReservationRequest(ui, reservationCollection,
+                itineraryHistory, id, name );
+        request.execute();
+
     }
 
     /**
