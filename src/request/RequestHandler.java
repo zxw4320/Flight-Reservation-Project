@@ -93,8 +93,8 @@ public class RequestHandler {
                                 break;
             case "airport":     parseAirport(ui, requestArray);
                                 break;
-            default:            ui.printString("error,unknown airport");
-                                return 1;
+            default:            ui.printString("error,unknown request");
+                                return 2;
         }
 
         // return success
