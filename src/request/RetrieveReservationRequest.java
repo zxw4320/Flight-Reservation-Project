@@ -9,6 +9,10 @@ import ui.AFRSInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Retrieves reservations from the ReservationCollection given to it.
+ * Prints them all to the ui given.
+ */
 public class RetrieveReservationRequest implements Request {
 
     private AFRSInterface ui;

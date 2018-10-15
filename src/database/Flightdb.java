@@ -3,7 +3,7 @@ package database;
 import model.RouteMap;
 
 /**
- * Interface for all
+ * Interface for a database of flights
  */
 public interface Flightdb {
 
@@ -11,5 +11,5 @@ public interface Flightdb {
      * Generates a routemap from DB contents
      * @return RouteMap
      */
-    public RouteMap generateRouteMap();
+    RouteMap generateRouteMap();
 }

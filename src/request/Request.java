@@ -1,7 +1,7 @@
 package request;
 
 /**
- *
+ * Interface for all requests to implement
  */
 public interface Request {
 

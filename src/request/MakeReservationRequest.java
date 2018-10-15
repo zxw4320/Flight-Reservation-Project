@@ -6,7 +6,7 @@ import ui.AFRSInterface;
 import java.util.List;
 
 /**
- *
+ * Makes a reservation request and adds to the given ReservationCollection
  */
 public class MakeReservationRequest implements Request {
 

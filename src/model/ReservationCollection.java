@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 /**
- *
+ * Acts to collect all reservations currently stored in the system
  */
 public class ReservationCollection {
 

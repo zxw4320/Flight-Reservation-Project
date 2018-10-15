@@ -1,7 +1,7 @@
 package ui;
 
 /**
- *
+ * Interface that represents
  */
 public interface AFRSInterface {
 

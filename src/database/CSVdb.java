@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- *
+ * Represents a "database" of flights from a csv file
  */
 public class CSVdb implements Flightdb {
 

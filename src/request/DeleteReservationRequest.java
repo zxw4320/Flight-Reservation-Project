@@ -8,7 +8,7 @@ import ui.AFRSInterface;
 import java.util.List;
 
 /**
- *
+ * Deletes a reservation from a ReservationCollection
  */
 public class DeleteReservationRequest implements Request {
 
@@ -38,18 +38,19 @@ public class DeleteReservationRequest implements Request {
 
         // catch error
         if (thisReservation == null){
-            ui.printString("error, reservation not found");
+            ui.printString("error,reservation not found");
         }
         // process deletion
         else {
             reservations.deleteReservation(thisReservation);
-            ui.printString("delete, successful");
+            ui.printString("delete,successful");
         }
     }
 
     /**
-     *
-     * @return
+     * Finds a reservation in this classes reservation request based on this
+     * class's passengerName, originAirportCode, and destinationAirportCode
+     * @return Reservation for that passenger
      */
     private Reservation findReservation(){
 

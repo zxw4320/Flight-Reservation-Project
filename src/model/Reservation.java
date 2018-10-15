@@ -1,7 +1,8 @@
 package model;
 
 /**
- *
+ * representation of a reservation as an object.
+ * links a passenger to an itinerary.
  */
 public class Reservation {
     private String passenger;

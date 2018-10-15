@@ -3,7 +3,6 @@ package model;
 /**
  *  This class sets up the behavior of flights and interfaces
  *  allowing them to be used interchangeably.
- *  By Tyler Baldwin
  */
 public interface FlightInterface {
 
