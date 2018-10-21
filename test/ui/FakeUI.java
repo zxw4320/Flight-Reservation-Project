@@ -25,7 +25,7 @@ public class FakeUI implements AFRSInterface{
         requestHandler.makeRequest(this, request);
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (Exception e) {
             e.printStackTrace();
         }

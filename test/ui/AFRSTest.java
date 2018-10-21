@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AFRSTest {
 
-    RequestHandler afrs;
+    RequestHandler requestHandler;
     FakeUI ui;
 
     @Before
@@ -35,18 +35,25 @@ public class AFRSTest {
         ReservationCollection reservationCollection = reservationdb
                 .generateReservationCollection(routeMap);
         // create request handler
-        afrs = new RequestHandler(routeMap, reservationCollection);
+        requestHandler = new RequestHandler(routeMap, reservationCollection);
 
         ui = new FakeUI();
     }
 
     @Test
     public void airportInfoTest(){
-        List<String> responces = ui.sendCommand(afrs, "airport,BOS;");
+        List<String> responces = ui.sendCommand(requestHandler, "airport,BOS;");
         assertEquals("Boston (BOS) is currently partly cloudy, 70F with 30 minute delays.", responces.get(0));
 
     }
 
+    @Test
+    public void flightInfoTest(){
+        List<String> responces = ui.sendCommand(requestHandler, "info,BOS,ATL;");
+        System.out.println(responces);
+        //TODO add asserts
+
+    }
 
 
 }
