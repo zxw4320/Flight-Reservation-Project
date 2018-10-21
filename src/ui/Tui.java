@@ -49,10 +49,25 @@ public class Tui implements AFRSInterface {
         Tui activeTui = new Tui();
         Scanner input = new Scanner(System.in);
         String inputLine = "";
+        boolean terminated;
+
+        // main program loop
         while(true) {
-            while(!inputLine.endsWith(";")) {
+
+            // input loop
+            do {
+                // get input
                 inputLine += input.nextLine();
-            }
+
+                // check for terminating character, partial request
+                terminated = inputLine.endsWith(";");
+                if (!terminated){
+                    activeTui.printString("partial-request");
+                }
+                // loop until full request
+            } while (!terminated);
+
+            // send a command then clear buffer
             activeTui.sendString(inputLine);
             inputLine = "";
         }

@@ -19,11 +19,13 @@ import request.FlightOrders.FlightOrder;
  */
 public class RequestHandler {
 
+    // storage objects
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
+    private ItineraryHistory itineraryHistory;
+    // db objects
     private Flightdb flightdb;
     private Reservationdb reservationdb;
-    private ItineraryHistory itineraryHistory;
 
     public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
         this.flightdb = flightdb;

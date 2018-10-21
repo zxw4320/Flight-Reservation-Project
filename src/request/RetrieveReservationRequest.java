@@ -44,15 +44,15 @@ public class RetrieveReservationRequest implements Request {
         List<Reservation> reservations = new ArrayList<>();
 
         // error for origin
-        if (originAirportCode != "" &&
+        if (!originAirportCode.equals("") &&
                 routeMap.getAirport(originAirportCode) == null) {
             ui.printString("error,unknown origin");
             return;
         }
 
         // error for destination
-        if ( !destinationAirportCode.equals("") &&
-            routeMap.getAirport(destinationAirportCode) == null) {
+        if (!destinationAirportCode.equals("") &&
+                routeMap.getAirport(destinationAirportCode) == null) {
             ui.printString("error,unknown destination");
             return;
         }
