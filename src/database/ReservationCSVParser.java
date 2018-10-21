@@ -30,7 +30,7 @@ public class ReservationCSVParser implements Reservationdb {
 
 
     public ReservationCollection generateReservationCollection(RouteMap routeMap){
-        ReservationCollection reservations = new ReservationCollection();
+        List<Reservation> reservationList = new ArrayList<>();
         List<String[]> returnList = new ArrayList<>();
 
         // parse the file from the path to an array of string arrays
@@ -54,10 +54,10 @@ public class ReservationCSVParser implements Reservationdb {
             }
             Itinerary itinerary = new Itinerary(trip);
             Reservation reservation = new Reservation(name,itinerary);
-            reservations.addReservation(reservation);
+            reservationList.add(reservation);
         }
 
-        return reservations;
+        return new ReservationCollection(this, reservationList);
     }
 
     /**

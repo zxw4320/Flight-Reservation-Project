@@ -23,16 +23,10 @@ public class RequestHandler {
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
-    // db objects
-    private Flightdb flightdb;
-    private Reservationdb reservationdb;
 
-    public RequestHandler(Flightdb flightdb, Reservationdb reservationdb){
-        this.flightdb = flightdb;
-        this.reservationdb = reservationdb;
-        routeMap = flightdb.generateRouteMap();
-        reservationCollection
-                = reservationdb.generateReservationCollection(routeMap);
+    public RequestHandler(RouteMap routeMap, ReservationCollection reservationCollection){
+        this.routeMap = routeMap;
+        this.reservationCollection = reservationCollection;
         this.itineraryHistory = new ItineraryHistory();
     }
 
@@ -135,12 +129,6 @@ public class RequestHandler {
         Request request = new MakeReservationRequest(ui, reservationCollection,
                 itineraryHistory, id, name );
         request.execute();
-        try {
-            reservationdb.writeToDB(reservationCollection);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -178,11 +166,6 @@ public class RequestHandler {
                 argumentArray.get(1), argumentArray.get(2),
                 argumentArray.get(3), reservationCollection);
         deleteRequest.execute();
-        try {
-            reservationdb.writeToDB(reservationCollection);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

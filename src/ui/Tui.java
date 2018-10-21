@@ -4,6 +4,8 @@ import database.CSVdb;
 import database.Flightdb;
 import database.ReservationCSVParser;
 import database.Reservationdb;
+import model.ReservationCollection;
+import model.RouteMap;
 import request.RequestHandler;
 
 import java.nio.file.Path;
@@ -30,8 +32,12 @@ public class Tui implements AFRSInterface {
         // make DB readers
         Flightdb flightdb = new CSVdb(a,w,f,d);
         Reservationdb reservationdb = new ReservationCSVParser(r);
+        // use DB readers
+        RouteMap routeMap = flightdb.generateRouteMap();
+        ReservationCollection reservationCollection = reservationdb
+                .generateReservationCollection(routeMap);
         // create request handler
-        afrs = new RequestHandler(flightdb, reservationdb);
+        afrs = new RequestHandler(routeMap, reservationCollection);
     }
 
     @Override

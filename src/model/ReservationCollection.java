@@ -1,5 +1,7 @@
 package model;
 
+import database.Reservationdb;
+
 import java.util.*;
 
 /**
@@ -8,12 +10,15 @@ import java.util.*;
 public class ReservationCollection {
 
     private List<Reservation> reservations;
+    private Reservationdb db;
 
     /**
      * Constructor
      */
-    public ReservationCollection(){
-        reservations = new ArrayList<>();
+    public ReservationCollection(Reservationdb db, List<Reservation>
+            reservations){
+        this.db = db;
+        this.reservations = new ArrayList<>(reservations);
     }
 
     /**
@@ -22,6 +27,7 @@ public class ReservationCollection {
      */
     public void addReservation(Reservation reservation){
         reservations.add(reservation);
+        write();
     }
 
     /**
@@ -30,6 +36,7 @@ public class ReservationCollection {
      */
     public void deleteReservation(Reservation reservation){
         reservations.remove(reservation);
+        write();
     }
 
     /**
@@ -61,4 +68,14 @@ public class ReservationCollection {
         return resCopy;
     }
 
+    /**
+     * Writes self to db
+     */
+    private void write(){
+        try {
+            db.writeToDB(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
