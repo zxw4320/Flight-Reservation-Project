@@ -19,8 +19,6 @@ import request.FlightOrders.FlightOrder;
  */
 public class RequestHandler {
 
-    private String cachedString;
-    private Boolean partialRequest;
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
     private Flightdb flightdb;
@@ -34,8 +32,6 @@ public class RequestHandler {
         reservationCollection
                 = reservationdb.generateReservationCollection(routeMap);
         this.itineraryHistory = new ItineraryHistory();
-        cachedString = "";
-        partialRequest = false;
     }
 
     /**
@@ -51,28 +47,6 @@ public class RequestHandler {
     public int makeRequest(ui.AFRSInterface ui, String requestString) {
 
         ArrayList<String> requestArray = new ArrayList<>();
-
-        // use our cachedString, we prepend it if it exist TODO move to tui
-        if (partialRequest) {
-            requestString = cachedString + requestString;
-        }
-
-        // check for terminating character
-        boolean hasTerminator =
-                requestString.charAt(requestString.length() - 1) == ';';
-
-        // throw error on lack of terminator
-        if (!hasTerminator) {
-            ui.printString("partial-request");
-            cachedString += requestString;
-            partialRequest = true;
-            return 1;
-        }
-        // leave partial request state in it
-        else if (partialRequest) {
-            partialRequest = false;
-            cachedString = "";
-        }
 
         // split the string for parsing and remove terminator
         String[] tempArray = requestString

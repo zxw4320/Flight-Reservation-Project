@@ -49,9 +49,12 @@ public class Tui implements AFRSInterface {
         Tui activeTui = new Tui();
         Scanner input = new Scanner(System.in);
         String inputLine = "";
-        while(true){
-            inputLine = input.nextLine();
+        while(true) {
+            while(!inputLine.endsWith(";")) {
+                inputLine += input.nextLine();
+            }
             activeTui.sendString(inputLine);
+            inputLine = "";
         }
 
     }
