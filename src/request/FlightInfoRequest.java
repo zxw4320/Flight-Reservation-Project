@@ -105,6 +105,7 @@ public class FlightInfoRequest implements Request {
         flights.forEach(flight -> completeItineraries.add(new Itinerary(flight)));
 
         // start recursion
+        if (depth > 0)
         completeItineraries.addAll(findFlightHelper(itineraries, destination, depth));
         return completeItineraries;
     }
@@ -115,6 +116,7 @@ public class FlightInfoRequest implements Request {
 
         ArrayList<Itinerary> completeItinerary = new ArrayList<>();
         ArrayList<Itinerary> partialItinerary = new ArrayList<>();
+        depth--;
 
         // set for airports
         Set<Airport> interimAirports = new HashSet<Airport>();
@@ -152,8 +154,8 @@ public class FlightInfoRequest implements Request {
         partialItinerary.removeAll(completeItinerary);
 
         // Recurse! and Return!
-        if(depth > 1)
-            completeItinerary.addAll(findFlightHelper(partialItinerary, destination, depth - 1));
+        if(depth > 0)
+            completeItinerary.addAll(findFlightHelper(partialItinerary, destination, depth));
         return completeItinerary;
     }
 
