@@ -71,4 +71,39 @@ public class RouteMap {
     public List<Flight> getFlights() {
         return flights;
     }
+
+    /**
+     * gets flights FROM a single airport
+     * @param airport
+     * @return
+     */
+    public List<Flight> getFlightsFrom(Airport airport) {
+        List<Flight> foundFlights = new ArrayList<>();
+
+        // find flights
+        flights.forEach(flight -> {
+            if (flight.getOrigin() == airport)
+                foundFlights.add(flight);
+        });
+
+        return foundFlights;
+    }
+
+
+    /**
+     * gets flights TO a single airport
+     * @param airport
+     * @return
+     */
+    public List<Flight> getFlightsTo(Airport airport) {
+        List<Flight> foundFlights = new ArrayList<>();
+
+        // find flights
+        flights.forEach(flight -> {
+            if (flight.getDestination() == airport)
+                foundFlights.add(flight);
+        });
+
+       return foundFlights;
+    }
 }

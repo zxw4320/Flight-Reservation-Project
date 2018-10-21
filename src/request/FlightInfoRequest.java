@@ -1,12 +1,8 @@
 package request;
 
-import model.Flight;
-import model.Itinerary;
-import model.ItineraryHistory;
-import model.RouteMap;
+import model.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import request.FlightOrders.FlightOrder;
 import ui.AFRSInterface;
@@ -39,11 +35,21 @@ public class FlightInfoRequest implements Request {
     @Override
     public void execute() {
         if (checkArgumentsValid()) {
+
+            // parts of the request
+            String origin = flightRequest.get(1);
+            String destination = flightRequest.get(2);
+            String numConnect = flightRequest.get(3);
+
+            if(numConnect.equals(""))
+                numConnect = "2";
+
             // creates all itineraries that fit the query
-            ArrayList<Itinerary> itineraries = generateItineraries(routeMap.getFlights());
+            ArrayList<Itinerary> itineraries = findFlights(routeMap.getAirport(origin), routeMap.getAirport(destination), Integer.parseInt(numConnect));
             itineraries = sortOrder.sortOrder(itineraries);
             StringBuilder result = new StringBuilder();
             result.append("info,").append(itineraries.size());
+
             // gathers all of the valid itineraries
             for (int i = 1; i <= itineraries.size(); i++) {
                 result.append("\n").append(i).append(",").append((itineraries.get(i - 1)).toString());
@@ -52,89 +58,6 @@ public class FlightInfoRequest implements Request {
             ui.printString(fn);
             itineraryHistory.addItineraries(ui, itineraries);
         }
-    }
-
-    /**
-     * Helper method to generate Itineraries that fit all of the query information
-     *
-     * @return all itineraries that fit all the query requirements
-     */
-    private ArrayList<Itinerary> generateItineraries(List<Flight> flights) {
-
-        // parts of the request
-        String origin = flightRequest.get(1);
-        String destination = flightRequest.get(2);
-        String numConnect = flightRequest.get(3);
-
-        ArrayList<Itinerary> itineraries = new ArrayList<>();
-
-        // puts all single flights into the list
-        for (Flight flight : flights) {
-            if (flight.getOrigin().getAirportcode().equals(origin) &&
-                    flight.getDestination().getAirportcode().equals(destination)) {
-                ArrayList<Flight> temp = new ArrayList<>();
-                temp.add(flight);
-                itineraries.add(new Itinerary(temp));
-            }
-        }
-
-        // puts all itineraries with 1 connection into the list
-        if (numConnect.equals("1") || numConnect.equals("2") || numConnect.equals("")) {
-            // flights that start at the origin, but end in another airport
-            ArrayList<Flight> origins = new ArrayList<>();
-
-            // flights that end in the destination, but start at another airport
-            ArrayList<Flight> dests = new ArrayList<>();
-
-            // gather all flights that are not in the model that start or end in the proper place
-            for (Flight flight : flights) {
-                if (!flight.getOrigin().getAirportcode().equals(origin) ||
-                        !flight.getDestination().getAirportcode().equals(destination)) {
-                    if (flight.getOrigin().getAirportcode().equals(origin)) {
-                        origins.add(flight);
-                    }
-                    if (flight.getDestination().getAirportcode().equals(destination)) {
-                        dests.add(flight);
-                    }
-                }
-            }
-
-// TODO Combinations following delay and arrival time
-            // create all itineraries that have one connection
-            for (Flight org : origins) { // go through all the origin flights
-                for (Flight dest : dests) { // go through all the destination flights
-                    if (org.getDestination() == dest.getOrigin()) { // flights that connect at the same airport
-                        ArrayList<Flight> temp = new ArrayList<>();
-                        temp.add(org);
-                        temp.add(dest);
-                        itineraries.add(new Itinerary(temp));
-                    }
-                }
-            }
-
-            // create all itineraries that have 2 connecting flights
-            if (numConnect.equals("2") || numConnect.equals("")) {
-                for (Flight flight : flights) { // go through every flight
-                    for (Flight org : origins) { // go through all the origin flights
-                        for (Flight dest : dests) { // go through all the destination flights
-                            if (org.getDestination() == flight.getOrigin() &&
-                                    flight.getDestination() == dest.getOrigin()) { // flights that connect at the same airport
-                                ArrayList<Flight> temp = new ArrayList<>();
-                                temp.add(org);
-                                temp.add(flight);
-                                temp.add(dest);
-                                itineraries.add(new Itinerary(temp));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // puts all itineraries with 2 connections into the list
-
-
-        return itineraries;
     }
 
     /**
@@ -164,6 +87,77 @@ public class FlightInfoRequest implements Request {
             ui.printString("error,invalid connection limit");
             return false;
         }
+        return true;
+    }
+
+
+    private ArrayList<Itinerary> findFlights(Airport origin, Airport destination,
+                                        int depth) {
+        // generate itinerary list
+        List<Flight> flights = new ArrayList<>(routeMap.getFlightsFrom(origin));
+        List<Itinerary> itineraries = new ArrayList<>();
+        flights.forEach(flight -> itineraries.add(new Itinerary(flight)));
+
+        // find direct flights
+        flights.retainAll(routeMap.getFlightsTo(destination));
+        // convert to itineraries
+        ArrayList<Itinerary> completeItineraries = new ArrayList<>();
+        flights.forEach(flight -> completeItineraries.add(new Itinerary(flight)));
+
+        // start recursion
+        completeItineraries.addAll(findFlightHelper(itineraries, destination, depth));
+        return completeItineraries;
+    }
+
+
+    private ArrayList<Itinerary> findFlightHelper(List<Itinerary> itineraryList,
+                                            Airport destination, int depth) {
+
+        ArrayList<Itinerary> completeItinerary = new ArrayList<>();
+        ArrayList<Itinerary> partialItinerary = new ArrayList<>();
+
+        // set for airports
+        Set<Airport> interimAirports = new HashSet<Airport>();
+        // find all airports we need
+        itineraryList.forEach(flightInterface ->
+                interimAirports.add(flightInterface.getDestination()));
+
+        // get the flights to from each airport we have
+        HashMap<Airport, List<Flight>> flightsFrom = new HashMap<>();
+        interimAirports.forEach(airport -> {
+            flightsFrom.put(airport, routeMap.getFlightsFrom(airport));
+        });
+
+        // iterate over itineraries from input
+        itineraryList.forEach(itinerary -> {
+            Airport currentDestination = itinerary.getDestination();
+            // iterate over flights from current location
+            flightsFrom.get(currentDestination).forEach(flight -> {
+                // if we have a valid flight for current itinerary we add it
+                if (fitsItinerary(flight, itinerary)) {
+                    List<Flight> newItineraryFlights = itinerary.getFlights();
+                    newItineraryFlights.add(flight);
+                    partialItinerary.add(new Itinerary(newItineraryFlights));
+                }
+            });
+        });
+
+        // get destination flights
+        // remove from partial flights list
+        partialItinerary.forEach(itinerary -> {
+            if (itinerary.getDestination() == destination){
+                completeItinerary.add(itinerary);
+            }
+        });
+        partialItinerary.removeAll(completeItinerary);
+
+        // Recurse! and Return!
+        if(depth > 1)
+            completeItinerary.addAll(findFlightHelper(partialItinerary, destination, depth - 1));
+        return completeItinerary;
+    }
+
+    private boolean fitsItinerary(Flight flight, Itinerary itinerary){
         return true;
     }
 }
