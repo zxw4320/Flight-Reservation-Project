@@ -158,6 +158,9 @@ public class FlightInfoRequest implements Request {
     }
 
     private boolean fitsItinerary(Flight flight, Itinerary itinerary){
-        return true;
+        int arriveAtAirport = itinerary.getRawDelayedArrivalTime();
+        int leaveAirport = flight.getRawDepartureTime();
+        boolean flightReachable = arriveAtAirport < leaveAirport;
+        return flightReachable;
     }
 }

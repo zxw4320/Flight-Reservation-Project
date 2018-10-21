@@ -81,6 +81,18 @@ public class Itinerary implements FlightInterface {
     }
 
     @Override
+    public int getRawDelayedArrivalTime() {
+        Flight lastFlight = flights.get(flights.size() - 1);
+        return lastFlight.getRawDelayedArrivalTime();
+    }
+
+    @Override
+    public int getRawDepartureTime() {
+        Flight firstFlight = flights.get(0);
+        return firstFlight.getRawDepartureTime();
+    }
+
+    @Override
     public int getAirfare() {
         int sum = 0;
 

@@ -8,6 +8,10 @@ public interface FlightInterface {
 
     int getAirfare();
 
+    int getRawDelayedArrivalTime();
+
+    int getRawDepartureTime();
+
     String getArrivalTime();
 
     String getDepartureTime();
