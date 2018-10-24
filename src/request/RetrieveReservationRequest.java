@@ -99,4 +99,8 @@ public class RetrieveReservationRequest implements Request {
         return airport.getAirportcode().equals(code);
     }
 
+    @Override
+    public boolean unexecute() {
+        return false;
+    }
 }

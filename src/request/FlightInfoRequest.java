@@ -165,4 +165,9 @@ public class FlightInfoRequest implements Request {
         boolean flightReachable = arriveAtAirport < leaveAirport;
         return flightReachable;
     }
+
+    @Override
+    public boolean unexecute() {
+        return false;
+    }
 }

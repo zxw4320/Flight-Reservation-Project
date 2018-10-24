@@ -15,6 +15,7 @@ public class MakeReservationRequest implements Request {
     private AFRSInterface ui;
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
+    private Reservation reservation;
 
     /**
      * Constructor
@@ -27,6 +28,7 @@ public class MakeReservationRequest implements Request {
         this.itineraryHistory = itineraryHistory;
         this.id = id;
         this.passenger = passenger;
+        this.reservation = null;
     }
 
     @Override
@@ -56,7 +58,19 @@ public class MakeReservationRequest implements Request {
 
         // make reservation, no errors caught
         ui.printString("reserve,successful");
-        reservationCollection.addReservation(new Reservation(passenger, itinerary));
+        reservation = new Reservation(passenger, itinerary);
+        reservationCollection.addReservation(reservation);
 
+    }
+
+    @Override
+    public boolean unexecute() {
+        // check for reservation
+        if (reservation != null) {
+            reservationCollection.deleteReservation(reservation);
+            return true;
+        }
+        // handle unable to unexecute
+        return false;
     }
 }

@@ -17,6 +17,7 @@ public class DeleteReservationRequest implements Request {
     private String destinationAirportCode;
     private AFRSInterface ui;
     private ReservationCollection reservations;
+    private Reservation reservation;
 
     /**
      * Constructor
@@ -28,21 +29,22 @@ public class DeleteReservationRequest implements Request {
         this.originAirportCode = originAirportCode;
         this.destinationAirportCode = destinationAirportCode;
         this.reservations = reservations;
+        this.reservation = null;
     }
 
 
     @Override
     public void execute() {
 
-        Reservation thisReservation = findReservation();
+        reservation = findReservation();
 
         // catch error
-        if (thisReservation == null){
+        if (reservation == null){
             ui.printString("error,reservation not found");
         }
         // process deletion
         else {
-            reservations.deleteReservation(thisReservation);
+            reservations.deleteReservation(reservation);
             ui.printString("delete,successful");
         }
     }
@@ -71,5 +73,16 @@ public class DeleteReservationRequest implements Request {
 
         }
         return null;
+    }
+
+    @Override
+    public boolean unexecute() {
+        // if we have a reservation, we can undo this command
+        if(reservation != null) {
+            reservations.addReservation(reservation);
+            return true;
+        }
+        // return that we did nothing
+        return false;
     }
 }

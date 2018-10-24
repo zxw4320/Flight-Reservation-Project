@@ -34,4 +34,9 @@ public class AirportInfoRequest implements Request {
             Integer.toString(airport.getDelaytime()) + " minute delays.");
         }
     }
+
+    @Override
+    public boolean unexecute(){
+        return false;
+    }
 }
