@@ -34,8 +34,8 @@ public class Flight implements FlightInterface {
         SimpleDateFormat ft = new SimpleDateFormat("h:mma");
         try {
             Date parsedTime = ft.parse(time.replace("a", "am").replace("p", "pm"));
-            long secondsSince1970 = parsedTime.getTime();
-            int minutesSince1970 = toIntExact(secondsSince1970/60);
+            long millsecondsSince1970 = parsedTime.getTime();
+            int minutesSince1970 = toIntExact(millsecondsSince1970/60000);
             return minutesSince1970;
         } catch (Exception e){
             e.printStackTrace();

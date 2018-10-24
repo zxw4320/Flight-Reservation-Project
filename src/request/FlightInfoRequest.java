@@ -52,7 +52,7 @@ public class FlightInfoRequest implements Request {
 
             // gathers all of the valid itineraries
             for (int i = 1; i <= itineraries.size(); i++) {
-                result.append("\n").append(i).append(",").append((itineraries.get(i - 1)).toString());
+                ui.printString(i + "," + (itineraries.get(i - 1)).toString());
             }
             String fn = result.toString();
             ui.printString(fn);
