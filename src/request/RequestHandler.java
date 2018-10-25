@@ -23,11 +23,14 @@ public class RequestHandler {
     private RouteMap routeMap;
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
+    private RequestHistory requestHistory;
+    private int cid = 0; //TODO GET REAL CID
 
     public RequestHandler(RouteMap routeMap, ReservationCollection reservationCollection){
         this.routeMap = routeMap;
         this.reservationCollection = reservationCollection;
         this.itineraryHistory = new ItineraryHistory();
+        this.requestHistory = new RequestHistory();
     }
 
     /**
@@ -62,6 +65,10 @@ public class RequestHandler {
             case "delete" :     parseDelete(ui, requestArray);
                                 break;
             case "airport":     parseAirport(ui, requestArray);
+                                break;
+            case "undo":        requestHistory.undo(cid);
+                                break;
+            case "redo":        requestHistory.redo(cid);
                                 break;
             default:            ui.printString("error,unknown request");
                                 return 2;
@@ -129,6 +136,7 @@ public class RequestHandler {
         Request request = new MakeReservationRequest(ui, reservationCollection,
                 itineraryHistory, id, name );
         request.execute();
+        requestHistory.addRequest(cid, request);
     }
 
     /**
@@ -166,6 +174,7 @@ public class RequestHandler {
                 argumentArray.get(1), argumentArray.get(2),
                 argumentArray.get(3), reservationCollection);
         deleteRequest.execute();
+        requestHistory.addRequest(cid, deleteRequest);
     }
 
     /**
