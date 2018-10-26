@@ -15,9 +15,10 @@ import java.util.Scanner;
 /**
  *
  */
-public class Tui implements AFRSInterface {
+public class Tui implements MultiSessionUI {
 
-    request.RequestHandler afrs;
+    private request.RequestHandler afrs;
+    private SessionHandler sessionHandler;
 
     /**
      * Constructor
@@ -38,15 +39,16 @@ public class Tui implements AFRSInterface {
                 .generateReservationCollection(routeMap);
         // create request handler
         afrs = new RequestHandler(routeMap, reservationCollection);
+        sessionHandler = new SessionHandler(this, afrs);
     }
 
     @Override
-    public void printString(String printText) {
+    public void printString(int cid, String printText) {
         System.out.println(printText);
     }
 
     private void sendString(String sendText) {
-        afrs.makeRequest(this, sendText);
+        sessionHandler.makeRequest(sendText);
     }
 
     public static void main(String[] args) {
@@ -54,28 +56,11 @@ public class Tui implements AFRSInterface {
         // ready TUI
         Tui activeTui = new Tui();
         Scanner input = new Scanner(System.in);
-        String inputLine = "";
-        boolean terminated;
 
         // main program loop
         while(true) {
-
-            // input loop
-            do {
-                // get input
-                inputLine += input.nextLine();
-
-                // check for terminating character, partial request
-                terminated = inputLine.endsWith(";");
-                if (!terminated){
-                    activeTui.printString("partial-request");
-                }
-                // loop until full request
-            } while (!terminated);
-
-            // send a command then clear buffer
-            activeTui.sendString(inputLine);
-            inputLine = "";
+            // get input
+            activeTui.sendString(input.nextLine());
         }
 
     }

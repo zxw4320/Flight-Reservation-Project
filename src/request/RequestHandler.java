@@ -1,7 +1,5 @@
 package request;
 
-import database.Flightdb;
-import database.Reservationdb;
 import model.ItineraryHistory;
 import model.ReservationCollection;
 import model.RouteMap;
@@ -24,7 +22,6 @@ public class RequestHandler {
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
     private RequestHistory requestHistory;
-    private int cid = 0; //TODO GET REAL CID
 
     public RequestHandler(RouteMap routeMap, ReservationCollection reservationCollection){
         this.routeMap = routeMap;
@@ -35,15 +32,13 @@ public class RequestHandler {
 
     /**
      * Handles taking in strings of input from a client. It takes arguments
-     * separated by commas and terminated with a semi-colon. It returns a 1
-     * when more information is needed from the user. It stores the previous
-     * part of the requestString and will accept more until it receives the
-     * terminator.
+     * separated by commas and terminated with a semi-colon. It stores the
+     * previous part of the requestString and will accept more until it
+     * receives the terminator.
      *
      * @param requestString User input string
-     * @return 0 on success, 1 on error of partial request
      */
-    public int makeRequest(ui.AFRSInterface ui, String requestString) {
+    public void makeRequest(ui.AFRSInterface ui, String requestString) {
 
         ArrayList<String> requestArray = new ArrayList<>();
 
@@ -66,16 +61,12 @@ public class RequestHandler {
                                 break;
             case "airport":     parseAirport(ui, requestArray);
                                 break;
-            case "undo":        requestHistory.undo(cid);
+            case "undo":        requestHistory.undo(ui);
                                 break;
-            case "redo":        requestHistory.redo(cid);
+            case "redo":        requestHistory.redo(ui);
                                 break;
             default:            ui.printString("error,unknown request");
-                                return 2;
         }
-
-        // return success
-        return 0;
 
     }
 
@@ -136,7 +127,7 @@ public class RequestHandler {
         Request request = new MakeReservationRequest(ui, reservationCollection,
                 itineraryHistory, id, name );
         request.execute();
-        requestHistory.addRequest(cid, request);
+        requestHistory.addRequest(ui, request);
     }
 
     /**
@@ -174,7 +165,7 @@ public class RequestHandler {
                 argumentArray.get(1), argumentArray.get(2),
                 argumentArray.get(3), reservationCollection);
         deleteRequest.execute();
-        requestHistory.addRequest(cid, deleteRequest);
+        requestHistory.addRequest(ui, deleteRequest);
     }
 
     /**
