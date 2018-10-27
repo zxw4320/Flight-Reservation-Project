@@ -2,6 +2,9 @@ package model.Weather;
 
 import java.util.ArrayList;
 
+/**
+ * Class filled when gson gets data from FAA server
+ */
 public class FAAAirport {
     
     private String Name;

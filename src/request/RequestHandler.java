@@ -68,6 +68,7 @@ public class RequestHandler {
             case "redo":        requestHistory.redo(ui);
                                 break;
             default:            ui.printString("error,unknown request");
+                                break;
         }
 
     }
@@ -187,5 +188,6 @@ public class RequestHandler {
     
     private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray){
         //TODO implement this to switch weather for a single clients airports.
+        System.out.println(argumentArray);
     }
 }

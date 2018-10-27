@@ -3,7 +3,7 @@ package model.Weather;
 import java.util.ArrayList;
 
 /**
- *
+ *  Class filled by gson when getting weather from FAA server
  */
 public class Weather {
     

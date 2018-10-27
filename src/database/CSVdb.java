@@ -53,7 +53,6 @@ public class CSVdb implements Flightdb {
                 String cityName = sArray[1];
                 int delaytime = delayMap.get(airportCode);
                 String[] weather = weatherMap.get(airportCode);
-                // TODO remove if the below works routeMap.addAirport(new Airport(airportCode, cityName, delaytime, weather));
                 routeMap.addAirport(new Airport(airportCode, cityName, delaytime, new LocalWeather(weather)));
        }
 
