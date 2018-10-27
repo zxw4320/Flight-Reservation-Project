@@ -36,11 +36,11 @@ public class Tui implements MultiSessionUI {
         Reservationdb reservationdb = new ReservationCSVParser(r);
         // use DB readers
         RouteMap routeMap = flightdb.generateRouteMap();
-        AirportStorage airportStorage = ((CSVdb) flightdb).generateAiportStorage();
+        AirportStorage airportStorage = (flightdb).generateAiportStorage();
         ReservationCollection reservationCollection = reservationdb
                 .generateReservationCollection(routeMap);
         // create request handler
-        afrs = new RequestHandler(routeMap, reservationCollection);
+        afrs = new RequestHandler(routeMap, airportStorage, reservationCollection);
         sessionHandler = new SessionHandler(this, afrs);
     }
 

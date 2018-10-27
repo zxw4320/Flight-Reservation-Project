@@ -5,19 +5,29 @@ import java.util.HashMap;
 import model.Weather.WeatherMethod;
 import ui.AFRSInterface;
 
-public class AirportStorage implements {
+public class AirportStorage {
     
     private HashMap<AFRSInterface, HashMap<String, WeatherMethod>> userMethods;
     private HashMap<String, WeatherMethod> localWeathers;
     private HashMap<String, WeatherMethod> faaWeathers;
     
+    /**
+     *
+     * @param localWeathers
+     * @param faaWeathers
+     */
     public AirportStorage(HashMap<String, WeatherMethod> localWeathers,
-        HashMap<String, WeatherMethod> faaWeathers;) {
+        HashMap<String, WeatherMethod> faaWeathers) {
         this.userMethods = new HashMap<>();
         this.localWeathers = localWeathers;
         this.faaWeathers = faaWeathers;
     }
     
+    /**
+     *
+     * @param ui
+     * @param argumentArray
+     */
     public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         if (argumentArray.get(3).equals("local")) {
             userMethods.put(ui, localWeathers);
@@ -28,4 +38,13 @@ public class AirportStorage implements {
         }
     }
     
+    /**
+     *
+     * @param ui
+     * @param airportCode
+     * @return
+     */
+    public WeatherMethod getWeatherMethod(AFRSInterface ui, String airportCode){
+        return userMethods.get(ui).get(airportCode);
+    }
 }
