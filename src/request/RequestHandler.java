@@ -1,5 +1,6 @@
 package request;
 
+import model.AirportStorage;
 import model.ItineraryHistory;
 import model.ReservationCollection;
 import model.RouteMap;
@@ -22,12 +23,14 @@ public class RequestHandler {
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
     private RequestHistory requestHistory;
+    private AirportStorage airportStorage;
 
     public RequestHandler(RouteMap routeMap, ReservationCollection reservationCollection){
         this.routeMap = routeMap;
         this.reservationCollection = reservationCollection;
         this.itineraryHistory = new ItineraryHistory();
         this.requestHistory = new RequestHistory();
+        this.airportStorage = new AirportStorage();
     }
 
     /**
@@ -188,6 +191,6 @@ public class RequestHandler {
     
     private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray){
         //TODO implement this to switch weather for a single clients airports.
-        System.out.println(argumentArray);
+        airportStorage.setMethod(ui, argumentArray);
     }
 }

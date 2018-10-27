@@ -1,5 +1,6 @@
 package database;
 
+import model.AirportStorage;
 import model.RouteMap;
 
 /**
@@ -9,7 +10,15 @@ public interface Flightdb {
 
     /**
      * Generates a routemap from DB contents
+     *
      * @return RouteMap
      */
     RouteMap generateRouteMap();
+    
+    /**
+     * Generates an airportStorage from the DB contents
+     *
+     * @return AirportStorge with local and FAA weather objects
+     */
+    AirportStorage generateAiportStorage();
 }

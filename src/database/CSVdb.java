@@ -1,6 +1,7 @@
 package database;
 
 import model.Airport;
+import model.AirportStorage;
 import model.Flight;
 import model.RouteMap;
 
@@ -10,7 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
+import model.Weather.FAAWeather;
 import model.Weather.LocalWeather;
+import model.Weather.WeatherMethod;
 
 /**
  * Represents a "database" of flights from a csv file
@@ -69,6 +72,19 @@ public class CSVdb implements Flightdb {
         }
 
         return routeMap;
+    }
+    
+    public AirportStorage generateAiportStorage(){
+        
+        HashMap<String, WeatherMethod> localWeathers = new HashMap<>();;
+        HashMap<String, WeatherMethod> faaWeathers = new HashMap<>();;
+    
+        for (String[] sArray : parseLinesInFile(weatherFile)) {
+            localWeathers.put(sArray[0], new LocalWeather(sArray));
+            faaWeathers.put(sArray[0], new FAAWeather(sArray[0]));
+        }
+        
+        return new AirportStorage(localWeathers, faaWeathers);
     }
 
     /**
