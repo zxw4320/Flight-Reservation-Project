@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
+import model.Weather.LocalWeather;
 
 /**
  * Represents a "database" of flights from a csv file
@@ -52,8 +53,8 @@ public class CSVdb implements Flightdb {
                 String cityName = sArray[1];
                 int delaytime = delayMap.get(airportCode);
                 String[] weather = weatherMap.get(airportCode);
-                routeMap.addAirport(new Airport(airportCode, cityName,
-                        delaytime, weather));
+                // TODO remove if the below works routeMap.addAirport(new Airport(airportCode, cityName, delaytime, weather));
+                routeMap.addAirport(new Airport(airportCode, cityName, delaytime, new LocalWeather(weather)));
        }
 
         // read flight data and add to routeMap

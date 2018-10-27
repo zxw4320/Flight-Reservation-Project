@@ -8,6 +8,10 @@ public class LocalWeather implements WeatherMethod {
     private String[] weather;
     private int weatherIndex = 0;
     
+    public LocalWeather(String[] weather){
+        this.weather = weather;
+    }
+    
     /**
      * Gets the weather as a pretty string.
      * Iterates the weather on call to next from DB.
