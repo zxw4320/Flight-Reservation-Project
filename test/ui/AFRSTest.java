@@ -32,10 +32,11 @@ public class AFRSTest {
         Reservationdb reservationdb = new ReservationCSVParser(r);
         // use DB readers
         RouteMap routeMap = flightdb.generateRouteMap();
+        AirportStorage airportStorage = flightdb.generateAiportStorage();
         ReservationCollection reservationCollection = reservationdb
                 .generateReservationCollection(routeMap);
         // create request handler
-        requestHandler = new RequestHandler(routeMap, reservationCollection);
+        requestHandler = new RequestHandler(routeMap, airportStorage, reservationCollection);
 
         ui = new FakeUI();
     }

@@ -29,9 +29,9 @@ public class AirportStorage {
      * @param argumentArray
      */
     public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
-        if (argumentArray.get(3).equals("local")) {
+        if (argumentArray.get(1).equals("local")) {
             userMethods.put(ui, localWeathers);
-        } else if (argumentArray.get(3).equals("faa")) {
+        } else if (argumentArray.get(1).equals("faa")) {
             userMethods.put(ui, faaWeathers);
         } else {
             ui.printString("error, unknown information server");

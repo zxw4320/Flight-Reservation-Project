@@ -44,6 +44,7 @@ public class SessionHandler {
         if(newRequestArray.get(0).equals("connect;")) {
             cid = addSession();
             printToUI(cid, "connect," + Integer.toString(cid));
+            useSUIP(cid, "server,local;");
             return;
         }
 
@@ -76,6 +77,7 @@ public class SessionHandler {
 
     /**
      * Allows a suip to print out to the correct user session
+     *
      * @param suip The SUIP that wants to print to the ui
      * @param response the response to print
      */
@@ -93,6 +95,7 @@ public class SessionHandler {
 
     /**
      * Creates a session in our SUIPmap with a new ID
+     *
      * @return The generated ID
      */
     private Integer addSession() {
@@ -108,6 +111,7 @@ public class SessionHandler {
 
     /**
      * Handles sending a request to the AFRS with the correct SUIP
+     *
      * @param cid Client ID making request
      * @param command Request made by client session
      * @return Did we have success?
