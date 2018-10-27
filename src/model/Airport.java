@@ -10,7 +10,6 @@ public class Airport {
     private String airportcode;
     private String name;
     private int delaytime;
-    
     private WeatherMethod weatherMethod;
     
     /**

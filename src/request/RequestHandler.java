@@ -61,6 +61,8 @@ public class RequestHandler {
                                 break;
             case "airport":     parseAirport(ui, requestArray);
                                 break;
+            case "server":      parseServer(ui, requestArray);
+                                break;
             case "undo":        requestHistory.undo(ui);
                                 break;
             case "redo":        requestHistory.redo(ui);
@@ -180,5 +182,10 @@ public class RequestHandler {
             argumentArray.get(1));
         // execute request
         airportRequest.execute();
+    }
+    
+    
+    private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray){
+    
     }
 }

@@ -1,7 +1,7 @@
 package model.Weather;
 
 /**
- *
+ *  Weather object generated from the local files.
  */
 public class LocalWeather implements WeatherMethod {
     
@@ -15,7 +15,7 @@ public class LocalWeather implements WeatherMethod {
     /**
      * Gets the weather as a pretty string.
      * Iterates the weather on call to next from DB.
-     * @return
+     * @return weather stored in local files
      */
     public String getWeather() {
         // reset before out of bounds
