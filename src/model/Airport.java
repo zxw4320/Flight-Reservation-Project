@@ -10,20 +10,8 @@ public class Airport {
     private String airportcode;
     private String name;
     private int delaytime;
-    //private String[] weather;
-    //private int weatherIndex = 0;
     
     private WeatherMethod weatherMethod;
-
-    /**
-     * Constructor
-     *
-    public Airport(String airportcode, String name, int delaytime, String[] weather) {
-        this.airportcode = airportcode;
-        this.weather = weather;
-        this.name = name;
-        this.delaytime = delaytime;
-    }*/
     
     /**
      *  Constructor
@@ -60,15 +48,9 @@ public class Airport {
     /**
      * Gets the weather as a pretty string.
      * Iterates the weather on call to next from DB.
-     * @return
+     * @return the current weather from the weatherMethod
      */
     public String getWeather() {
-        /*// reset before out of bounds TODO remove if calling get weather works
-        if(weatherIndex+2 >= weather.length)
-            weatherIndex = 0;
-        String currentWeather = weather[weatherIndex+1] + ", " + weather[weatherIndex+2] +"F";
-        weatherIndex = (weatherIndex+2) % weather.length;
-        return currentWeather;*/
         return weatherMethod.getWeather();
     }
 }
