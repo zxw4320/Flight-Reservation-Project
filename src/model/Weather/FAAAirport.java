@@ -17,9 +17,7 @@ public class FAAAirport {
     
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(Name).append(" ").append(Weather.toString());
-        return result.toString();
+        return Weather.toString();
     }
     
     // Getter Methods

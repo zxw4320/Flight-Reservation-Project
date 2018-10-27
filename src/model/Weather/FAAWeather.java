@@ -11,7 +11,8 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 /**
- *
+ *  Weather object that gets weather from the FAA servers
+ *  Represents a concreteStrategy in the Strategy design pattern.
  */
 public class FAAWeather implements WeatherMethod {
     
@@ -20,11 +21,16 @@ public class FAAWeather implements WeatherMethod {
     String url;
     String airportCode;
     
+    /**
+     * Constructor
+     */
     public FAAWeather(String airportCode) {
         this.airportCode = airportCode;
     }
     
     /**
+     * Gets the weather as a pretty string from the FAA server
+     *
      * @return the most recent weather from the FAA server
      */
     public String getWeather() {

@@ -2,6 +2,9 @@ package model.Weather;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class Weather {
     
     ArrayList<Weather> Weather = new ArrayList<Weather>();
