@@ -1,7 +1,7 @@
 package request;
 
 import model.Airport;
-import model.AirportStorage;
+import model.AirportWeatherStorage;
 import model.RouteMap;
 import ui.AFRSInterface;
 
@@ -13,17 +13,17 @@ public class AirportInfoRequest implements Request {
     private String airportCode;
     private RouteMap routeMap;
     private AFRSInterface ui;
-    private AirportStorage airportStorage;
+    private AirportWeatherStorage airportWeatherStorage;
     
     /**
      * Constructor
      */
-    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap, AirportStorage airportStorage,
+    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap, AirportWeatherStorage airportWeatherStorage,
         String airportCode) {
         this.airportCode = airportCode;
         this.routeMap = routeMap;
         this.ui = ui;
-        this.airportStorage = airportStorage;
+        this.airportWeatherStorage = airportWeatherStorage;
     }
     
     
@@ -33,7 +33,7 @@ public class AirportInfoRequest implements Request {
         if (airport == null) { // check airport is valid
             ui.printString("error,unknown airport");
         } else {
-            airport.setWeatherMethod(airportStorage.getWeatherMethod(ui, airportCode));
+            airport.setWeatherMethod(airportWeatherStorage.getWeatherMethod(ui, airportCode));
             ui.printString(airport.toString() + " is currently "
                 + airport.getWeather() + " with " +
                 Integer.toString(airport.getDelaytime()) + " minute delays.");

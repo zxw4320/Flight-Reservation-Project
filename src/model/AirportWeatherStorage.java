@@ -5,7 +5,7 @@ import java.util.HashMap;
 import model.Weather.WeatherMethod;
 import ui.AFRSInterface;
 
-public class AirportStorage {
+public class AirportWeatherStorage {
     
     private HashMap<AFRSInterface, HashMap<String, WeatherMethod>> userMethods;
     private HashMap<String, WeatherMethod> localWeathers;
@@ -16,7 +16,7 @@ public class AirportStorage {
      * @param localWeathers
      * @param faaWeathers
      */
-    public AirportStorage(HashMap<String, WeatherMethod> localWeathers,
+    public AirportWeatherStorage(HashMap<String, WeatherMethod> localWeathers,
         HashMap<String, WeatherMethod> faaWeathers) {
         this.userMethods = new HashMap<>();
         this.localWeathers = localWeathers;

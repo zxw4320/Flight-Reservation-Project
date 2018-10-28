@@ -1,7 +1,7 @@
 package database;
 
 import model.Airport;
-import model.AirportStorage;
+import model.AirportWeatherStorage;
 import model.Flight;
 import model.RouteMap;
 
@@ -74,17 +74,17 @@ public class CSVdb implements Flightdb {
         return routeMap;
     }
     
-    public AirportStorage generateAiportStorage(){
+    public AirportWeatherStorage generateAirportWeatherStorage(){
         
-        HashMap<String, WeatherMethod> localWeathers = new HashMap<>();;
-        HashMap<String, WeatherMethod> faaWeathers = new HashMap<>();;
+        HashMap<String, WeatherMethod> localWeathers = new HashMap<>();
+        HashMap<String, WeatherMethod> faaWeathers = new HashMap<>();
     
         for (String[] sArray : parseLinesInFile(weatherFile)) {
             localWeathers.put(sArray[0], new LocalWeather(sArray));
             faaWeathers.put(sArray[0], new FAAWeather(sArray[0]));
         }
         
-        return new AirportStorage(localWeathers, faaWeathers);
+        return new AirportWeatherStorage(localWeathers, faaWeathers);
     }
 
     /**

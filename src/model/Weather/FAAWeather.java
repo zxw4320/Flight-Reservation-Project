@@ -55,7 +55,7 @@ public class FAAWeather implements WeatherMethod {
             
             while ((inputLine = in.readLine()) != null) {
                 FAAAirport airport = gson.fromJson(inputLine, FAAAirport.class);
-                response.append(airport.toString()).append("\n");
+                response.append(airport.toString());//.append("\n");
             }
             
             // MAKE SURE TO CLOSE YOUR CONNECTION!

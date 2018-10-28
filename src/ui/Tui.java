@@ -4,7 +4,7 @@ import database.CSVdb;
 import database.Flightdb;
 import database.ReservationCSVParser;
 import database.Reservationdb;
-import model.AirportStorage;
+import model.AirportWeatherStorage;
 import model.ReservationCollection;
 import model.RouteMap;
 import request.RequestHandler;
@@ -36,11 +36,11 @@ public class Tui implements MultiSessionUI {
         Reservationdb reservationdb = new ReservationCSVParser(r);
         // use DB readers
         RouteMap routeMap = flightdb.generateRouteMap();
-        AirportStorage airportStorage = (flightdb).generateAiportStorage();
+        AirportWeatherStorage airportWeatherStorage = (flightdb).generateAirportWeatherStorage();
         ReservationCollection reservationCollection = reservationdb
                 .generateReservationCollection(routeMap);
         // create request handler
-        afrs = new RequestHandler(routeMap, airportStorage, reservationCollection);
+        afrs = new RequestHandler(routeMap, airportWeatherStorage, reservationCollection);
         sessionHandler = new SessionHandler(this, afrs);
     }
 
