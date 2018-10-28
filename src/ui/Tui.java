@@ -4,23 +4,22 @@ import database.CSVdb;
 import database.Flightdb;
 import database.ReservationCSVParser;
 import database.Reservationdb;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
 import model.AirportWeatherStorage;
 import model.ReservationCollection;
 import model.RouteMap;
 import request.RequestHandler;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
-
 /**
  *
  */
 public class Tui implements MultiSessionUI {
-
+    
     private request.RequestHandler afrs;
     private SessionHandler sessionHandler;
-
+    
     /**
      * Constructor
      */
@@ -32,39 +31,39 @@ public class Tui implements MultiSessionUI {
         Path d = Paths.get("csv/delay.csv");
         Path r = Paths.get("csv/reservations.csv");
         // make DB readers
-        Flightdb flightdb = new CSVdb(a,w,f,d);
+        Flightdb flightdb = new CSVdb(a, w, f, d);
         Reservationdb reservationdb = new ReservationCSVParser(r);
         // use DB readers
         RouteMap routeMap = flightdb.generateRouteMap();
         AirportWeatherStorage airportWeatherStorage = (flightdb).generateAirportWeatherStorage();
         ReservationCollection reservationCollection = reservationdb
-                .generateReservationCollection(routeMap);
+            .generateReservationCollection(routeMap);
         // create request handler
         afrs = new RequestHandler(routeMap, airportWeatherStorage, reservationCollection);
         sessionHandler = new SessionHandler(this, afrs);
     }
-
+    
     @Override
     public void printString(int cid, String printText) {
         System.out.println(printText);
     }
-
+    
     private void sendString(String sendText) {
         sessionHandler.makeRequest(sendText);
     }
-
+    
     public static void main(String[] args) {
-
+        
         // ready TUI
         Tui activeTui = new Tui();
         Scanner input = new Scanner(System.in);
-
+        
         // main program loop
-        while(true) {
+        while (true) {
             // get input
             activeTui.sendString(input.nextLine());
         }
-
+        
     }
-
+    
 }

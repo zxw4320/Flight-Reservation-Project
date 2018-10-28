@@ -9,42 +9,42 @@ import java.util.List;
  * itineraries to each other. The Composite in the Composite Pattern.
  */
 public class Itinerary implements FlightInterface {
-
+    
     private List<Flight> flights;
-
+    
     /**
      * Constructor
      */
     public Itinerary(List<Flight> fs) {
         flights = fs;
     }
-
+    
     public Itinerary(Flight flight) {
         flights = new ArrayList<>();
         flights.add(flight);
     }
-
+    
     /**
      * Compares model by arrival time
      */
     public static Comparator<Itinerary> arrivalTimeComparator =
-            (Itinerary i1, Itinerary i2) -> (Integer.compare(convertTime(i1.getArrivalTime()),
-                    convertTime(i2.getArrivalTime())));
-
+        (Itinerary i1, Itinerary i2) -> (Integer.compare(convertTime(i1.getArrivalTime()),
+            convertTime(i2.getArrivalTime())));
+    
     /**
      * Compares model by arrival time
      */
     public static Comparator<Itinerary> departureTimeComparator =
-            (Itinerary i1, Itinerary i2) -> (Integer.compare(convertTime(i1.getDepartureTime()),
-                    convertTime(i2.getDepartureTime())));
-
-
+        (Itinerary i1, Itinerary i2) -> (Integer.compare(convertTime(i1.getDepartureTime()),
+            convertTime(i2.getDepartureTime())));
+    
+    
     /**
      * Compares model by arrival time
      */
     public static Comparator<Itinerary> airfareComparator =
-            (Itinerary i1, Itinerary i2) -> (Integer.compare(i1.getAirfare(), i2.getAirfare()));
-
+        (Itinerary i1, Itinerary i2) -> (Integer.compare(i1.getAirfare(), i2.getAirfare()));
+    
     /**
      * Converts times to entirely minutes for comparison
      */
@@ -62,7 +62,7 @@ public class Itinerary implements FlightInterface {
         result = hours * 60 + minutes;
         return result;
     }
-
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -73,56 +73,56 @@ public class Itinerary implements FlightInterface {
         String fn = result.toString();
         return fn;
     }
-
+    
     /*** getters ***/
-
+    
     public List<Flight> getFlights() {
         return new ArrayList<>(flights);
     }
-
+    
     @Override
     public int getRawDelayedArrivalTime() {
         Flight lastFlight = flights.get(flights.size() - 1);
         return lastFlight.getRawDelayedArrivalTime();
     }
-
+    
     @Override
     public int getRawDepartureTime() {
         Flight firstFlight = flights.get(0);
         return firstFlight.getRawDepartureTime();
     }
-
+    
     @Override
     public int getAirfare() {
         int sum = 0;
-
+        
         for (FlightInterface flight : flights) {
-
+            
             sum += flight.getAirfare();
         }
         return sum;
     }
-
+    
     @Override
     public String getArrivalTime() {
         return flights.get(flights.size() - 1).getArrivalTime();
     }
-
+    
     @Override
     public String getDepartureTime() {
         return flights.get(0).getDepartureTime();
     }
-
+    
     @Override
     public Airport getOrigin() {
         return flights.get(0).getOrigin();
     }
-
+    
     @Override
     public Airport getDestination() {
         return flights.get(flights.size() - 1).getDestination();
     }
-
+    
     @Override
     public String getFlightNumber() {
         StringBuilder stringBuilder = new StringBuilder();

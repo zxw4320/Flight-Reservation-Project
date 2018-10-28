@@ -44,7 +44,7 @@ public class AirportWeatherStorage {
      * @param airportCode
      * @return
      */
-    public WeatherMethod getWeatherMethod(AFRSInterface ui, String airportCode){
+    public WeatherMethod getWeatherMethod(AFRSInterface ui, String airportCode) {
         return userMethods.get(ui).get(airportCode);
     }
 }

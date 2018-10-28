@@ -7,11 +7,11 @@ import java.util.List;
  * This class contains all airports and flights for our routes
  */
 public class RouteMap {
-
+    
     List<Airport> airports;
     List<Flight> flights;
-
-
+    
+    
     /**
      * Constructor
      */
@@ -19,21 +19,21 @@ public class RouteMap {
         airports = new ArrayList<>();
         flights = new ArrayList<>();
     }
-
+    
     /**
      * Adds flights without checks to the route collection of flights
      */
     public void addFlight(Flight newFlight) {
         flights.add(newFlight);
     }
-
+    
     /**
      * Adds airports without checks to the route collection of flights
      */
     public void addAirport(Airport newAirport) {
         airports.add(newAirport);
     }
-
+    
     /**
      * Finds the airport for a given airport code string.
      *
@@ -48,7 +48,7 @@ public class RouteMap {
         }
         return null;
     }
-
+    
     /**
      * Gets a flight from a flight number
      *
@@ -57,12 +57,13 @@ public class RouteMap {
      */
     public Flight getFlight(String flightNumber) {
         for (Flight flight : flights) {
-            if (flight.getFlightNumber().equals(flightNumber))
+            if (flight.getFlightNumber().equals(flightNumber)) {
                 return flight;
+            }
         }
         return null;
     }
-
+    
     /**
      * Returns all the flights for the system
      *
@@ -71,39 +72,37 @@ public class RouteMap {
     public List<Flight> getFlights() {
         return flights;
     }
-
+    
     /**
      * gets flights FROM a single airport
-     * @param airport
-     * @return
      */
     public List<Flight> getFlightsFrom(Airport airport) {
         List<Flight> foundFlights = new ArrayList<>();
-
+        
         // find flights
         flights.forEach(flight -> {
-            if (flight.getOrigin() == airport)
+            if (flight.getOrigin() == airport) {
                 foundFlights.add(flight);
+            }
         });
-
+        
         return foundFlights;
     }
-
-
+    
+    
     /**
      * gets flights TO a single airport
-     * @param airport
-     * @return
      */
     public List<Flight> getFlightsTo(Airport airport) {
         List<Flight> foundFlights = new ArrayList<>();
-
+        
         // find flights
         flights.forEach(flight -> {
-            if (flight.getDestination() == airport)
+            if (flight.getDestination() == airport) {
                 foundFlights.add(flight);
+            }
         });
-
-       return foundFlights;
+        
+        return foundFlights;
     }
 }

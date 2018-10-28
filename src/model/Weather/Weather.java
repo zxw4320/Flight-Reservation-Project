@@ -3,7 +3,7 @@ package model.Weather;
 import java.util.ArrayList;
 
 /**
- *  Class filled by gson when getting weather from FAA server
+ * Class filled by gson when getting weather from FAA server
  */
 public class Weather {
     
@@ -17,7 +17,7 @@ public class Weather {
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < Weather.size(); i++) {
-            for(int j = 0; j < Weather.get(i).Temp.size(); j++) {
+            for (int j = 0; j < Weather.get(i).Temp.size(); j++) {
                 result.append(Weather.get(i).Temp.get(j)).append(" ");
             }
         }

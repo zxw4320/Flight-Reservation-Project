@@ -18,7 +18,8 @@ public class AirportInfoRequest implements Request {
     /**
      * Constructor
      */
-    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap, AirportWeatherStorage airportWeatherStorage,
+    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap,
+        AirportWeatherStorage airportWeatherStorage,
         String airportCode) {
         this.airportCode = airportCode;
         this.routeMap = routeMap;
