@@ -2,7 +2,6 @@ package request;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import model.AirportWeatherStorage;
 import model.ItineraryHistory;
 import model.ReservationCollection;
 import model.RouteMap;
@@ -22,13 +21,10 @@ public class RequestHandler {
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
     private RequestHistory requestHistory;
-    private AirportWeatherStorage airportWeatherStorage;
     
-    public RequestHandler(RouteMap routeMap, AirportWeatherStorage airportWeatherStorage,
-        ReservationCollection reservationCollection) {
+    public RequestHandler(RouteMap routeMap, ReservationCollection reservationCollection) {
         this.routeMap = routeMap;
         this.reservationCollection = reservationCollection;
-        this.airportWeatherStorage = airportWeatherStorage;
         this.itineraryHistory = new ItineraryHistory();
         this.requestHistory = new RequestHistory();
     }
@@ -198,8 +194,7 @@ public class RequestHandler {
      */
     private void parseAirport(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         // create request
-        Request airportRequest = new AirportInfoRequest(ui, routeMap, airportWeatherStorage,
-            argumentArray.get(1));
+        Request airportRequest = new AirportInfoRequest(ui, routeMap, argumentArray.get(1));
         // execute request
         airportRequest.execute();
     }
@@ -207,6 +202,6 @@ public class RequestHandler {
     
     private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         //TODO check that this worked
-        airportWeatherStorage.setMethod(ui, argumentArray);
+        routeMap.setMethod(ui, argumentArray);
     }
 }

@@ -13,21 +13,20 @@ import ui.AFRSInterface;
  */
 public class RouteMap {
     
-    List<Airport> airports;
     List<Flight> flights;
     private HashMap<AFRSInterface, HashMap<String, Airport>> userMethods;
-    private HashMap<String, LocalAirport> localAirports;
-    private HashMap<String, FAAAirport> faaAirports;
+    private HashMap<String, Airport> localAirports;
+    private HashMap<String, Airport> faaAirports;
     
     
     /**
      * Constructor
      */
-    public RouteMap(HashMap<String, LocalAirport> localAirports, HashMap<String, FAAAirport> faaAirports) {
-        airports = new ArrayList<>();
+    public RouteMap(HashMap<String, Airport> localAirports, HashMap<String, Airport> faaAirports) {
         flights = new ArrayList<>();
         this.localAirports = localAirports;
         this.faaAirports = faaAirports;
+        this.userMethods = new HashMap<>();
     }
     
     /**
@@ -43,13 +42,12 @@ public class RouteMap {
      * @param airportCode String version of airport code
      * @return Airport or null if airport not found
      */
-    public Airport getAirport(String airportCode) {
-        for (Airport airport : airports) {
-            if (airport.getAirportcode().equals(airportCode)) {
-                return airport;
-            }
-        }
-        return null;
+    public Airport getAirport(AFRSInterface ui, String airportCode) {
+        return userMethods.get(ui).get(airportCode);
+    }
+    
+    public Airport getAirport(String airportCode){
+        return localAirports.get(airportCode);
     }
     
     /**

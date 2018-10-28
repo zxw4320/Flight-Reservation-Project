@@ -17,20 +17,26 @@ import model.Airport;
  */
 public class FAAAirport implements Airport {
     
-    String urlPreface =
+    private String urlPreface =
         "https://soa.smext.faa.gov/asws/api/airport/status/";
-    String url;
-    String airportCode;
+    private String url;
+    private String airportCode;
+    private int avgDelayTime;
     
     /**
      * Constructor
      */
-    public FAAAirport( String airportCode, String cityName, int delaytime, String[] weather) {
+    public FAAAirport( String airportCode, String cityName, int delayTime, String[] weather) {
         this.airportCode = airportCode;
+        this.avgDelayTime = delayTime;
     }
     
     public String getAirportcode(){
         return airportCode;
+    }
+    
+    public int getDelayTime(){
+        return this.avgDelayTime;
     }
     
     /**

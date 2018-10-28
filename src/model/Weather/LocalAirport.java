@@ -10,7 +10,7 @@ public class LocalAirport implements Airport {
    
     private String airportcode;
     private String name;
-    private int delaytime;
+    private int delayTime;
     private String[] weather;
     private int weatherIndex = 0;
     
@@ -18,17 +18,17 @@ public class LocalAirport implements Airport {
     /**
      * Constructor
      */
-    public LocalAirport(String airportcode, String name, int delaytime, String[] weather) {
+    public LocalAirport(String airportcode, String name, int delayTime, String[] weather) {
         this.weather = weather;
         this.airportcode = airportcode;
         this.name = name;
-        this.delaytime = delaytime;
+        this.delayTime = delayTime;
     }
     
     public String getInfo() {
         return name + " (" + airportcode + ")"+ " is currently "
             + getWeather() + " with " +
-            Integer.toString(delaytime) + " minute delays.";
+            Integer.toString(delayTime) + " minute delays.";
     }
     
     /*** getters ***/
@@ -41,8 +41,8 @@ public class LocalAirport implements Airport {
         return name;
     }
     
-    public int getDelaytime() {
-        return delaytime;
+    public int getDelayTime() {
+        return delayTime;
     }
 
     

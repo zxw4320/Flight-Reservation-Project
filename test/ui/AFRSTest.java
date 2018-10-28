@@ -9,7 +9,6 @@ import database.Reservationdb;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import model.AirportWeatherStorage;
 import model.ReservationCollection;
 import model.RouteMap;
 import org.junit.Before;
@@ -34,11 +33,10 @@ public class AFRSTest {
         Reservationdb reservationdb = new ReservationCSVParser(r);
         // use DB readers
         RouteMap routeMap = flightdb.generateRouteMap();
-        AirportWeatherStorage airportStorage = flightdb.generateAirportWeatherStorage();
         ReservationCollection reservationCollection = reservationdb
             .generateReservationCollection(routeMap);
         // create request handler
-        requestHandler = new RequestHandler(routeMap, airportStorage, reservationCollection);
+        requestHandler = new RequestHandler(routeMap, reservationCollection);
         
         ui = new FakeUI();
     }

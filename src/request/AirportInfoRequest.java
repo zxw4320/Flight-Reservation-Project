@@ -1,7 +1,6 @@
 package request;
 
 import model.Airport;
-import model.AirportWeatherStorage;
 import model.RouteMap;
 import ui.AFRSInterface;
 
@@ -13,29 +12,24 @@ public class AirportInfoRequest implements Request {
     private String airportCode;
     private RouteMap routeMap;
     private AFRSInterface ui;
-    private AirportWeatherStorage airportWeatherStorage;
     
     /**
      * Constructor
      */
-    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap,
-        AirportWeatherStorage airportWeatherStorage,
-        String airportCode) {
+    public AirportInfoRequest(AFRSInterface ui, RouteMap routeMap, String airportCode) {
         this.airportCode = airportCode;
         this.routeMap = routeMap;
         this.ui = ui;
-        this.airportWeatherStorage = airportWeatherStorage;
     }
     
     
     @Override
     public void execute() {
-        Airport airport = routeMap.getAirport(airportCode);
+        Airport airport = routeMap.getAirport(ui, airportCode);
         if (airport == null) { // check airport is valid
             ui.printString("error,unknown airport");
         } else {
-            airport.setWeatherMethod(airportWeatherStorage.getWeatherMethod(ui, airportCode));
-            ui.printString("airport, " +airport.toString());
+            ui.printString("airport, " + airport.toString());
         }
     }
     

@@ -14,4 +14,6 @@ public interface Airport {
     String getInfo();
     
     String getAirportcode();
+    
+    int getDelayTime();
 }

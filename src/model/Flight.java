@@ -56,7 +56,7 @@ public class Flight implements FlightInterface {
     
     @Override
     public int getRawDelayedArrivalTime() {
-        int delay = origin.getDelaytime();
+        int delay = origin.getDelayTime();
         int arrival = timeToInt(arrivalTime);
         return arrival + delay;
     }
