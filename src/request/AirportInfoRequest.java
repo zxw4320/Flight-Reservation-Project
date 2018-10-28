@@ -29,7 +29,7 @@ public class AirportInfoRequest implements Request {
         if (airport == null) { // check airport is valid
             ui.printString("error,unknown airport");
         } else {
-            ui.printString("airport, " + airport.toString());
+            ui.printString("airport, " + airport.getInfo());
         }
     }
     
