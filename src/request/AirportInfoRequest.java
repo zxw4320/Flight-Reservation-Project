@@ -35,9 +35,7 @@ public class AirportInfoRequest implements Request {
             ui.printString("error,unknown airport");
         } else {
             airport.setWeatherMethod(airportWeatherStorage.getWeatherMethod(ui, airportCode));
-            ui.printString(airport.toString() + " is currently "
-                + airport.getWeather() + " with " +
-                Integer.toString(airport.getDelaytime()) + " minute delays.");
+            ui.printString("airport, " +airport.toString());
         }
     }
     

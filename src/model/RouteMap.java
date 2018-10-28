@@ -1,7 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import model.Weather.FAAAirport;
+import model.Weather.LocalAirport;
+import ui.AFRSInterface;
 
 /**
  * This class contains all airports and flights for our routes
@@ -10,14 +15,19 @@ public class RouteMap {
     
     List<Airport> airports;
     List<Flight> flights;
+    private HashMap<AFRSInterface, HashMap<String, Airport>> userMethods;
+    private HashMap<String, LocalAirport> localAirports;
+    private HashMap<String, FAAAirport> faaAirports;
     
     
     /**
      * Constructor
      */
-    public RouteMap() {
+    public RouteMap(HashMap<String, LocalAirport> localAirports, HashMap<String, FAAAirport> faaAirports) {
         airports = new ArrayList<>();
         flights = new ArrayList<>();
+        this.localAirports = localAirports;
+        this.faaAirports = faaAirports;
     }
     
     /**
@@ -25,13 +35,6 @@ public class RouteMap {
      */
     public void addFlight(Flight newFlight) {
         flights.add(newFlight);
-    }
-    
-    /**
-     * Adds airports without checks to the route collection of flights
-     */
-    public void addAirport(Airport newAirport) {
-        airports.add(newAirport);
     }
     
     /**
@@ -104,5 +107,21 @@ public class RouteMap {
         });
         
         return foundFlights;
+    }
+    
+    /**
+     * Sets the method for each user.
+     *
+     * @param ui
+     * @param argumentArray
+     */
+    public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
+        if (argumentArray.get(1).equals("local")) {
+            userMethods.put(ui, localAirports);
+        } else if (argumentArray.get(1).equals("faa")) {
+            userMethods.put(ui, faaAirports);
+        } else {
+            ui.printString("error, unknown information server");
+        }
     }
 }

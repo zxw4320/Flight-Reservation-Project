@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 import model.Airport;
-import model.AirportWeatherStorage;
 import model.Flight;
 import model.RouteMap;
-import model.Weather.FAAWeather;
-import model.Weather.LocalWeather;
-import model.Weather.WeatherMethod;
+import model.Weather.FAAAirport;
+import model.Weather.LocalAirport;
 
 /**
  * Represents a "database" of flights from a csv file
@@ -37,7 +35,8 @@ public class CSVdb implements Flightdb {
         // variables for data
         HashMap<String, String[]> weatherMap = new HashMap<>();
         HashMap<String, Integer> delayMap = new HashMap<>();
-        RouteMap routeMap = new RouteMap();
+        HashMap<String, LocalAirport> localAirports = new HashMap<>();
+        HashMap<String, FAAAirport> faaAirports = new HashMap<>();
         
         // read in weather data for airports that we have on file
         for (String[] sArray : parseLinesInFile(weatherFile)) {
@@ -55,9 +54,12 @@ public class CSVdb implements Flightdb {
             String cityName = sArray[1];
             int delaytime = delayMap.get(airportCode);
             String[] weather = weatherMap.get(airportCode);
-            routeMap.addAirport(
-                new Airport(airportCode, cityName, delaytime, new LocalWeather(weather)));
+            
+            localAirports.put(sArray[0], new LocalAirport(airportCode, cityName, delaytime, weather));
+            faaAirports.put(sArray[0], new FAAAirport(airportCode, cityName, delaytime, weather);
         }
+    
+        RouteMap routeMap = new RouteMap(localAirports, faaAirports);
         
         // read flight data and add to routeMap
         for (String[] sArray : parseLinesInFile(flightFile)) {
@@ -72,19 +74,6 @@ public class CSVdb implements Flightdb {
         }
         
         return routeMap;
-    }
-    
-    public AirportWeatherStorage generateAirportWeatherStorage() {
-        
-        HashMap<String, WeatherMethod> localWeathers = new HashMap<>();
-        HashMap<String, WeatherMethod> faaWeathers = new HashMap<>();
-        
-        for (String[] sArray : parseLinesInFile(weatherFile)) {
-            localWeathers.put(sArray[0], new LocalWeather(sArray));
-            faaWeathers.put(sArray[0], new FAAWeather(sArray[0]));
-        }
-        
-        return new AirportWeatherStorage(localWeathers, faaWeathers);
     }
     
     /**

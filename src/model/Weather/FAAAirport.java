@@ -1,101 +1,85 @@
 package model.Weather;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import model.Airport;
 
 /**
- * Class filled when gson gets data from FAA server
+ * Weather object that gets weather from the FAA servers Represents a concreteStrategy in the
+ * Strategy design pattern.
  */
-public class FAAAirport {
+public class FAAAirport implements Airport {
     
-    private String Name;
-    private String City;
-    private String State;
-    private String ICAO;
-    private String IATA;
-    private boolean SupportedAirport;
-    private boolean Delay;
-    private float DelayCount;
-    ArrayList<Object> Status = new ArrayList<Object>();
-    Weather Weather;
+    String urlPreface =
+        "https://soa.smext.faa.gov/asws/api/airport/status/";
+    String url;
+    String airportCode;
     
-    @Override
-    public String toString() {
-        return Weather.toString();
+    /**
+     * Constructor
+     */
+    public FAAAirport( String airportCode, String cityName, int delaytime, String[] weather) {
+        this.airportCode = airportCode;
     }
     
-    // Getter Methods
-    
-    public String getName() {
-        return Name;
+    public String getAirportcode(){
+        return airportCode;
     }
     
-    public String getCity() {
-        return City;
-    }
-    
-    public String getState() {
-        return State;
-    }
-    
-    public String getICAO() {
-        return ICAO;
-    }
-    
-    public String getIATA() {
-        return IATA;
-    }
-    
-    public boolean getSupportedAirport() {
-        return SupportedAirport;
-    }
-    
-    public boolean getDelay() {
-        return Delay;
-    }
-    
-    public float getDelayCount() {
-        return DelayCount;
-    }
-    
-    public Weather getWeather() {
-        return Weather;
-    }
-    
-    // Setter Methods
-    
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-    
-    public void setCity(String City) {
-        this.City = City;
-    }
-    
-    public void setState(String State) {
-        this.State = State;
-    }
-    
-    public void setICAO(String ICAO) {
-        this.ICAO = ICAO;
-    }
-    
-    public void setIATA(String IATA) {
-        this.IATA = IATA;
-    }
-    
-    public void setSupportedAirport(boolean SupportedAirport) {
-        this.SupportedAirport = SupportedAirport;
-    }
-    
-    public void setDelay(boolean Delay) {
-        this.Delay = Delay;
-    }
-    
-    public void setDelayCount(float DelayCount) {
-        this.DelayCount = DelayCount;
-    }
-    
-    public void setWeather(Weather Weather) {
-        this.Weather = Weather;
+    /**
+     * Gets the weather as a pretty string from the FAA server
+     *
+     * @return the most recent weather from the FAA server
+     */
+    public String getInfo() {
+        try {        // Create a URL and open a connection
+            StringBuilder response = new StringBuilder();
+            Gson gson = new Gson();
+            url = urlPreface + airportCode;
+            URL FAAURL = new URL(url);
+            HttpURLConnection urlConnection =
+                (HttpURLConnection) FAAURL.openConnection();
+            
+            // Set the paramters for the HTTP Request
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setRequestProperty("Accept", "application/json");
+            
+            // Create an input stream and wrap in a BufferedReader to read the response.
+            BufferedReader in =
+                new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            String inputLine;
+            
+            while ((inputLine = in.readLine()) != null) {
+                FAAInfo airport = gson.fromJson(inputLine, FAAInfo.class);
+                response.append(airport.toString());
+            }
+            
+            // MAKE SURE TO CLOSE YOUR CONNECTION!
+            in.close();
+            
+            // response is the contents of the XML
+            return response.toString();
+        } catch (FileNotFoundException e) {
+            System.out.print("URL not found: ");
+            System.out.println(e.getMessage());
+        } catch (MalformedURLException e) {
+            System.out.print("Malformed URL: ");
+            System.out.println(e.getMessage());
+        } catch (ProtocolException e) {
+            System.out.print("Unsupported protocol: ");
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

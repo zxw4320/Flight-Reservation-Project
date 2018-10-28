@@ -2,9 +2,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import model.Weather.WeatherMethod;
 import ui.AFRSInterface;
 
+/**
+ *
+ */
 public class AirportWeatherStorage {
     
     private HashMap<AFRSInterface, HashMap<String, WeatherMethod>> userMethods;
@@ -12,9 +14,7 @@ public class AirportWeatherStorage {
     private HashMap<String, WeatherMethod> faaWeathers;
     
     /**
-     *
-     * @param localWeathers
-     * @param faaWeathers
+     *  Constructor
      */
     public AirportWeatherStorage(HashMap<String, WeatherMethod> localWeathers,
         HashMap<String, WeatherMethod> faaWeathers) {
@@ -24,6 +24,7 @@ public class AirportWeatherStorage {
     }
     
     /**
+     * Sets the method for each user.
      *
      * @param ui
      * @param argumentArray
@@ -39,10 +40,11 @@ public class AirportWeatherStorage {
     }
     
     /**
+     * returns the proper airport for the specified user
      *
-     * @param ui
-     * @param airportCode
-     * @return
+     * @param ui the user
+     * @param airportCode the airport needed
+     * @return the airport based on the users server
      */
     public WeatherMethod getWeatherMethod(AFRSInterface ui, String airportCode) {
         return userMethods.get(ui).get(airportCode);

@@ -18,10 +18,10 @@ public class Weather {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < Weather.size(); i++) {
             for (int j = 0; j < Weather.get(i).Temp.size(); j++) {
-                result.append(Weather.get(i).Temp.get(j)).append(" ");
+                result.append(Weather.get(i).Temp.get(j)).append(", ");
             }
         }
-        return result.toString();
+        return result.append(Temp.get(0)).append(", ").toString();
     }
     
     // Getter Methods
