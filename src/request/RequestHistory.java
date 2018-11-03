@@ -31,10 +31,14 @@ public class RequestHistory {
      * @param ui client that wants to undo
      */
     public void undo(AFRSInterface ui) {
+        // catch empty stack
         Request request;
-
         // keep popping until we hit an undoable command
         do {
+            if (getStack(ui, undoStacks).isEmpty()) {
+                ui.printString("error,no request available");
+                return;
+            }
             request = getStack(ui, undoStacks).pop();
         } while (!request.unexecute());
 
@@ -47,13 +51,18 @@ public class RequestHistory {
      * @param ui client that wants to redo
      */
     public void redo(AFRSInterface ui) {
+        // catch empty stack
+        if (getStack(ui, redoStacks).isEmpty()) {
+            ui.printString("error,no request available");
+            return;
+        }
         // pop off redo stack
         Request request = getStack(ui, redoStacks).pop();
-        // execute
         request.execute();
         // push request to undo stack
         getStack(ui, undoStacks).push(request);
     }
+
 
     /**
      * helper function to et a stack from our hashmap faster
