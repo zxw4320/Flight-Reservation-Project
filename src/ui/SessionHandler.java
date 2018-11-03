@@ -9,7 +9,7 @@ import request.RequestHandler;
 public class SessionHandler {
     
     private Map<Integer, SessionUIProxy> SUIPmap;
-    private Map<Integer, ArrayList<String>> partialRequests;
+    private Map<Integer, String> partialRequests;
     private RequestHandler afrs;
     private MultiSessionUI outputUI;
     private int nextCID;
@@ -23,25 +23,29 @@ public class SessionHandler {
         this.outputUI = outputUI;
         
     }
-    
-    
+
+
+    /**
+     * Makes a request to the correct UI based on CID. Will return text errors
+     * to the UI if needed.
+     * @param string Request to make in "CID,REQUEST" format
+     */
     protected void makeRequest(String string) {
-        
-        ArrayList<String> newRequestArray = new ArrayList<>();
-        ArrayList<String> fullRequestArray = new ArrayList<>();
+
+        String newRequestString;
+        String fullRequestString;
         int cid;
         
         // split the string for parsing
         String[] tempArray = string.split(",");
-        newRequestArray = new ArrayList<>(Arrays.asList(tempArray));
-        
+
         // throw out empty queries
-        if (newRequestArray.isEmpty()) {
+        if(string.isEmpty())
             return;
         }
         
         // handle special connection requests
-        if (newRequestArray.get(0).equals("connect;")) {
+        if(string.equals("connect;")) {
             cid = addSession();
             printToUI(cid, "connect," + Integer.toString(cid));
             useSUIP(cid, "server,local;");
@@ -50,29 +54,39 @@ public class SessionHandler {
         
         // get CID
         try {
-            cid = Integer.parseInt(newRequestArray.get(0));
+            String cidstring = string.substring( 0, string.indexOf(","));
+            newRequestString = string.substring(string.indexOf(",")+1);
+            cid = Integer.parseInt(cidstring);
+
         } catch (Exception e) {
             return;
         }
         
         // get partial request elements
-        fullRequestArray = partialRequests.getOrDefault(cid, new ArrayList<>());
-        fullRequestArray.addAll(newRequestArray);
-        
+
+        fullRequestString = partialRequests.getOrDefault(cid, "");
+        fullRequestString = fullRequestString.concat(newRequestString);
+
         // handle partial requests
         if (!string.endsWith(";")) {
-            partialRequests.put(cid, fullRequestArray);
+            partialRequests.put(cid, fullRequestString);
             printToUI(cid, "partial-request");
             return;
         }
         
-        // finally, strip the cid and hit the main afrs, and handle case if
-        // the SUIP doesn't exist for the CID...
-        fullRequestArray.remove(0);
-        if (!useSUIP(cid, String.join(",", fullRequestArray))) {
-            printToUI(cid, "error,invalid connection");
+
+        // handle disconnect
+        if(fullRequestString.equals("disconnect;")){
+            printToUI(cid, "disconnect;");
+            SUIPmap.remove(cid);
+            partialRequests.remove(cid);
+            return;
         }
-        
+
+        // finally send to afrs and handle invalid connections
+        if (!useSUIP(cid, fullRequestString))
+            printToUI(cid, "error,invalid connection");
+        partialRequests.remove(cid);
     }
     
     
@@ -102,9 +116,7 @@ public class SessionHandler {
      */
     private Integer addSession() {
         // choose a /fresh/ CID
-        int cid = nextCID;
-        nextCID++;
-        
+        int cid = getCID();
         //Generate our SUIP , add to map and return
         SUIPmap.put(cid, new SessionUIProxy(this));
         return cid;
@@ -128,6 +140,17 @@ public class SessionHandler {
         // failure
         return false;
     }
-    
-    
+
+
+    /**
+     * Gets a new CID for a user
+     * @return unused CID
+     */
+    private int getCID(){
+        int i = 0;
+        while(SUIPmap.containsKey(i))
+            i++;
+        return i;
+    }
+
 }
