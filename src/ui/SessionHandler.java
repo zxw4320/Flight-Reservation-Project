@@ -2,8 +2,6 @@ package ui;
 
 import request.RequestHandler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +11,6 @@ public class SessionHandler {
     private Map<Integer, String> partialRequests;
     private RequestHandler afrs;
     private MultiSessionUI outputUI;
-    private int nextCID;
 
 
     protected SessionHandler(MultiSessionUI outputUI, RequestHandler afrs){
