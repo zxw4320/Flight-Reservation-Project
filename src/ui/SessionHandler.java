@@ -26,6 +26,11 @@ public class SessionHandler {
     }
 
 
+    /**
+     * Makes a request to the correct UI based on CID. Will return text errors
+     * to the UI if needed.
+     * @param string Request to make in "CID,REQUEST" format
+     */
     protected void makeRequest(String string) {
 
         ArrayList<String> newRequestArray = new ArrayList<>();
@@ -50,6 +55,8 @@ public class SessionHandler {
         // get CID
         try {
             cid = Integer.parseInt(newRequestArray.get(0));
+            newRequestArray.remove(0);
+
         } catch (Exception e) {
             return;
         }
@@ -65,11 +72,21 @@ public class SessionHandler {
             return;
         }
 
-        // finally, strip the cid and hit the main afrs, and handle case if
-        // the SUIP doesn't exist for the CID...
-        fullRequestArray.remove(0);
-        if (!useSUIP(cid, String.join(",", fullRequestArray)))
+        // parse final request
+        String finalRequest = String.join("", fullRequestArray);
+
+        // handle disconnect
+        if(finalRequest.equals("disconnect;")){
+            printToUI(cid, "disconnect;");
+            SUIPmap.remove(cid);
+            partialRequests.remove(cid);
+            return;
+        }
+
+        // finally send to afrs and handle invalid connections
+        if (!useSUIP(cid, finalRequest))
             printToUI(cid, "error,invalid connection");
+        partialRequests.remove(cid);
 
     }
 
@@ -97,8 +114,7 @@ public class SessionHandler {
      */
     private Integer addSession() {
         // choose a /fresh/ CID
-        int cid = nextCID;
-        nextCID++;
+        int cid = getCID();
 
         //Generate our SUIP , add to map and return
         SUIPmap.put(cid, new SessionUIProxy(this));
@@ -121,6 +137,18 @@ public class SessionHandler {
         }
         // failure
         return false;
+    }
+
+
+    /**
+     * Gets a new CID for a user
+     * @return unused CID
+     */
+    private int getCID(){
+        int i = 0;
+        while(SUIPmap.containsKey(i))
+            i++;
+        return i;
     }
 
 
