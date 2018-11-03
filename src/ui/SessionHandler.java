@@ -72,8 +72,6 @@ public class SessionHandler {
             return;
         }
 
-        System.out.println(fullRequestString);
-
         // handle disconnect
         if(fullRequestString.equals("disconnect;")){
             printToUI(cid, "disconnect;");
