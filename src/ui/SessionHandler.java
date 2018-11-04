@@ -1,25 +1,21 @@
 package ui;
 
-import request.RequestHandler;
-
 import java.util.HashMap;
 import java.util.Map;
+import request.RequestHandler;
 
 class SessionHandler {
-
     private Map<Integer, SessionUIProxy> SUIPmap;
     private Map<Integer, String> partialRequests;
     private RequestHandler afrs;
     private MultiSessionUI outputUI;
 
-
     SessionHandler(MultiSessionUI outputUI, RequestHandler afrs){
-
         this.SUIPmap = new HashMap<>();
         this.partialRequests = new HashMap<>();
         this.afrs = afrs;
         this.outputUI = outputUI;
-
+        
     }
 
 
@@ -33,21 +29,22 @@ class SessionHandler {
         String newRequestString;
         String fullRequestString;
         int cid;
-
+        
         // split the string for parsing
         String[] tempArray = string.split(",");
 
         // throw out empty queries
         if(string.isEmpty())
             return;
-
+        }
+        
         // handle special connection requests
         if(string.equals("connect;")) {
             cid = addSession();
             printToUI(cid, "connect," + cid);
             return;
         }
-
+        
         // get CID
         try {
             String cidstring = string.substring( 0, string.indexOf(","));
@@ -57,8 +54,9 @@ class SessionHandler {
         } catch (Exception e) {
             return;
         }
-
+        
         // get partial request elements
+
         fullRequestString = partialRequests.getOrDefault(cid, "");
         fullRequestString = fullRequestString.concat(newRequestString);
 
@@ -68,6 +66,7 @@ class SessionHandler {
             printToUI(cid, "partial-request");
             return;
         }
+        
 
         // handle disconnect
         if(fullRequestString.equals("disconnect;")){
@@ -81,43 +80,45 @@ class SessionHandler {
         if (!useSUIP(cid, fullRequestString))
             printToUI(cid, "error,invalid connection");
         partialRequests.remove(cid);
-
     }
-
-
+    
+    
     /**
      * Allows a suip to print out to the correct user session
+     *
      * @param suip The SUIP that wants to print to the ui
      * @param response the response to print
      */
     void printToUI(SessionUIProxy suip, String response) {
         SUIPmap.forEach((cid, sessionUIProxy) -> {
-            if (sessionUIProxy == suip)
+            if (sessionUIProxy == suip) {
                 printToUI(cid, response);
+            }
         });
     }
-
+    
     private void printToUI(int cid, String string) {
         outputUI.printString(cid, string);
     }
-
-
+    
+    
     /**
      * Creates a session in our SUIPmap with a new ID
+     *
      * @return The generated ID
      */
     private Integer addSession() {
         // choose a /fresh/ CID
         int cid = getCID();
-
         //Generate our SUIP , add to map and return
         SUIPmap.put(cid, new SessionUIProxy(this));
         return cid;
     }
-
-
+    
+    
     /**
      * Handles sending a request to the AFRS with the correct SUIP
+     *
      * @param cid Client ID making request
      * @param command Request made by client session
      * @return Did we have success?
@@ -144,6 +145,5 @@ class SessionHandler {
             i++;
         return i;
     }
-
 
 }

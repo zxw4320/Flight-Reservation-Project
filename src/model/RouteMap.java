@@ -1,54 +1,55 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import model.Weather.FAAAirport;
+import model.Weather.LocalAirport;
+import ui.AFRSInterface;
 
 /**
  * This class contains all airports and flights for our routes
  */
 public class RouteMap {
-
-    List<Airport> airports;
+    
     List<Flight> flights;
-
-
+    private HashMap<AFRSInterface, HashMap<String, Airport>> userMethods;
+    private HashMap<String, Airport> localAirports;
+    private HashMap<String, Airport> faaAirports;
+    
+    
     /**
      * Constructor
      */
-    public RouteMap() {
-        airports = new ArrayList<>();
+    public RouteMap(HashMap<String, Airport> localAirports, HashMap<String, Airport> faaAirports) {
         flights = new ArrayList<>();
+        this.localAirports = localAirports;
+        this.faaAirports = faaAirports;
+        this.userMethods = new HashMap<>();
     }
-
+    
     /**
      * Adds flights without checks to the route collection of flights
      */
     public void addFlight(Flight newFlight) {
         flights.add(newFlight);
     }
-
-    /**
-     * Adds airports without checks to the route collection of flights
-     */
-    public void addAirport(Airport newAirport) {
-        airports.add(newAirport);
-    }
-
+    
     /**
      * Finds the airport for a given airport code string.
      *
      * @param airportCode String version of airport code
      * @return Airport or null if airport not found
      */
-    public Airport getAirport(String airportCode) {
-        for (Airport airport : airports) {
-            if (airport.getAirportcode().equals(airportCode)) {
-                return airport;
-            }
-        }
-        return null;
+    public Airport getAirport(AFRSInterface ui, String airportCode) {
+        return userMethods.get(ui).get(airportCode);
     }
-
+    
+    public Airport getAirport(String airportCode){
+        return localAirports.get(airportCode);
+    }
+    
     /**
      * Gets a flight from a flight number
      *
@@ -57,12 +58,13 @@ public class RouteMap {
      */
     public Flight getFlight(String flightNumber) {
         for (Flight flight : flights) {
-            if (flight.getFlightNumber().equals(flightNumber))
+            if (flight.getFlightNumber().equals(flightNumber)) {
                 return flight;
+            }
         }
         return null;
     }
-
+    
     /**
      * Returns all the flights for the system
      *
@@ -71,39 +73,53 @@ public class RouteMap {
     public List<Flight> getFlights() {
         return flights;
     }
-
+    
     /**
      * gets flights FROM a single airport
-     * @param airport
-     * @return
      */
     public List<Flight> getFlightsFrom(Airport airport) {
         List<Flight> foundFlights = new ArrayList<>();
-
+        
         // find flights
         flights.forEach(flight -> {
-            if (flight.getOrigin() == airport)
+            if (flight.getOrigin() == airport) {
                 foundFlights.add(flight);
+            }
         });
-
+        
         return foundFlights;
     }
-
-
+    
+    
     /**
      * gets flights TO a single airport
-     * @param airport
-     * @return
      */
     public List<Flight> getFlightsTo(Airport airport) {
         List<Flight> foundFlights = new ArrayList<>();
-
+        
         // find flights
         flights.forEach(flight -> {
-            if (flight.getDestination() == airport)
+            if (flight.getDestination() == airport) {
                 foundFlights.add(flight);
+            }
         });
-
-       return foundFlights;
+        
+        return foundFlights;
+    }
+    
+    /**
+     * Sets the method for each user.
+     *
+     * @param ui
+     * @param argumentArray
+     */
+    public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
+        if (argumentArray.get(1).equals("local")) {
+            userMethods.put(ui, localAirports);
+        } else if (argumentArray.get(1).equals("faa")) {
+            userMethods.put(ui, faaAirports);
+        } else {
+            ui.printString("error, unknown information server");
+        }
     }
 }
