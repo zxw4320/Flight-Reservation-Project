@@ -1,5 +1,7 @@
 package ui;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,23 +23,28 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.awt.*;
+import java.util.HashMap;
 
 public class GUI extends Application implements MultiSessionUI{
+    // This is a collection of all previous dialogue strings
+    private HashMap<Integer,String> dialogue = new HashMap();
+
+
     public static void main(String[] args){
         Application.launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
+
         primaryStage.setTitle("<<TITLE>>");
         Group root = new Group();
 
         BorderPane borderPane = new BorderPane();
         TabPane tabPane = new TabPane();
         Button addButton = new Button("New Connection");
-
         Scene scene = new Scene(root, 600, 400, Color.WHITE);
-        Label inputLabel = new Label("Input:");
+
 
         //This is the outermost border pane
         borderPane.setTop(addButton);
@@ -60,14 +68,15 @@ public class GUI extends Application implements MultiSessionUI{
                 submitButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        if(input.getText().equals("")){
+                        String inputArg = input.getText();
+                        if(inputArg.equals("")){
                             System.out.println("Empty Input");
                             //TODO - Give error message to user
                         }
                         else
                         {
                             System.out.println("Some Input");
-                            System.out.println(input.getText());
+                            System.out.println(inputArg);
                             //TODO - Give input to system
                         }
                         input.setText("");
@@ -76,6 +85,17 @@ public class GUI extends Application implements MultiSessionUI{
                 inputHbox.getChildren().addAll(input,submitButton);
                 inputHbox.setSpacing(10);
                 tabBorderPane.setBottom(inputHbox);
+
+                //This is the output box
+                TextArea output = new TextArea();
+                //Figure out some way to trigger this for output
+                output.textProperty().addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+                    }
+                });
+
                 tabBorderPane.setPadding(new Insets(10,10,10,10));
                 tab.setOnCloseRequest(new EventHandler<Event>() {
                     //Requests to close tab - maybe use setOnClose
@@ -101,5 +121,15 @@ public class GUI extends Application implements MultiSessionUI{
     @Override
     public void printString(int sessionID, String output){
 
+    }
+
+    private String update(int sessionID, String output){
+        if(dialogue.containsKey(sessionID)){
+            String prev = dialogue.get(sessionID);
+            String curr = prev + sessionID + output + "\n";
+            dialogue.put(sessionID,curr);
+
+        }
+        return null;
     }
 }
