@@ -92,6 +92,7 @@ public class DeleteReservationRequest implements Request {
 
     @Override
     public String toString(){
-        return name;
+        return name + "," + reservation.getPassenger() + ","
+                + reservation.toString();
     }
 }

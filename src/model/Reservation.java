@@ -16,7 +16,8 @@ public class Reservation {
         this.passenger = passenger;
         this.itinerary = itinerary;
     }
-    
+
+    @Override
     public String toString() {
         return itinerary.toString();
     }
@@ -38,4 +39,5 @@ public class Reservation {
     public Airport getDestination() {
         return itinerary.getDestination();
     }
+
 }
