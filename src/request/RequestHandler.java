@@ -201,7 +201,6 @@ public class RequestHandler {
     
     
     private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
-        //TODO check that this worked
         routeMap.setMethod(ui, argumentArray);
     }
 }

@@ -44,7 +44,6 @@ public class SessionHandler {
         if (newRequestArray.get(0).equals("connect;")) {
             cid = addSession();
             printToUI(cid, "connect," + Integer.toString(cid));
-            useSUIP(cid, "server,local;");
             return;
         }
         
@@ -107,6 +106,7 @@ public class SessionHandler {
         
         //Generate our SUIP , add to map and return
         SUIPmap.put(cid, new SessionUIProxy(this));
+        useSUIP(cid, "server,local;");
         return cid;
     }
     
