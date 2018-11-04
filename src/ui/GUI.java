@@ -70,6 +70,7 @@ public class GUI extends Application implements MultiSessionUI{
                             System.out.println("Some Input");
                             System.out.println(inputArg);
                             //TODO - Give input to system
+                            printString(sessionID,inputArg);
                         }
                         input.setText("");
                     }
