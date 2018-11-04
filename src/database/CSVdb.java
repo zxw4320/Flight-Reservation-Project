@@ -29,6 +29,9 @@ public class CSVdb implements Flightdb {
         this.delayFile = delayFile;
     }
     
+    /**
+     * Generates and returns a RouteMap
+     */
     @Override
     public RouteMap generateRouteMap() {
         

@@ -99,7 +99,14 @@ public class FlightInfoRequest implements Request {
         return true;
     }
     
-    
+    /**
+     * Generates a list of all valid itineraries
+     *
+     * @param origin the origin airport
+     * @param destination the destination airport
+     * @param depth the number of connections
+     * @return a list of all valid itineraries
+     */
     private ArrayList<Itinerary> findFlights(Airport origin, Airport destination, int depth) {
         
         // get the list of all flights
@@ -125,7 +132,9 @@ public class FlightInfoRequest implements Request {
         return completeItineraries;
     }
     
-    
+    /**
+     * Finds all itineraries with more than one flight
+     */
     private ArrayList<Itinerary> findFlightHelper(List<Itinerary> itineraryList,
         Airport destination, int depth) {
         
@@ -175,6 +184,9 @@ public class FlightInfoRequest implements Request {
         return completeItinerary;
     }
     
+    /**
+     * @return whether or not an itinerary can contain the given flight
+     */
     private boolean fitsItinerary(Flight flight, Itinerary itinerary) {
         int arriveAtAirport = itinerary.getRawDelayedArrivalTime();
         int leaveAirport = flight.getRawDepartureTime();
@@ -185,11 +197,5 @@ public class FlightInfoRequest implements Request {
     @Override
     public boolean unexecute() {
         return false;
-    }
-
-
-    @Override
-    public String toString(){
-        return name;
     }
 }

@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import request.RequestHandler;
 
+/**
+ *
+ */
 class SessionHandler {
     private Map<Integer, SessionUIProxy> SUIPmap;
     private Map<Integer, String> partialRequests;

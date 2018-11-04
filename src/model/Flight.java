@@ -31,6 +31,9 @@ public class Flight implements FlightInterface {
         this.departureTime = departureTime;
     }
     
+    /**
+     * @return the time String as an int in minutes
+     */
     private int timeToInt(String time) {
         SimpleDateFormat ft = new SimpleDateFormat("h:mma");
         try {
@@ -53,7 +56,9 @@ public class Flight implements FlightInterface {
     
     /*** Getters ***/
     
-    
+    /**
+     * @return the origin delay time added to the flights arrival time
+     */
     @Override
     public int getRawDelayedArrivalTime() {
         int delay = origin.getDelayTime();

@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ *
+ */
 public class SessionUIProxy implements AFRSInterface {
     
     // the session handler we report back to

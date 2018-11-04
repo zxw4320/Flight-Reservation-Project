@@ -199,7 +199,12 @@ public class RequestHandler {
         airportRequest.execute();
     }
     
-    
+    /**
+     * Sets the server for the user based on their input
+     *
+     * @param ui the user interface the command returns to
+     * @param argumentArray arguments sent by the user
+     */
     private void parseServer(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         routeMap.setMethod(ui, argumentArray);
     }

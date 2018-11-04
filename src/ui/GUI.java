@@ -27,6 +27,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+/**
+ * The GUI for the AFRS that can handle multiple users. Separates each user in tabs.
+ */
 public class GUI extends Application implements MultiSessionUI{
     // This is a collection of all previous dialogue strings
     private HashMap<Integer,TextArea> textAreaHashMap = new HashMap();

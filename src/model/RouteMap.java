@@ -108,10 +108,10 @@ public class RouteMap {
     }
     
     /**
-     * Sets the method for each user.
+     * Sets the server for each user
      *
-     * @param ui
-     * @param argumentArray
+     * @param ui the user who's server is being set
+     * @param argumentArray command with the server type
      */
     public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         if (argumentArray.get(1).equals("local")) {

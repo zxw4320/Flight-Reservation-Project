@@ -79,6 +79,9 @@ public class Itinerary implements FlightInterface {
         return new ArrayList<>(flights);
     }
     
+    /**
+     * @return the origin delay time added to the flights arrival time
+     */
     @Override
     public int getRawDelayedArrivalTime() {
         Flight lastFlight = flights.get(flights.size() - 1);

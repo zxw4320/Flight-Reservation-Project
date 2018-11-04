@@ -25,7 +25,7 @@ public class FAAInfo {
             String delay;
             if((((LinkedTreeMap) Status.get(0)).containsKey("AvgDelay"))){
                 delay = (String) (((LinkedTreeMap) Status.get(0)).get("AvgDelay"));
-            } else {
+            } else { // never had any airports with this type of delay, but left for safety
                 delay = "Calculate Average Delay here"; //TODO calc avg delay if need be
             }
             return Name + ", " + Weather.toString() + delay;

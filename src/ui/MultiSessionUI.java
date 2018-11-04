@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ *
+ */
 public interface MultiSessionUI {
     
     /**
