@@ -9,7 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -26,24 +28,54 @@ public class GUI extends Application implements MultiSessionUI{
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World");
         Group root = new Group();
+        HBox inputHbox = new HBox();
+        Button submitButton = new Button("Submit");
+        TextField input = new TextField();
+        BorderPane borderPane = new BorderPane();
         TabPane tabPane = new TabPane();
         Button addButton = new Button("New Connection");
-        BorderPane borderPane = new BorderPane();
         BorderPane tabBorderPane = new BorderPane();
+        Scene scene = new Scene(root, 600, 400, Color.WHITE);
+        Label inputLabel = new Label("Input:");
+
+        //This is the outermost border pane
+        borderPane.setTop(addButton);
+        borderPane.setCenter(tabPane);
+
+        //This is the input box
+        input.setText("Test");
+        submitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if(input.getText().equals("")){
+                    System.out.println("Empty Input");
+                    //TODO - Give error message to user
+                }
+                else
+                {
+                    System.out.println("Some Input");
+                    System.out.println(input.getText());
+                    //TODO - Give input to system
+                }
+                input.setText("");
+            }
+        });
+        inputHbox.getChildren().addAll(input,submitButton);
+        tabBorderPane.setBottom(inputHbox);
+
+        //This button creates a new tab
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Break One Reached");
                 Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
                 tabPane.getTabs().add(tab);
                 tabPane.getSelectionModel().select(tab);
                 tab.setContent(tabBorderPane);
             }
         });
-        borderPane.setTop(addButton);
-        borderPane.setCenter(tabPane);
+
+        //End Render
         root.getChildren().addAll(borderPane);
-        Scene scene = new Scene(root, 600, 400, Color.WHITE);
         primaryStage.setScene(scene);
         primaryStage.show();
 
