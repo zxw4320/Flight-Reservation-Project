@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Stack;
 import ui.AFRSInterface;
 
-public class RequestHistory {
+class RequestHistory {
     
     private HashMap<AFRSInterface, Stack<Request>> undoStacks;
     private HashMap<AFRSInterface, Stack<Request>> redoStacks;
     
     
-    public RequestHistory() {
+    RequestHistory() {
         undoStacks = new HashMap<>();
         redoStacks = new HashMap<>();
     }
@@ -22,7 +22,7 @@ public class RequestHistory {
      * @param ui client that made the request
      * @param request The request the client made
      */
-    public void addRequest(AFRSInterface ui, Request request) {
+    void addRequest(AFRSInterface ui, Request request) {
         getStack(ui, undoStacks).push(request);
     }
     
@@ -31,7 +31,7 @@ public class RequestHistory {
      *
      * @param ui client that wants to undo
      */
-    public void undo(AFRSInterface ui) {
+    void undo(AFRSInterface ui) {
         // catch empty stack
         Request request;
         // keep popping until we hit an undoable command
@@ -52,7 +52,7 @@ public class RequestHistory {
      *
      * @param ui client that wants to redo
      */
-    public void redo(AFRSInterface ui) {
+    void redo(AFRSInterface ui) {
         // catch empty stack
         if (getStack(ui, redoStacks).isEmpty()) {
             ui.printString("error,no request available");
