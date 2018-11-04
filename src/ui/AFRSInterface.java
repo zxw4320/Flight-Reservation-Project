@@ -1,7 +1,7 @@
 package ui;
 
 /**
- * Interface that represents
+ * Interface that represents a user session in the RequestHandler
  */
 public interface AFRSInterface {
     

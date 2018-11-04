@@ -12,7 +12,10 @@ import model.RouteMap;
 import request.RequestHandler;
 
 /**
+ * A Terminal based interface to use the entire program. Contains a main method
+ * that sets up execution. It is able to accept multiple clients.
  *
+ * If you are cool, you will use this to use our program.
  */
 public class Tui implements MultiSessionUI {
     

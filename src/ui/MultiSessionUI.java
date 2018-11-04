@@ -1,7 +1,7 @@
 package ui;
 
 /**
- *
+ * Interface for a UI that accepts multiple clients by CID
  */
 public interface MultiSessionUI {
     

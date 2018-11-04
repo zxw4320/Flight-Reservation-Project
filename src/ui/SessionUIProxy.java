@@ -1,7 +1,8 @@
 package ui;
 
 /**
- *
+ * An AFRSInterface implementing stand-in for a UI that calls back to its
+ * parent SessionHandler so that it can map the callback to a distinct CID.
  */
 public class SessionUIProxy implements AFRSInterface {
     

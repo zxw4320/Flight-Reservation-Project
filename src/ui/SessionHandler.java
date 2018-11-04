@@ -5,7 +5,9 @@ import java.util.Map;
 import request.RequestHandler;
 
 /**
- *
+ * Class that allows a MultiSessionUI to leverage use of multiple
+ * AFRSinterfaces via CID Integer values to have multipe sessions in a
+ * RequestHandler.
  */
 class SessionHandler {
     private Map<Integer, SessionUIProxy> SUIPmap;
