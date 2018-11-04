@@ -26,9 +26,7 @@ public class LocalAirport implements Airport {
     }
     
     public String getInfo() {
-        return name + " (" + airportcode + ")"+ " is currently "
-            + getWeather() + " with " +
-            Integer.toString(delayTime) + " minute delays.";
+        return name + "," + getWeather() + "," + delayTime;
     }
     
     /*** getters ***/
@@ -56,7 +54,7 @@ public class LocalAirport implements Airport {
         if (weatherIndex + 2 >= weather.length) {
             weatherIndex = 0;
         }
-        String currentWeather = weather[weatherIndex + 1] + ", " + weather[weatherIndex + 2] + "F";
+        String currentWeather = weather[weatherIndex + 1] + "," + weather[weatherIndex + 2];
         weatherIndex = (weatherIndex + 2) % weather.length;
         return currentWeather;
     }
