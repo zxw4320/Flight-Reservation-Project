@@ -1,22 +1,16 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import request.RequestHandler;
 
-public class SessionHandler {
-    
+class SessionHandler {
     private Map<Integer, SessionUIProxy> SUIPmap;
     private Map<Integer, String> partialRequests;
     private RequestHandler afrs;
     private MultiSessionUI outputUI;
-    private int nextCID;
-    
-    
-    protected SessionHandler(MultiSessionUI outputUI, RequestHandler afrs) {
-        
+
+    SessionHandler(MultiSessionUI outputUI, RequestHandler afrs){
         this.SUIPmap = new HashMap<>();
         this.partialRequests = new HashMap<>();
         this.afrs = afrs;
@@ -30,7 +24,7 @@ public class SessionHandler {
      * to the UI if needed.
      * @param string Request to make in "CID,REQUEST" format
      */
-    protected void makeRequest(String string) {
+    void makeRequest(String string) {
 
         String newRequestString;
         String fullRequestString;
@@ -47,8 +41,7 @@ public class SessionHandler {
         // handle special connection requests
         if(string.equals("connect;")) {
             cid = addSession();
-            printToUI(cid, "connect," + Integer.toString(cid));
-            useSUIP(cid, "server,local;");
+            printToUI(cid, "connect," + cid);
             return;
         }
         
@@ -96,7 +89,7 @@ public class SessionHandler {
      * @param suip The SUIP that wants to print to the ui
      * @param response the response to print
      */
-    protected void printToUI(SessionUIProxy suip, String response) {
+    void printToUI(SessionUIProxy suip, String response) {
         SUIPmap.forEach((cid, sessionUIProxy) -> {
             if (sessionUIProxy == suip) {
                 printToUI(cid, response);
