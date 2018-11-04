@@ -1,6 +1,7 @@
 package ui;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,7 +28,7 @@ public class GUI extends Application implements MultiSessionUI{
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("<<TITLE>>");
         Group root = new Group();
 
         BorderPane borderPane = new BorderPane();
@@ -45,6 +46,7 @@ public class GUI extends Application implements MultiSessionUI{
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //TODO - Get CID on new tab
                 Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
                 BorderPane tabBorderPane = new BorderPane();
                 HBox inputHbox = new HBox();
@@ -52,6 +54,7 @@ public class GUI extends Application implements MultiSessionUI{
                 TextField input = new TextField();
                 tabPane.getTabs().add(tab);
                 tab.setContent(tabBorderPane);
+
                 //This is the input box
                 input.setText("Test");
                 submitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -74,7 +77,14 @@ public class GUI extends Application implements MultiSessionUI{
                 inputHbox.setSpacing(10);
                 tabBorderPane.setBottom(inputHbox);
                 tabBorderPane.setPadding(new Insets(10,10,10,10));
-
+                tab.setOnCloseRequest(new EventHandler<Event>() {
+                    //Requests to close tab - maybe use setOnClose
+                    @Override
+                    public void handle(Event event) {
+                        //TODO - Client closes tab without disconnecting
+                        System.out.println("DISCONNECT COMMAND");
+                    }
+                });
             }
 
         });
