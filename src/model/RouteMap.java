@@ -77,12 +77,12 @@ public class RouteMap {
     /**
      * gets flights FROM a single airport
      */
-    public List<Flight> getFlightsFrom(Airport airport) {
+    public List<Flight> getFlightsFrom(String airportCode) {
         List<Flight> foundFlights = new ArrayList<>();
         
         // find flights
         flights.forEach(flight -> {
-            if (flight.getOrigin() == airport) {
+            if (flight.getOrigin().getAirportcode().equals(airportCode)) {
                 foundFlights.add(flight);
             }
         });
@@ -94,12 +94,12 @@ public class RouteMap {
     /**
      * gets flights TO a single airport
      */
-    public List<Flight> getFlightsTo(Airport airport) {
+    public List<Flight> getFlightsTo(String airportCode) {
         List<Flight> foundFlights = new ArrayList<>();
         
         // find flights
         flights.forEach(flight -> {
-            if (flight.getDestination() == airport) {
+            if (flight.getDestination().getAirportcode().equals(airportCode)) {
                 foundFlights.add(flight);
             }
         });
