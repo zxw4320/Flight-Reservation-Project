@@ -1,33 +1,25 @@
 package ui;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.awt.*;
 import java.util.HashMap;
 
 public class GUI extends Application implements MultiSessionUI{
     // This is a collection of all previous dialogue strings
-    private HashMap<Integer,String> dialogue = new HashMap();
+    private HashMap<Integer,TextArea> textAreaHashMap = new HashMap();
 
 
     public static void main(String[] args){
@@ -55,6 +47,7 @@ public class GUI extends Application implements MultiSessionUI{
             @Override
             public void handle(ActionEvent event) {
                 //TODO - Get CID on new tab
+                int sessionID = 1;
                 Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
                 BorderPane tabBorderPane = new BorderPane();
                 HBox inputHbox = new HBox();
@@ -64,7 +57,6 @@ public class GUI extends Application implements MultiSessionUI{
                 tab.setContent(tabBorderPane);
 
                 //This is the input box
-                input.setText("Test");
                 submitButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -88,13 +80,8 @@ public class GUI extends Application implements MultiSessionUI{
 
                 //This is the output box
                 TextArea output = new TextArea();
-                //Figure out some way to trigger this for output
-                output.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-
-                    }
-                });
+                textAreaHashMap.put(sessionID,output);
+                tabBorderPane.setTop(textAreaHashMap.get(sessionID));
 
                 tabBorderPane.setPadding(new Insets(10,10,10,10));
                 tab.setOnCloseRequest(new EventHandler<Event>() {
@@ -120,16 +107,8 @@ public class GUI extends Application implements MultiSessionUI{
 
     @Override
     public void printString(int sessionID, String output){
-
-    }
-
-    private String update(int sessionID, String output){
-        if(dialogue.containsKey(sessionID)){
-            String prev = dialogue.get(sessionID);
-            String curr = prev + sessionID + output + "\n";
-            dialogue.put(sessionID,curr);
-
-        }
-        return null;
+        TextArea curr = textAreaHashMap.get(sessionID);
+        curr.appendText(output+"\n");
+        textAreaHashMap.put(sessionID,curr);
     }
 }
