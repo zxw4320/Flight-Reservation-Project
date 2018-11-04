@@ -60,6 +60,10 @@ public class GUI extends Application implements MultiSessionUI{
         sessionHandler = new SessionHandler(this, afrs);
     }
 
+    /**
+     * This method runs the GUI element.
+     * @param primaryStage the gui element
+     */
     @Override
     public void start(Stage primaryStage) {
 
@@ -82,7 +86,8 @@ public class GUI extends Application implements MultiSessionUI{
             public void handle(ActionEvent event) {
                 int sessionID = sessionHandler.addSession();
 
-                Tab tab = new Tab("User" + sessionID);
+                //Tab layout
+                Tab tab = new Tab("User " + sessionID);
                 BorderPane tabBorderPane = new BorderPane();
                 HBox inputHbox = new HBox();
                 Button submitButton = new Button("Submit");
@@ -109,8 +114,9 @@ public class GUI extends Application implements MultiSessionUI{
                 tabBorderPane.setTop(textAreaHashMap.get(sessionID));
 
                 tabBorderPane.setPadding(new Insets(10,10,10,10));
+
+                //Disconnect on tab close
                 tab.setOnClosed(new EventHandler<Event>() {
-                    //Requests to close tab - maybe use setOnClose
                     @Override
                     public void handle(Event event) {
                         sendString(sessionID+",disconnect;");
@@ -119,8 +125,6 @@ public class GUI extends Application implements MultiSessionUI{
             }
 
         });
-
-
 
         //End Render
         root.getChildren().addAll(borderPane);
