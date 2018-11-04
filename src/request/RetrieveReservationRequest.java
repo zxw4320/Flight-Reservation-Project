@@ -77,11 +77,14 @@ public class RetrieveReservationRequest implements Request {
             }
         }
         
-        // print start line
-        ui.printString("retrieve," + reservations.size());
-        // print to ui
-        reservations.forEach(r -> ui.printString(r.toString()));
+        StringBuilder result = new StringBuilder();
         
+        // generate print String
+        result.append("retrieve,").append(reservations.size());
+        reservations.forEach(r -> result.append("\n").append(r.toString()));
+        
+        // print to ui
+        ui.printString(result.toString());
     }
     
     /**
