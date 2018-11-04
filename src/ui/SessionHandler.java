@@ -34,7 +34,7 @@ class SessionHandler {
         String[] tempArray = string.split(",");
 
         // throw out empty queries
-        if(string.isEmpty())
+        if(string.isEmpty()){
             return;
         }
         
