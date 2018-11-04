@@ -85,7 +85,7 @@ public class GUI extends Application implements MultiSessionUI{
             @Override
             public void handle(ActionEvent event) {
                 int sessionID = sessionHandler.addSession();
-
+                
                 //Tab layout
                 Tab tab = new Tab("User " + sessionID);
                 BorderPane tabBorderPane = new BorderPane();
@@ -122,6 +122,8 @@ public class GUI extends Application implements MultiSessionUI{
                         sendString(sessionID+",disconnect;");
                     }
                 });
+    
+                sendString(sessionID + ",server,local;");
             }
 
         });
