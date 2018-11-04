@@ -2,6 +2,7 @@ package ui;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -28,13 +29,11 @@ public class GUI extends Application implements MultiSessionUI{
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World");
         Group root = new Group();
-        HBox inputHbox = new HBox();
-        Button submitButton = new Button("Submit");
-        TextField input = new TextField();
+
         BorderPane borderPane = new BorderPane();
         TabPane tabPane = new TabPane();
         Button addButton = new Button("New Connection");
-        BorderPane tabBorderPane = new BorderPane();
+
         Scene scene = new Scene(root, 600, 400, Color.WHITE);
         Label inputLabel = new Label("Input:");
 
@@ -42,37 +41,45 @@ public class GUI extends Application implements MultiSessionUI{
         borderPane.setTop(addButton);
         borderPane.setCenter(tabPane);
 
-        //This is the input box
-        input.setText("Test");
-        submitButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(input.getText().equals("")){
-                    System.out.println("Empty Input");
-                    //TODO - Give error message to user
-                }
-                else
-                {
-                    System.out.println("Some Input");
-                    System.out.println(input.getText());
-                    //TODO - Give input to system
-                }
-                input.setText("");
-            }
-        });
-        inputHbox.getChildren().addAll(input,submitButton);
-        tabBorderPane.setBottom(inputHbox);
-
         //This button creates a new tab
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
+                BorderPane tabBorderPane = new BorderPane();
+                HBox inputHbox = new HBox();
+                Button submitButton = new Button("Submit");
+                TextField input = new TextField();
                 tabPane.getTabs().add(tab);
-                tabPane.getSelectionModel().select(tab);
                 tab.setContent(tabBorderPane);
+                //This is the input box
+                input.setText("Test");
+                submitButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        if(input.getText().equals("")){
+                            System.out.println("Empty Input");
+                            //TODO - Give error message to user
+                        }
+                        else
+                        {
+                            System.out.println("Some Input");
+                            System.out.println(input.getText());
+                            //TODO - Give input to system
+                        }
+                        input.setText("");
+                    }
+                });
+                inputHbox.getChildren().addAll(input,submitButton);
+                inputHbox.setSpacing(10);
+                tabBorderPane.setBottom(inputHbox);
+                tabBorderPane.setPadding(new Insets(10,10,10,10));
+
             }
+
         });
+
+
 
         //End Render
         root.getChildren().addAll(borderPane);
