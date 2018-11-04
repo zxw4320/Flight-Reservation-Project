@@ -38,4 +38,10 @@ public class AirportInfoRequest implements Request {
     public boolean unexecute() {
         return false;
     }
+
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

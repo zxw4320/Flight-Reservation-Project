@@ -76,4 +76,10 @@ public class MakeReservationRequest implements Request {
         // handle unable to unexecute
         return false;
     }
+
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

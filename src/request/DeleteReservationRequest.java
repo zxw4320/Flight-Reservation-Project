@@ -88,4 +88,10 @@ public class DeleteReservationRequest implements Request {
         // return that we did nothing
         return false;
     }
+
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }
