@@ -12,7 +12,8 @@ public class AirportInfoRequest implements Request {
     private String airportCode;
     private RouteMap routeMap;
     private AFRSInterface ui;
-    
+    private final String name = "airport";
+
     /**
      * Constructor
      */

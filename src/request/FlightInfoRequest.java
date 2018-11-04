@@ -24,7 +24,8 @@ public class FlightInfoRequest implements Request {
     private ArrayList<String> flightRequest;
     private FlightOrder sortOrder;
     private ItineraryHistory itineraryHistory;
-    
+    private final String name = "info";
+
     /**
      * Constructor
      */

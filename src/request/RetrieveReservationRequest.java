@@ -20,7 +20,8 @@ public class RetrieveReservationRequest implements Request {
     private String passengerName;
     private String originAirportCode;
     private String destinationAirportCode;
-    
+    private final String name = "retrieve";
+
     
     /**
      * Constructor

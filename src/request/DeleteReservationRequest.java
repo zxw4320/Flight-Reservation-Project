@@ -17,7 +17,8 @@ public class DeleteReservationRequest implements Request {
     private AFRSInterface ui;
     private ReservationCollection reservations;
     private Reservation reservation;
-    
+    private final String name = "delete";
+
     /**
      * Constructor
      */
