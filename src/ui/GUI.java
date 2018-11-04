@@ -1,4 +1,8 @@
 package ui;
+import database.CSVdb;
+import database.Flightdb;
+import database.ReservationCSVParser;
+import database.Reservationdb;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -15,21 +19,51 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.ReservationCollection;
+import model.RouteMap;
+import request.RequestHandler;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class GUI extends Application implements MultiSessionUI{
     // This is a collection of all previous dialogue strings
     private HashMap<Integer,TextArea> textAreaHashMap = new HashMap();
+    private request.RequestHandler afrs;
+    private SessionHandler sessionHandler;
 
 
     public static void main(String[] args){
         Application.launch(args);
     }
 
+    /**
+     * Constructor
+     */
+    public GUI() {
+        // acquire DB files
+        Path a = Paths.get("csv/airports.csv");
+        Path f = Paths.get("csv/flights.csv");
+        Path w = Paths.get("csv/weather.csv");
+        Path d = Paths.get("csv/delay.csv");
+        Path r = Paths.get("csv/reservations.csv");
+        // make DB readers
+        Flightdb flightdb = new CSVdb(a, w, f, d);
+        Reservationdb reservationdb = new ReservationCSVParser(r);
+        // use DB readers
+        RouteMap routeMap = flightdb.generateRouteMap();
+        ReservationCollection reservationCollection = reservationdb
+                .generateReservationCollection(routeMap);
+        // create request handler
+        afrs = new RequestHandler(routeMap, reservationCollection);
+        sessionHandler = new SessionHandler(this, afrs);
+    }
+
     @Override
     public void start(Stage primaryStage) {
 
-        primaryStage.setTitle("<<TITLE>>");
+        primaryStage.setTitle("AFRS System");
         Group root = new Group();
 
         BorderPane borderPane = new BorderPane();
@@ -46,9 +80,9 @@ public class GUI extends Application implements MultiSessionUI{
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                //TODO - Get CID on new tab
-                int sessionID = 1;
-                Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
+                int sessionID = sessionHandler.addSession();
+
+                Tab tab = new Tab("User" + sessionID);
                 BorderPane tabBorderPane = new BorderPane();
                 HBox inputHbox = new HBox();
                 Button submitButton = new Button("Submit");
@@ -61,17 +95,7 @@ public class GUI extends Application implements MultiSessionUI{
                     @Override
                     public void handle(ActionEvent event) {
                         String inputArg = input.getText();
-                        if(inputArg.equals("")){
-                            System.out.println("Empty Input");
-                            //TODO - Give error message to user
-                        }
-                        else
-                        {
-                            System.out.println("Some Input");
-                            System.out.println(inputArg);
-                            //TODO - Give input to system
-                            printString(sessionID,inputArg);
-                        }
+                        sendString(sessionID+","+inputArg);
                         input.setText("");
                     }
                 });
@@ -85,12 +109,11 @@ public class GUI extends Application implements MultiSessionUI{
                 tabBorderPane.setTop(textAreaHashMap.get(sessionID));
 
                 tabBorderPane.setPadding(new Insets(10,10,10,10));
-                tab.setOnCloseRequest(new EventHandler<Event>() {
+                tab.setOnClosed(new EventHandler<Event>() {
                     //Requests to close tab - maybe use setOnClose
                     @Override
                     public void handle(Event event) {
-                        //TODO - Client closes tab without disconnecting
-                        System.out.println("DISCONNECT COMMAND");
+                        sendString(sessionID+",disconnect;");
                     }
                 });
             }
@@ -106,6 +129,19 @@ public class GUI extends Application implements MultiSessionUI{
 
     }
 
+    /**
+     * This is how the GUI sends input to the system.
+     * @param sendText The input argument to be sent.
+     */
+    private void sendString(String sendText) {
+        sessionHandler.makeRequest(sendText);
+    }
+
+    /**
+     * This is how the GUI recieves output from the system.
+     * @param sessionID The session to receive output
+     * @param output The string to output to the UI
+     */
     @Override
     public void printString(int sessionID, String output){
         TextArea curr = textAreaHashMap.get(sessionID);

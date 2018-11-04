@@ -100,7 +100,7 @@ public class SessionHandler {
      *
      * @return The generated ID
      */
-    private Integer addSession() {
+    public Integer addSession() {
         // choose a /fresh/ CID
         int cid = nextCID;
         nextCID++;
