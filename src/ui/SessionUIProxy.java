@@ -4,8 +4,8 @@ public class SessionUIProxy implements AFRSInterface {
     
     // the session handler we report back to
     private SessionHandler sessionHandler;
-    
-    protected SessionUIProxy(SessionHandler sessionHandler) {
+
+    SessionUIProxy(SessionHandler sessionHandler) {
         this.sessionHandler = sessionHandler;
     }
     

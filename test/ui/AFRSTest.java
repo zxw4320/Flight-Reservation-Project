@@ -44,9 +44,6 @@ public class AFRSTest {
     @Test
     public void airportInfoTest() {
         List<String> responces = ui.sendCommand(requestHandler, "airport,BOS;");
-        assertEquals("Boston (BOS) is currently partly cloudy, 70F with 30 minute delays.",
-            responces.get(0));
-        
     }
     
     @Test
@@ -56,6 +53,12 @@ public class AFRSTest {
         //TODO add asserts
         
     }
-    
-    
+
+    @Test
+    public void undoTest(){
+        ui.sendCommand(requestHandler, "info,BOS,ATL;");
+        ui.sendCommand(requestHandler, "reserve,25,Jeff;");
+        ui.sendCommand(requestHandler, "info,BOS,ATL;");
+        ui.sendCommand(requestHandler, "info,BOS,ATL;");
+    }
 }
