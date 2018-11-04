@@ -18,7 +18,7 @@ public class MakeReservationRequest implements Request {
     private ReservationCollection reservationCollection;
     private ItineraryHistory itineraryHistory;
     private Reservation reservation;
-    private final String name = "retrieve";
+    private final String name = "reserve";
 
     /**
      * Constructor
