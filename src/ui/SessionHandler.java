@@ -107,7 +107,7 @@ class SessionHandler {
      *
      * @return The generated ID
      */
-    private Integer addSession() {
+    public Integer addSession() {
         // choose a /fresh/ CID
         int cid = getCID();
         //Generate our SUIP , add to map and return

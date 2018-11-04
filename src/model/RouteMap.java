@@ -116,8 +116,10 @@ public class RouteMap {
     public void setMethod(ui.AFRSInterface ui, ArrayList<String> argumentArray) {
         if (argumentArray.get(1).equals("local")) {
             userMethods.put(ui, localAirports);
+            ui.printString("local,successful");
         } else if (argumentArray.get(1).equals("faa")) {
             userMethods.put(ui, faaAirports);
+            ui.printString("faa,successful");
         } else {
             ui.printString("error, unknown information server");
         }

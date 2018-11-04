@@ -1,5 +1,6 @@
 package model.Weather;
 
+import com.google.gson.internal.LinkedTreeMap;
 import java.util.ArrayList;
 
 /**
@@ -20,10 +21,17 @@ public class FAAInfo {
     
     @Override
     public String toString() {
-        if(Delay)
-            return Name + ", " + Weather.toString() + Status.get(0); //TODO make this work correctly
-        else
+        if (Delay) {
+            String delay;
+            if((((LinkedTreeMap) Status.get(0)).containsKey("AvgDelay"))){
+                delay = (String) (((LinkedTreeMap) Status.get(0)).get("AvgDelay"));
+            } else {
+                delay = "Calculate Average Delay here"; //TODO calc avg delay if need be
+            }
+            return Name + ", " + Weather.toString() + delay;
+        } else {
             return Name + ", " + Weather.toString() + "0 delay";
+        }
     }
     
     // Getter Methods
