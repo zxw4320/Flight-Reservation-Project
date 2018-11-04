@@ -42,7 +42,8 @@ class RequestHistory {
             }
             request = getStack(ui, undoStacks).pop();
         } while (!request.unexecute());
-        
+        ui.printString("undo," + request.toString());
+
         // add the undone command to the redo stack
         getStack(ui, redoStacks).push(request);
     }
@@ -61,6 +62,7 @@ class RequestHistory {
         // pop off redo stack
         Request request = getStack(ui, redoStacks).pop();
         request.execute();
+        ui.printString("redo," + request.toString());
         // push request to undo stack
         getStack(ui, undoStacks).push(request);
     }
