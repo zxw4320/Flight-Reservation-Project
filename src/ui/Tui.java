@@ -43,10 +43,12 @@ public class Tui implements MultiSessionUI {
     
     @Override
     public void printString(int cid, String printText) {
-        if(printText.startsWith("connect"))
+        if(printText.startsWith("connect")) {
             System.out.println(printText);
-        else
+            sendString(cid + ",server,local;");
+        } else {
             System.out.println(cid + "," + printText);
+        }
     }
     
     private void sendString(String sendText) {
