@@ -70,8 +70,7 @@ public class Itinerary implements FlightInterface {
         for (FlightInterface flight : flights) {
             result.append(",").append(flight.toString());
         }
-        String fn = result.toString();
-        return fn;
+        return result.toString();
     }
     
     /*** getters ***/
