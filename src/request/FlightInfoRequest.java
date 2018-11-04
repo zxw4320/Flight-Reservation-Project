@@ -99,22 +99,27 @@ public class FlightInfoRequest implements Request {
     }
     
     
-    private ArrayList<Itinerary> findFlights(Airport origin, Airport destination,
-        int depth) {
-        // generate itinerary list
-        List<Flight> flights = new ArrayList<>(routeMap.getFlightsFrom(origin));
-        List<Itinerary> itineraries = new ArrayList<>();
-        flights.forEach(flight -> itineraries.add(new Itinerary(flight)));
+    private ArrayList<Itinerary> findFlights(Airport origin, Airport destination, int depth) {
+        
+        // get the list of all flights
+        List<Flight> flights = routeMap.getFlightsFrom(origin.getAirportcode());
+        List<Flight> originFlights = new ArrayList<>(flights);
         
         // find direct flights
-        flights.retainAll(routeMap.getFlightsTo(destination));
+        flights.retainAll(routeMap.getFlightsTo(destination.getAirportcode()));
+        
+        // remove all direct flights
+        originFlights.removeAll(routeMap.getFlightsTo(destination.getAirportcode()));
+        
         // convert to itineraries
         ArrayList<Itinerary> completeItineraries = new ArrayList<>();
         flights.forEach(flight -> completeItineraries.add(new Itinerary(flight)));
         
-        // start recursion
+        // start recursion if anything other than direct flights included
         if (depth > 0) {
-            completeItineraries.addAll(findFlightHelper(itineraries, destination, depth));
+            List<Itinerary> originItineraries = new ArrayList<>();
+            originFlights.forEach(flight -> originItineraries.add(new Itinerary(flight)));
+            completeItineraries.addAll(findFlightHelper(originItineraries, destination, depth));
         }
         return completeItineraries;
     }
@@ -136,7 +141,7 @@ public class FlightInfoRequest implements Request {
         // get the flights to from each airport we have
         HashMap<Airport, List<Flight>> flightsFrom = new HashMap<>();
         interimAirports.forEach(airport -> {
-            flightsFrom.put(airport, routeMap.getFlightsFrom(airport));
+            flightsFrom.put(airport, routeMap.getFlightsFrom(airport.getAirportcode()));
         });
         
         // iterate over itineraries from input
