@@ -23,62 +23,31 @@ public class GUI extends Application implements MultiSessionUI{
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World");
         Group root = new Group();
-        Scene scene = new Scene(root, 400, 250, Color.WHITE);
         TabPane tabPane = new TabPane();
-        //Button addButton = new Button("+");
-
+        Button addButton = new Button("New Connection");
         BorderPane borderPane = new BorderPane();
-        for (int i = 0; i < 5; i++) {
-            Tab tab = new Tab();
-            tab.setText("User" + i);
-            HBox hbox = new HBox();
-            hbox.getChildren().add(new Label("Tab"+i));
-            hbox.setAlignment(Pos.CENTER);
-            tab.setContent(hbox);
-
-            Button btn = new Button();
-            btn.setText("Say 'Hello World'");
-            btn.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.println("Hello World!");
-                }
-            });
-        }
-        // bind to take available space
-        borderPane.prefHeightProperty().bind(scene.heightProperty());
-        borderPane.prefWidthProperty().bind(scene.widthProperty());
-
-        borderPane.setCenter(tabPane);
-        root.getChildren().add(borderPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-
-
-
-
-
-
-
-/*
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
+        BorderPane tabBorderPane = new BorderPane();
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
+                System.out.println("Break One Reached");
+                Tab tab = new Tab("Tab" + (tabPane.getTabs().size() + 1));
+                tabPane.getTabs().add(tab);
+                tabPane.getSelectionModel().select(tab);
+                tab.setContent(tabBorderPane);
             }
         });
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300,250));
+        borderPane.setTop(addButton);
+        borderPane.setCenter(tabPane);
+        root.getChildren().addAll(borderPane);
+        Scene scene = new Scene(root, 600, 400, Color.WHITE);
+        primaryStage.setScene(scene);
         primaryStage.show();
-        */
 
+    }
 
     @Override
     public void printString(int sessionID, String output){
